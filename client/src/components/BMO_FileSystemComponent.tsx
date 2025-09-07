@@ -97,21 +97,29 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
 
   const renderExplorerView = () => (
-    <div className="h-full">
-      {/* Folder Icons Grid */}
-      <div className="p-4 grid grid-cols-2 gap-4 h-full">
+    <div className="h-full bg-white">
+      {/* Folder Icons Grid - Windows Explorer Style */}
+      <div className="p-3 grid grid-cols-2 gap-3 h-full">
         {folders.map((folder, index) => (
           <button
             key={folder.name}
             onClick={() => handleFolderClick(folder)}
-            className="flex flex-col items-center justify-center p-2 hover:bg-blue-100 rounded transition-colors animate-slideIn"
+            className="flex flex-col items-center justify-center p-3 hover:bg-blue-200 border border-transparent hover:border-blue-400 rounded transition-all duration-200 transform hover:scale-105 animate-slideIn group"
             style={{ animationDelay: `${index * 0.1}s` }}
             data-testid={`folder-${folder.name.toLowerCase().replace(/\s+/g, '-')}`}
           >
-            <div className="text-2xl mb-1" style={{ imageRendering: 'pixelated' }}>
-              {folder.emoji}
+            {/* Windows-style folder icon background */}
+            <div className="relative mb-2">
+              <div className="w-12 h-10 bg-yellow-300 border-2 border-yellow-600 rounded-t-lg relative" style={{ imageRendering: 'pixelated' }}>
+                <div className="absolute top-0 left-0 w-3 h-2 bg-yellow-400 border border-yellow-600 rounded-tl-lg"></div>
+                <div className="absolute inset-1 bg-yellow-100 rounded flex items-center justify-center">
+                  <span className="text-lg group-hover:scale-110 transition-transform" style={{ imageRendering: 'pixelated' }}>
+                    {folder.emoji}
+                  </span>
+                </div>
+              </div>
             </div>
-            <span className="pixel-text text-xs text-center text-black leading-tight">
+            <span className="pixel-text text-[10px] text-center text-black leading-tight max-w-full">
               {folder.name}
             </span>
           </button>
@@ -124,40 +132,46 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     switch (currentView) {
       case 'videos':
         return (
-          <div className="p-3 h-full flex flex-col">
-            <h3 className="pixel-text text-sm mb-3 text-black">Video Gallery</h3>
-            <div className="flex-1 bg-black rounded flex items-center justify-center">
-              <div className="text-white text-center p-4">
-                <div className="text-2xl mb-2">🎬</div>
-                <div className="pixel-text text-xs">Video Player</div>
-                <div className="text-xs mt-1">Click to play demo</div>
+          <div className="p-2 h-full flex flex-col bg-white">
+            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">📹 Video Gallery</h3>
+            <div className="flex-1 bg-black border-2 border-gray-400 rounded flex items-center justify-center mb-2">
+              <div className="text-white text-center p-2">
+                <div className="text-xl mb-1">🎬</div>
+                <div className="pixel-text text-[8px]">React Player Ready</div>
+                <div className="text-[7px] mt-1">Select video below</div>
               </div>
             </div>
-            <div className="mt-2 space-y-1">
-              <div className="bg-gray-200 p-2 rounded text-xs">
-                <span className="pixel-text">Demo Reel.mp4</span>
-              </div>
-              <div className="bg-gray-200 p-2 rounded text-xs">
-                <span className="pixel-text">Tutorial_01.mp4</span>
-              </div>
+            <div className="space-y-1 overflow-y-auto">
+              <button className="w-full text-left p-1 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors">
+                <span className="pixel-text">🎥 Portfolio Demo.mp4</span>
+              </button>
+              <button className="w-full text-left p-1 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors">
+                <span className="pixel-text">🎥 Coding Tutorial.mp4</span>
+              </button>
+              <button className="w-full text-left p-1 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors">
+                <span className="pixel-text">🎥 Project Showcase.mp4</span>
+              </button>
             </div>
           </div>
         );
 
       case 'chat':
         return (
-          <div className="p-2 h-full flex flex-col">
-            <div className="flex-1 overflow-y-auto mb-2 space-y-2 bg-gray-100 p-2 rounded">
+          <div className="p-2 h-full flex flex-col bg-white">
+            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">💬 AI Talk with BMO</h3>
+            <div className="flex-1 overflow-y-auto mb-2 space-y-1 bg-gray-50 border-2 border-gray-300 p-2 rounded" style={{ minHeight: '120px' }}>
               {chatMessages.map((message) => (
                 <div
                   key={message.id}
-                  className={`p-2 rounded text-xs max-w-[80%] ${
+                  className={`p-1 rounded text-[8px] max-w-[85%] ${
                     message.sender === 'user'
-                      ? 'bg-blue-200 ml-auto text-right'
-                      : 'bg-green-200'
+                      ? 'bg-blue-100 border border-blue-300 ml-auto text-right'
+                      : 'bg-green-100 border border-green-300'
                   }`}
                 >
-                  <div className="pixel-text">{message.text}</div>
+                  <div className="pixel-text leading-tight">
+                    <span className="font-bold">{message.sender === 'user' ? 'You:' : 'BMO:'}</span> {message.text}
+                  </div>
                 </div>
               ))}
             </div>
@@ -167,13 +181,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Type message..."
-                className="flex-1 text-xs p-1 border rounded pixel-text"
+                placeholder="Ask BMO anything..."
+                className="flex-1 text-[8px] p-1 border-2 border-gray-300 rounded pixel-text bg-white"
                 data-testid="chat-input"
               />
               <button
                 onClick={handleSendMessage}
-                className="px-2 py-1 bg-blue-500 text-white rounded text-xs pixel-text"
+                className="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white border border-blue-600 rounded text-[8px] pixel-text transition-colors"
                 data-testid="chat-send"
               >
                 Send
@@ -184,17 +198,24 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'communities':
         return (
-          <div className="p-3 space-y-2">
-            <h3 className="pixel-text text-sm mb-2 text-black">Communities</h3>
+          <div className="p-2 bg-white h-full">
+            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">👥 Communities & Social</h3>
             <div className="space-y-1">
-              <button className="w-full text-left p-2 bg-gray-200 rounded text-xs hover:bg-gray-300 transition-colors">
-                <span className="pixel-text">🔗 Discord Server</span>
+              <button className="w-full text-left p-2 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors group">
+                <span className="pixel-text">🔗 Discord Community</span>
+                <div className="text-[7px] text-gray-600 mt-1">Join our active development community</div>
               </button>
-              <button className="w-full text-left p-2 bg-gray-200 rounded text-xs hover:bg-gray-300 transition-colors">
-                <span className="pixel-text">🔗 Reddit Community</span>
+              <button className="w-full text-left p-2 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors group">
+                <span className="pixel-text">🔗 Reddit r/BMOPortfolio</span>
+                <div className="text-[7px] text-gray-600 mt-1">Share projects and get feedback</div>
               </button>
-              <button className="w-full text-left p-2 bg-gray-200 rounded text-xs hover:bg-gray-300 transition-colors">
-                <span className="pixel-text">🔗 Twitter Updates</span>
+              <button className="w-full text-left p-2 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors group">
+                <span className="pixel-text">🔗 Twitter @BMOCodes</span>
+                <div className="text-[7px] text-gray-600 mt-1">Follow for updates and tips</div>
+              </button>
+              <button className="w-full text-left p-2 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors group">
+                <span className="pixel-text">🔗 YouTube Channel</span>
+                <div className="text-[7px] text-gray-600 mt-1">Coding tutorials and demos</div>
               </button>
             </div>
           </div>
@@ -202,17 +223,24 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'contact':
         return (
-          <div className="p-3 space-y-2">
-            <h3 className="pixel-text text-sm mb-2 text-black">Contact Info</h3>
+          <div className="p-2 bg-white h-full">
+            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">📒 Contact Information</h3>
             <div className="space-y-1">
-              <div className="p-2 bg-gray-200 rounded text-xs">
-                <span className="pixel-text">📧 hello@example.com</span>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">📧 Email Address</div>
+                <div className="text-[7px] text-gray-600 mt-1">developer@bmo-portfolio.com</div>
               </div>
-              <div className="p-2 bg-gray-200 rounded text-xs">
-                <span className="pixel-text">💼 LinkedIn Profile</span>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">💼 LinkedIn Profile</div>
+                <div className="text-[7px] text-gray-600 mt-1">Connect for professional opportunities</div>
               </div>
-              <div className="p-2 bg-gray-200 rounded text-xs">
-                <span className="pixel-text">🐙 GitHub Profile</span>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">🐙 GitHub Repository</div>
+                <div className="text-[7px] text-gray-600 mt-1">View code and contribute</div>
+              </div>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">📱 Schedule Meeting</div>
+                <div className="text-[7px] text-gray-600 mt-1">Book a 30-minute consultation</div>
               </div>
             </div>
           </div>
@@ -220,17 +248,28 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'tools':
         return (
-          <div className="p-3 space-y-2">
-            <h3 className="pixel-text text-sm mb-2 text-black">Development Tools</h3>
+          <div className="p-2 bg-white h-full">
+            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">🛠 Development Toolkit</h3>
             <div className="space-y-1">
-              <div className="p-2 bg-gray-200 rounded text-xs">
-                <span className="pixel-text">⚛️ React Projects</span>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">⚛️ React Component Library</div>
+                <div className="text-[7px] text-gray-600 mt-1">Reusable UI components & hooks</div>
               </div>
-              <div className="p-2 bg-gray-200 rounded text-xs">
-                <span className="pixel-text">🟦 TypeScript Utils</span>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">🟦 TypeScript Utilities</div>
+                <div className="text-[7px] text-gray-600 mt-1">Type definitions & helper functions</div>
               </div>
-              <div className="p-2 bg-gray-200 rounded text-xs">
-                <span className="pixel-text">🎨 Design Systems</span>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">🎨 Design System</div>
+                <div className="text-[7px] text-gray-600 mt-1">Color palettes & component styles</div>
+              </div>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">🔧 VS Code Extensions</div>
+                <div className="text-[7px] text-gray-600 mt-1">Productivity tools & themes</div>
+              </div>
+              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
+                <div className="pixel-text">📦 NPM Packages</div>
+                <div className="text-[7px] text-gray-600 mt-1">Published utilities & libraries</div>
               </div>
             </div>
           </div>
@@ -257,52 +296,60 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         data-testid="bmo-filesystem"
       >
         {/* Windows Explorer Top Menu */}
-        <div className="bg-gray-300 border-b border-gray-400 px-2 py-1">
-          <div className="flex space-x-4 text-xs pixel-text">
-            <span className="hover:bg-gray-400 px-1 cursor-pointer">File</span>
-            <span className="hover:bg-gray-400 px-1 cursor-pointer">Edit</span>
-            <span className="hover:bg-gray-400 px-1 cursor-pointer">View</span>
-            <span className="hover:bg-gray-400 px-1 cursor-pointer">Help</span>
+        <div className="bg-gradient-to-b from-gray-200 to-gray-300 border-b-2 border-gray-400 px-2 py-1 shadow-sm">
+          <div className="flex space-x-1 text-[8px] pixel-text">
+            <button className="hover:bg-gray-400 px-2 py-1 rounded transition-colors border border-transparent hover:border-gray-500">File</button>
+            <button className="hover:bg-gray-400 px-2 py-1 rounded transition-colors border border-transparent hover:border-gray-500">Edit</button>
+            <button className="hover:bg-gray-400 px-2 py-1 rounded transition-colors border border-transparent hover:border-gray-500">View</button>
+            <button className="hover:bg-gray-400 px-2 py-1 rounded transition-colors border border-transparent hover:border-gray-500">Help</button>
             {onBack && (
               <button 
                 onClick={onBack}
-                className="ml-auto text-red-600 hover:text-red-800 transition-colors"
+                className="ml-auto text-red-600 hover:text-red-800 hover:bg-red-100 px-2 py-1 rounded transition-colors border border-transparent hover:border-red-400"
                 data-testid="button-back-to-face"
+                title="Close BMO Filesystem"
               >
-                [X]
+                ✕
               </button>
             )}
           </div>
         </div>
 
-        {/* Navigation Bar */}
-        <div className="bg-gray-100 border-b border-gray-400 px-2 py-1 flex items-center space-x-2">
+        {/* Navigation Bar - Windows Explorer Style */}
+        <div className="bg-gradient-to-b from-gray-100 to-gray-200 border-b-2 border-gray-400 px-2 py-1 flex items-center space-x-2 shadow-sm">
           <button
             onClick={handleBackClick}
             disabled={currentView === 'explorer'}
-            className={`text-xs px-2 py-1 border rounded ${
+            className={`text-[8px] px-2 py-1 border border-gray-400 rounded pixel-text transition-all ${
               currentView === 'explorer' 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                : 'bg-white hover:bg-gray-50 cursor-pointer'
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-inner' 
+                : 'bg-white hover:bg-blue-100 hover:border-blue-400 cursor-pointer shadow-sm active:shadow-inner'
             }`}
             data-testid="nav-back"
+            title="Go back to main folder"
           >
             ← Back
           </button>
           <button
             disabled
-            className="text-xs px-2 py-1 border rounded bg-gray-200 text-gray-400 cursor-not-allowed"
+            className="text-[8px] px-2 py-1 border border-gray-400 rounded bg-gray-200 text-gray-400 cursor-not-allowed shadow-inner pixel-text"
+            title="Forward (not available)"
           >
             → Forward
           </button>
-          <div className="flex-1 bg-white border border-gray-400 px-2 py-1 text-xs pixel-text">
+          <div className="flex-1 bg-white border-2 border-gray-400 px-2 py-1 text-[8px] pixel-text shadow-inner rounded" style={{ fontFamily: 'monospace' }}>
             {currentPath}
+          </div>
+          <div className="text-[7px] text-gray-600 pixel-text">
+            {currentView === 'explorer' ? `${folders.length} items` : '1 folder'}
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 h-full overflow-hidden">
-          {renderContentView()}
+        <div className="flex-1 h-full overflow-hidden transition-all duration-300">
+          <div className="h-full transform transition-transform duration-300 ease-in-out">
+            {renderContentView()}
+          </div>
         </div>
       </div>
   );
