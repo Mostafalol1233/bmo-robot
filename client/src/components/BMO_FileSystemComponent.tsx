@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ReactPlayer from 'react-player';
 import BMOFace from './BMOFace';
+import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 
 interface BMO_FileSystemComponentProps {
   onBack?: () => void;
@@ -184,37 +185,37 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'chat':
         return (
-          <div className="p-2 h-full flex flex-col bg-white">
-            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">💬 AI Talk with BMO</h3>
-            <div className="flex-1 overflow-y-auto mb-2 space-y-1 bg-gray-50 border-2 border-gray-300 p-2 rounded" style={{ minHeight: '120px' }}>
+          <div className="p-4 h-full flex flex-col bg-white">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">💬 AI Talk with BMO</h3>
+            <div className="flex-1 overflow-y-auto mb-4 space-y-2 bg-gray-50 border border-gray-300 p-4 rounded-lg" style={{ minHeight: '200px' }}>
               {chatMessages.map((message) => (
                 <div
                   key={message.id}
-                  className={`p-1 rounded text-[8px] max-w-[85%] ${
+                  className={`p-3 rounded-lg text-sm max-w-[85%] ${
                     message.sender === 'user'
-                      ? 'bg-blue-100 border border-blue-300 ml-auto text-right'
-                      : 'bg-green-100 border border-green-300'
+                      ? 'bg-blue-500 text-white ml-auto'
+                      : 'bg-white border border-gray-300 shadow-sm'
                   }`}
                 >
-                  <div className="pixel-text leading-tight">
-                    <span className="font-bold">{message.sender === 'user' ? 'You:' : 'BMO:'}</span> {message.text}
+                  <div className="leading-relaxed">
+                    <span className="font-medium">{message.sender === 'user' ? 'You:' : 'BMO:'}</span> {message.text}
                   </div>
                 </div>
               ))}
             </div>
-            <div className="flex space-x-1">
+            <div className="flex space-x-2">
               <input
                 type="text"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Ask BMO anything..."
-                className="flex-1 text-[8px] p-1 border-2 border-gray-300 rounded pixel-text bg-white"
+                className="flex-1 text-sm p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 data-testid="chat-input"
               />
               <button
                 onClick={handleSendMessage}
-                className="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white border border-blue-600 rounded text-[8px] pixel-text transition-colors"
+                className="px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors"
                 data-testid="chat-send"
               >
                 Send
@@ -225,79 +226,198 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'communities':
         return (
-          <div className="p-2 bg-white h-full">
-            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">👥 Communities & Social</h3>
-            <div className="space-y-1">
-              <button className="w-full text-left p-2 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors group">
-                <span className="pixel-text">🔗 Discord Community</span>
-                <div className="text-[7px] text-gray-600 mt-1">Join our active development community</div>
-              </button>
-              <button className="w-full text-left p-2 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors group">
-                <span className="pixel-text">🔗 Reddit r/BMOPortfolio</span>
-                <div className="text-[7px] text-gray-600 mt-1">Share projects and get feedback</div>
-              </button>
-              <button className="w-full text-left p-2 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors group">
-                <span className="pixel-text">🔗 Twitter @BMOCodes</span>
-                <div className="text-[7px] text-gray-600 mt-1">Follow for updates and tips</div>
-              </button>
-              <button className="w-full text-left p-2 bg-gray-100 hover:bg-blue-200 border border-gray-300 rounded text-[8px] transition-colors group">
-                <span className="pixel-text">🔗 YouTube Channel</span>
-                <div className="text-[7px] text-gray-600 mt-1">Coding tutorials and demos</div>
-              </button>
+          <div className="p-4 bg-white h-full">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">👥 Communities & Social</h3>
+            <div className="grid grid-cols-1 gap-3">
+              <a 
+                href="https://discord.gg/bmocommunity" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 hover:border-indigo-300 rounded-lg transition-colors group"
+              >
+                <div className="text-2xl">💬</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-indigo-700">Discord Community</div>
+                  <div className="text-sm text-gray-600 mt-1">Join our active development community</div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://reddit.com/r/BMOPortfolio" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-orange-50 hover:bg-orange-100 border border-orange-200 hover:border-orange-300 rounded-lg transition-colors group"
+              >
+                <div className="text-2xl">🔗</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-orange-700">Reddit r/BMOPortfolio</div>
+                  <div className="text-sm text-gray-600 mt-1">Share projects and get feedback</div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://twitter.com/BMOCodes" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 rounded-lg transition-colors group"
+              >
+                <div className="text-2xl">🐦</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-blue-700">Twitter @BMOCodes</div>
+                  <div className="text-sm text-gray-600 mt-1">Follow for updates and tips</div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://youtube.com/@BMOCodes" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-red-50 hover:bg-red-100 border border-red-200 hover:border-red-300 rounded-lg transition-colors group"
+              >
+                <div className="text-2xl">📺</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-red-700">YouTube Channel</div>
+                  <div className="text-sm text-gray-600 mt-1">Coding tutorials and demos</div>
+                </div>
+              </a>
             </div>
           </div>
         );
 
       case 'contact':
         return (
-          <div className="p-2 bg-white h-full">
-            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">📒 Contact Information</h3>
-            <div className="space-y-1">
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">📧 Email Address</div>
-                <div className="text-[7px] text-gray-600 mt-1">developer@bmo-portfolio.com</div>
-              </div>
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">💼 LinkedIn Profile</div>
-                <div className="text-[7px] text-gray-600 mt-1">Connect for professional opportunities</div>
-              </div>
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">🐙 GitHub Repository</div>
-                <div className="text-[7px] text-gray-600 mt-1">View code and contribute</div>
-              </div>
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">📱 Schedule Meeting</div>
-                <div className="text-[7px] text-gray-600 mt-1">Book a 30-minute consultation</div>
-              </div>
+          <div className="p-4 bg-white h-full">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">📒 Contact Information</h3>
+            <div className="grid grid-cols-1 gap-4">
+              <a 
+                href="mailto:developer@bmo-portfolio.com"
+                className="flex items-center space-x-3 p-4 bg-green-50 hover:bg-green-100 border border-green-200 hover:border-green-300 rounded-lg transition-colors group"
+              >
+                <div className="text-2xl">📧</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-green-700">Email Address</div>
+                  <div className="text-sm text-gray-600 mt-1">developer@bmo-portfolio.com</div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://linkedin.com/in/bmo-developer" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 rounded-lg transition-colors group"
+              >
+                <div className="text-2xl">💼</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-blue-700">LinkedIn Profile</div>
+                  <div className="text-sm text-gray-600 mt-1">Connect for professional opportunities</div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://github.com/bmo-portfolio" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors group"
+              >
+                <div className="text-2xl">🐙</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-gray-700">GitHub Repository</div>
+                  <div className="text-sm text-gray-600 mt-1">View code and contribute</div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://calendly.com/bmo-developer" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-purple-50 hover:bg-purple-100 border border-purple-200 hover:border-purple-300 rounded-lg transition-colors group"
+              >
+                <div className="text-2xl">📱</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-purple-700">Schedule Meeting</div>
+                  <div className="text-sm text-gray-600 mt-1">Book a 30-minute consultation</div>
+                </div>
+              </a>
             </div>
           </div>
         );
 
       case 'tools':
         return (
-          <div className="p-2 bg-white h-full">
-            <h3 className="pixel-text text-[10px] mb-2 text-black border-b border-gray-300 pb-1">🛠 Development Toolkit</h3>
-            <div className="space-y-1">
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">⚛️ React Component Library</div>
-                <div className="text-[7px] text-gray-600 mt-1">Reusable UI components & hooks</div>
-              </div>
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">🟦 TypeScript Utilities</div>
-                <div className="text-[7px] text-gray-600 mt-1">Type definitions & helper functions</div>
-              </div>
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">🎨 Design System</div>
-                <div className="text-[7px] text-gray-600 mt-1">Color palettes & component styles</div>
-              </div>
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">🔧 VS Code Extensions</div>
-                <div className="text-[7px] text-gray-600 mt-1">Productivity tools & themes</div>
-              </div>
-              <div className="p-2 bg-gray-100 border border-gray-300 rounded text-[8px]">
-                <div className="pixel-text">📦 NPM Packages</div>
-                <div className="text-[7px] text-gray-600 mt-1">Published utilities & libraries</div>
-              </div>
+          <div className="p-4 bg-white h-full">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2">🛠 Development Toolkit</h3>
+              <button 
+                onClick={() => window.open('https://bmo-toold.netlify.app', '_blank')}
+                className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded transition-colors"
+              >
+                🔗 Visit Tools Site
+              </button>
+            </div>
+            <div className="grid grid-cols-1 gap-4">
+              <a 
+                href="https://bmo-toold.netlify.app" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors group"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="text-2xl">⚛️</div>
+                  <div>
+                    <div className="font-medium text-gray-800 text-base group-hover:text-blue-700">React Component Library</div>
+                    <div className="text-sm text-gray-600 mt-1">Reusable UI components & custom hooks for modern React applications</div>
+                    <div className="text-xs text-gray-500 mt-2">Click to explore →</div>
+                  </div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://bmo-toold.netlify.app" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors group"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="text-2xl">🟦</div>
+                  <div>
+                    <div className="font-medium text-gray-800 text-base group-hover:text-blue-700">TypeScript Utilities</div>
+                    <div className="text-sm text-gray-600 mt-1">Type definitions & helper functions for better development</div>
+                    <div className="text-xs text-gray-500 mt-2">Click to explore →</div>
+                  </div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://bmo-toold.netlify.app" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors group"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="text-2xl">🎨</div>
+                  <div>
+                    <div className="font-medium text-gray-800 text-base group-hover:text-blue-700">Design System</div>
+                    <div className="text-sm text-gray-600 mt-1">Color palettes & component styles for consistent UI</div>
+                    <div className="text-xs text-gray-500 mt-2">Click to explore →</div>
+                  </div>
+                </div>
+              </a>
+              
+              <a 
+                href="https://bmo-toold.netlify.app" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors group"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="text-2xl">📦</div>
+                  <div>
+                    <div className="font-medium text-gray-800 text-base group-hover:text-blue-700">NPM Packages</div>
+                    <div className="text-sm text-gray-600 mt-1">Published utilities & libraries for the JavaScript ecosystem</div>
+                    <div className="text-xs text-gray-500 mt-2">Click to explore →</div>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
         );
@@ -334,7 +454,15 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
           {onBack && (
             <button 
-              onClick={onBack}
+              onClick={() => {
+                // Play BMO sound when going back
+                const audio = new Audio(bmoWelcomeSound);
+                audio.volume = 0.3;
+                audio.play().catch(() => {
+                  // Handle audio play failure silently
+                });
+                onBack();
+              }}
               className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 p-1 rounded"
               data-testid="button-back-to-face"
               title="Close File Explorer"

@@ -142,14 +142,20 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
           <div className="space-y-3">
             {/* Top Row: D-Pad and Red Button with proper spacing */}
             <div className="flex justify-between items-start px-2">
-              {/* Yellow Cross D-Pad - more authentic */}
+              {/* Yellow Cross D-Pad - Games Link */}
               <div className="relative ml-2">
-                <div className="relative w-14 h-14">
+                <button
+                  onClick={() => window.open('https://bemora.vercel.app', '_blank')}
+                  className="relative w-14 h-14 transform hover:scale-105 transition-all duration-200 cursor-pointer"
+                  title="BMO Games"
+                  data-testid="button-games"
+                >
                   {/* Horizontal bar */}
-                  <div className="absolute top-1/2 left-1 w-12 h-4 bg-gradient-to-b from-yellow-300 to-yellow-500 border-2 border-yellow-600 transform -translate-y-1/2 rounded shadow-lg" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)' }}></div>
+                  <div className="absolute top-1/2 left-1 w-12 h-4 bg-gradient-to-b from-yellow-300 to-yellow-500 border-2 border-yellow-600 transform -translate-y-1/2 rounded shadow-lg hover:from-yellow-200 hover:to-yellow-400 transition-colors" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)' }}></div>
                   {/* Vertical bar */}
-                  <div className="absolute left-1/2 top-1 w-4 h-12 bg-gradient-to-r from-yellow-300 to-yellow-500 border-2 border-yellow-600 transform -translate-x-1/2 rounded shadow-lg" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)' }}></div>
-                </div>
+                  <div className="absolute left-1/2 top-1 w-4 h-12 bg-gradient-to-r from-yellow-300 to-yellow-500 border-2 border-yellow-600 transform -translate-x-1/2 rounded shadow-lg hover:from-yellow-200 hover:to-yellow-400 transition-colors" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)' }}></div>
+                </button>
+                <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 pixel-text text-xs text-black font-bold">GAMES</span>
               </div>
               
               {/* Red Start Button - more authentic */}
