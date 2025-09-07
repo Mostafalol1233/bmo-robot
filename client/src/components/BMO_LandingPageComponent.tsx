@@ -6,59 +6,10 @@ interface BMO_LandingPageComponentProps {
 }
 
 export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageComponentProps) {
-  const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [isBlinking, setIsBlinking] = useState(false);
-  const [isMouthMoving, setIsMouthMoving] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const bmoRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (bmoRef.current) {
-        const rect = bmoRef.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        const mouseX = e.clientX - centerX;
-        const mouseY = e.clientY - centerY;
-        
-        // Limit eye movement range
-        const maxMovement = 8;
-        const distance = Math.sqrt(mouseX * mouseX + mouseY * mouseY);
-        const limitedDistance = Math.min(distance, maxMovement);
-        
-        const angle = Math.atan2(mouseY, mouseX);
-        const limitedX = Math.cos(angle) * limitedDistance;
-        const limitedY = Math.sin(angle) * limitedDistance;
-        
-        setEyePosition({ x: limitedX, y: limitedY });
-      }
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => document.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Natural blinking and mouth movements
-  useEffect(() => {
-    // Random blinking
-    const blinkInterval = setInterval(() => {
-      setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 150);
-    }, 2000 + Math.random() * 3000); // Random between 2-5 seconds
-
-    // Random mouth movements
-    const mouthInterval = setInterval(() => {
-      setIsMouthMoving(true);
-      setTimeout(() => setIsMouthMoving(false), 800);
-    }, 3000 + Math.random() * 4000); // Random between 3-7 seconds
-
-    return () => {
-      clearInterval(blinkInterval);
-      clearInterval(mouthInterval);
-    };
-  }, []);
 
   // Play welcome sound when component mounts (website opens)
   useEffect(() => {
@@ -98,40 +49,12 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
         {/* BMO Body - More rectangular and authentic */}
         <div className="bg-gradient-to-br from-cyan-400 via-cyan-450 to-cyan-500 rounded-xl border-4 border-cyan-700 shadow-2xl relative p-6" style={{ aspectRatio: '0.65', width: '320px' }}>
           
-          {/* BMO Screen - White screen with animated face */}
+          {/* BMO Screen - Empty white screen ready for file system */}
           <div className="bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center" style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)' }}>
-            {/* BMO Animated Face */}
-            <div className="relative z-10 animate-bounce" style={{ imageRendering: 'pixelated', animationDuration: '3s' }}>
-              {/* Eyes - Black circles that follow mouse */}
-              <div className="flex space-x-12 mb-6">
-                <div className="relative">
-                  <div className={`w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out ${isBlinking ? 'animate-blink' : ''}`}
-                    style={{
-                      transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
-                      imageRendering: 'pixelated'
-                    }}
-                    data-testid="bmo-left-eye"
-                  ></div>
-                </div>
-                <div className="relative">
-                  <div className={`w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out ${isBlinking ? 'animate-blink' : ''}`}
-                    style={{
-                      transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
-                      imageRendering: 'pixelated'
-                    }}
-                    data-testid="bmo-right-eye"
-                  ></div>
-                </div>
-              </div>
-              
-              {/* BMO Smile with movement */}
-              <div className="relative w-16 h-6 mx-auto">
-                <div className={`absolute bottom-0 left-2 w-12 h-3 border-b-4 border-l-2 border-r-2 border-black rounded-b-full transition-transform duration-200 ${isMouthMoving ? 'animate-pulse' : ''}`} 
-                     style={{ 
-                       imageRendering: 'pixelated',
-                       transform: isMouthMoving ? 'scaleX(1.1) scaleY(0.9)' : 'scaleX(1) scaleY(1)'
-                     }}></div>
-              </div>
+            {/* Empty screen ready for interaction */}
+            <div className="relative z-10 flex flex-col items-center justify-center text-gray-400">
+              <div className="text-4xl mb-2">💻</div>
+              <div className="pixel-text text-xs">اضغط START</div>
             </div>
             
             {/* Screen reflection effect */}
