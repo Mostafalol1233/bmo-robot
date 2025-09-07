@@ -7,7 +7,7 @@ interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
 
-type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images';
+type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character';
 
 interface FolderItem {
   name: string;
@@ -20,6 +20,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [showFace, setShowFace] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('explorer');
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
+  const [selectedCharacter, setSelectedCharacter] = useState<string>('');
   const [chatMessages, setChatMessages] = useState([
     { id: 1, sender: 'bmo', text: "Hi! I'm BMO! Ask me anything about my creator's work!" }
   ]);
@@ -67,6 +68,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const handleFolderClick = (folder: FolderItem) => {
     setCurrentView(folder.type);
     setCurrentPath(`C:\\Portfolio\\${folder.name}\\`);
+  };
+
+  const handleCharacterClick = (characterName: string) => {
+    setSelectedCharacter(characterName);
+    setCurrentView('character');
+    setCurrentPath(`C:\\Portfolio\\Images\\${characterName}\\`);
   };
 
   const handleBackClick = () => {
@@ -197,70 +204,65 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             {/* Files Grid - Adventure Time Characters using real cropped images */}
             <div className="grid grid-cols-6 gap-4">
               {/* Finn File */}
-              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+              <button 
+                onClick={() => handleCharacterClick('Finn')}
+                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+              >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
-                    <img 
-                      src="/attached_assets/generated_images/Finn_character_icon_crop_db38cbd0.png" 
-                      alt="Finn" 
-                      className="w-full h-full object-cover rounded-lg"
-                    />
+                  <div className="w-16 h-16 bg-blue-300 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
+                    <div className="text-white font-bold text-xs">🧢</div>
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">Finn</span>
               </button>
 
               {/* Jake File */}
-              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+              <button 
+                onClick={() => handleCharacterClick('Jake')}
+                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+              >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
-                    <img 
-                      src="/attached_assets/generated_images/Jake_character_icon_crop_331d1026.png" 
-                      alt="Jake" 
-                      className="w-full h-full object-cover rounded-lg"
-                    />
+                  <div className="w-16 h-16 bg-orange-400 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
+                    <div className="text-white font-bold text-xs">🐶</div>
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">Jake</span>
               </button>
 
               {/* Princess Bubblegum File */}
-              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+              <button 
+                onClick={() => handleCharacterClick('Princess Bubblegum')}
+                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+              >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
-                    <img 
-                      src="/attached_assets/generated_images/Princess_Bubblegum_icon_crop_ab2edfbb.png" 
-                      alt="Princess Bubblegum" 
-                      className="w-full h-full object-cover rounded-lg"
-                    />
+                  <div className="w-16 h-16 bg-pink-400 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
+                    <div className="text-white font-bold text-xs">👑</div>
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">P.Gum</span>
               </button>
 
               {/* Marceline File */}
-              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+              <button 
+                onClick={() => handleCharacterClick('Marceline')}
+                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+              >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
-                    <img 
-                      src="/attached_assets/generated_images/Marceline_character_icon_crop_2afa88e8.png" 
-                      alt="Marceline" 
-                      className="w-full h-full object-cover rounded-lg"
-                    />
+                  <div className="w-16 h-16 bg-gray-700 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
+                    <div className="text-white font-bold text-xs">🧛‍♀️</div>
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">Marcy</span>
               </button>
 
               {/* BMO File */}
-              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+              <button 
+                onClick={() => handleCharacterClick('BMO')}
+                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+              >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
-                    <img 
-                      src="/attached_assets/generated_images/BMO_character_icon_crop_f83ac667.png" 
-                      alt="BMO" 
-                      className="w-full h-full object-cover rounded-lg"
-                    />
+                  <div className="w-16 h-16 bg-cyan-400 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
+                    <div className="text-white font-bold text-xs">🤖</div>
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">BMO</span>
@@ -279,6 +281,48 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
             <div className="mt-6 text-center text-sm text-gray-500">
               🎭 Adventure Time Characters from your images
+            </div>
+          </div>
+        );
+
+      case 'character':
+        return (
+          <div className="p-4 h-full bg-white">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2">📁 {selectedCharacter} Files</h3>
+              <button 
+                onClick={() => {
+                  setCurrentView('images');
+                  setCurrentPath('C:\\Portfolio\\Images\\');
+                }}
+                className="text-blue-500 hover:text-blue-700 text-sm font-medium"
+              >
+                ← Back to Gallery
+              </button>
+            </div>
+            
+            {/* Character File Upload Area */}
+            <div className="grid grid-cols-4 gap-4">
+              {/* Photo placeholder slots */}
+              {Array.from({length: 8}).map((_, index) => (
+                <div key={index} className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors p-4">
+                  <div className="text-center text-gray-400">
+                    <div className="text-3xl mb-2">📷</div>
+                    <div className="text-xs font-medium">{selectedCharacter} Photo {index + 1}</div>
+                    <div className="text-xs text-gray-500 mt-1">Drop or upload image</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="text-sm text-blue-800">
+                <div className="font-medium mb-2">📤 Upload {selectedCharacter} Photos</div>
+                <div className="text-xs text-blue-600">
+                  Click on any slot above or drag and drop images to add photos of {selectedCharacter}. 
+                  Supported formats: JPG, PNG, GIF
+                </div>
+              </div>
             </div>
           </div>
         );
