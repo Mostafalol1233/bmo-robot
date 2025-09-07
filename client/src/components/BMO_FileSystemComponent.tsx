@@ -1,107 +1,257 @@
 import { useState } from 'react';
+import ReactPlayer from 'react-player';
 
 interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
 
-interface FileItem {
-  name: string;
-  icon: string;
-  type: 'folder';
-  action: 'external' | 'modal' | 'chat';
-  url?: string;
-}
+type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools';
 
-interface ModalState {
-  communities: boolean;
-  videos: boolean;
-  contact: boolean;
-  chat: boolean;
+interface FolderItem {
+  name: string;
+  emoji: string;
+  type: ViewType;
+  description: string;
 }
 
 export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemComponentProps) {
-  const [modals, setModals] = useState<ModalState>({
-    communities: false,
-    videos: false,
-    contact: false,
-    chat: false,
-  });
+  const [currentView, setCurrentView] = useState<ViewType>('explorer');
+  const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
+  const [chatMessages, setChatMessages] = useState([
+    { id: 1, sender: 'bmo', text: "Hi! I'm BMO! Ask me anything about my creator's work!" }
+  ]);
+  const [chatInput, setChatInput] = useState('');
 
-  const files: FileItem[] = [
+  const folders: FolderItem[] = [
     {
       name: 'Communities',
-      icon: 'fas fa-users',
-      type: 'folder',
-      action: 'modal'
+      emoji: '👥',
+      type: 'communities',
+      description: 'Social links and communities'
     },
     {
       name: 'Videos',
-      icon: 'fas fa-play',
-      type: 'folder', 
-      action: 'modal'
+      emoji: '🎬',
+      type: 'videos',
+      description: 'Project demos and tutorials'
     },
     {
       name: 'Contact Me',
-      icon: 'fas fa-address-book',
-      type: 'folder',
-      action: 'modal'
+      emoji: '📒',
+      type: 'contact',
+      description: 'Get in touch'
     },
     {
       name: 'My Tools',
-      icon: 'fas fa-wrench',
-      type: 'folder',
-      action: 'external',
-      url: 'https://github.com'
+      emoji: '🛠',
+      type: 'tools',
+      description: 'Development tools and resources'
     },
     {
       name: 'AI Talk',
-      icon: 'fas fa-comment-dots',
-      type: 'folder',
-      action: 'chat'
+      emoji: '💬',
+      type: 'chat',
+      description: 'Chat with BMO AI'
     }
   ];
 
-  const openModal = (modalName: keyof ModalState) => {
-    setModals(prev => ({ ...prev, [modalName]: true }));
+  const handleFolderClick = (folder: FolderItem) => {
+    setCurrentView(folder.type);
+    setCurrentPath(`C:\\Portfolio\\${folder.name}\\`);
   };
 
-  const closeModal = (modalName: keyof ModalState) => {
-    setModals(prev => ({ ...prev, [modalName]: false }));
+  const handleBackClick = () => {
+    setCurrentView('explorer');
+    setCurrentPath('C:\\Portfolio\\');
   };
 
-  const handleFileClick = (file: FileItem) => {
-    switch (file.action) {
-      case 'external':
-        if (file.url) {
-          window.open(file.url, '_blank');
-        }
-        break;
-      case 'modal':
-        if (file.name === 'Communities') openModal('communities');
-        else if (file.name === 'Videos') openModal('videos');
-        else if (file.name === 'Contact Me') openModal('contact');
-        break;
+  const handleSendMessage = () => {
+    if (!chatInput.trim()) return;
+    
+    const userMessage = { id: Date.now(), sender: 'user', text: chatInput };
+    setChatMessages(prev => [...prev, userMessage]);
+    
+    // Simple AI response simulation
+    setTimeout(() => {
+      const responses = [
+        "That's interesting! Tell me more about what you'd like to know!",
+        "I'm here to help! BMO knows lots about coding and creativity!",
+        "Mathematical! I love helping with questions about development!",
+        "Beep boop! Processing your request... just kidding, I'm ready to help!"
+      ];
+      const aiResponse = { 
+        id: Date.now() + 1, 
+        sender: 'bmo', 
+        text: responses[Math.floor(Math.random() * responses.length)]
+      };
+      setChatMessages(prev => [...prev, aiResponse]);
+    }, 1000);
+    
+    setChatInput('');
+  };
+
+  const renderExplorerView = () => (
+    <div className="h-full">
+      {/* Folder Icons Grid */}
+      <div className="p-4 grid grid-cols-2 gap-4 h-full">
+        {folders.map((folder, index) => (
+          <button
+            key={folder.name}
+            onClick={() => handleFolderClick(folder)}
+            className="flex flex-col items-center justify-center p-2 hover:bg-blue-100 rounded transition-colors animate-slideIn"
+            style={{ animationDelay: `${index * 0.1}s` }}
+            data-testid={`folder-${folder.name.toLowerCase().replace(/\s+/g, '-')}`}
+          >
+            <div className="text-2xl mb-1" style={{ imageRendering: 'pixelated' }}>
+              {folder.emoji}
+            </div>
+            <span className="pixel-text text-xs text-center text-black leading-tight">
+              {folder.name}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const renderContentView = () => {
+    switch (currentView) {
+      case 'videos':
+        return (
+          <div className="p-3 h-full flex flex-col">
+            <h3 className="pixel-text text-sm mb-3 text-black">Video Gallery</h3>
+            <div className="flex-1 bg-black rounded flex items-center justify-center">
+              <div className="text-white text-center p-4">
+                <div className="text-2xl mb-2">🎬</div>
+                <div className="pixel-text text-xs">Video Player</div>
+                <div className="text-xs mt-1">Click to play demo</div>
+              </div>
+            </div>
+            <div className="mt-2 space-y-1">
+              <div className="bg-gray-200 p-2 rounded text-xs">
+                <span className="pixel-text">Demo Reel.mp4</span>
+              </div>
+              <div className="bg-gray-200 p-2 rounded text-xs">
+                <span className="pixel-text">Tutorial_01.mp4</span>
+              </div>
+            </div>
+          </div>
+        );
+
       case 'chat':
-        openModal('chat');
-        break;
+        return (
+          <div className="p-2 h-full flex flex-col">
+            <div className="flex-1 overflow-y-auto mb-2 space-y-2 bg-gray-100 p-2 rounded">
+              {chatMessages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`p-2 rounded text-xs max-w-[80%] ${
+                    message.sender === 'user'
+                      ? 'bg-blue-200 ml-auto text-right'
+                      : 'bg-green-200'
+                  }`}
+                >
+                  <div className="pixel-text">{message.text}</div>
+                </div>
+              ))}
+            </div>
+            <div className="flex space-x-1">
+              <input
+                type="text"
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                placeholder="Type message..."
+                className="flex-1 text-xs p-1 border rounded pixel-text"
+                data-testid="chat-input"
+              />
+              <button
+                onClick={handleSendMessage}
+                className="px-2 py-1 bg-blue-500 text-white rounded text-xs pixel-text"
+                data-testid="chat-send"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        );
+
+      case 'communities':
+        return (
+          <div className="p-3 space-y-2">
+            <h3 className="pixel-text text-sm mb-2 text-black">Communities</h3>
+            <div className="space-y-1">
+              <button className="w-full text-left p-2 bg-gray-200 rounded text-xs hover:bg-gray-300 transition-colors">
+                <span className="pixel-text">🔗 Discord Server</span>
+              </button>
+              <button className="w-full text-left p-2 bg-gray-200 rounded text-xs hover:bg-gray-300 transition-colors">
+                <span className="pixel-text">🔗 Reddit Community</span>
+              </button>
+              <button className="w-full text-left p-2 bg-gray-200 rounded text-xs hover:bg-gray-300 transition-colors">
+                <span className="pixel-text">🔗 Twitter Updates</span>
+              </button>
+            </div>
+          </div>
+        );
+
+      case 'contact':
+        return (
+          <div className="p-3 space-y-2">
+            <h3 className="pixel-text text-sm mb-2 text-black">Contact Info</h3>
+            <div className="space-y-1">
+              <div className="p-2 bg-gray-200 rounded text-xs">
+                <span className="pixel-text">📧 hello@example.com</span>
+              </div>
+              <div className="p-2 bg-gray-200 rounded text-xs">
+                <span className="pixel-text">💼 LinkedIn Profile</span>
+              </div>
+              <div className="p-2 bg-gray-200 rounded text-xs">
+                <span className="pixel-text">🐙 GitHub Profile</span>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'tools':
+        return (
+          <div className="p-3 space-y-2">
+            <h3 className="pixel-text text-sm mb-2 text-black">Development Tools</h3>
+            <div className="space-y-1">
+              <div className="p-2 bg-gray-200 rounded text-xs">
+                <span className="pixel-text">⚛️ React Projects</span>
+              </div>
+              <div className="p-2 bg-gray-200 rounded text-xs">
+                <span className="pixel-text">🟦 TypeScript Utils</span>
+              </div>
+              <div className="p-2 bg-gray-200 rounded text-xs">
+                <span className="pixel-text">🎨 Design Systems</span>
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return renderExplorerView();
     }
   };
 
   return (
-    <>
       <div 
-        className="w-full h-full bg-gradient-to-br from-gray-100 via-gray-50 to-white p-2 animate-slideIn font-mono text-black"
+        className="w-full h-full bg-gray-200 text-black animate-slideIn"
         style={{ imageRendering: 'pixelated', fontSize: '10px' }}
         data-testid="bmo-filesystem"
       >
-        {/* Terminal-style File System Header */}
-        <div className="bg-gray-800 text-green-400 p-1 mb-2 rounded-sm" style={{ fontFamily: 'monospace' }}>
-          <div className="flex items-center justify-between">
-            <span className="text-xs">BMO:/home/user$</span>
+        {/* Windows Explorer Top Menu */}
+        <div className="bg-gray-300 border-b border-gray-400 px-2 py-1">
+          <div className="flex space-x-4 text-xs pixel-text">
+            <span className="hover:bg-gray-400 px-1 cursor-pointer">File</span>
+            <span className="hover:bg-gray-400 px-1 cursor-pointer">Edit</span>
+            <span className="hover:bg-gray-400 px-1 cursor-pointer">View</span>
+            <span className="hover:bg-gray-400 px-1 cursor-pointer">Help</span>
             {onBack && (
               <button 
                 onClick={onBack}
-                className="text-red-400 hover:text-red-300 transition-colors text-xs"
+                className="ml-auto text-red-600 hover:text-red-800 transition-colors"
                 data-testid="button-back-to-face"
               >
                 [X]
@@ -110,286 +260,35 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
         </div>
 
-        {/* Directory Listing - Computer-like */}
-        <div className="bg-white border border-gray-300 p-2 h-full overflow-auto" style={{ fontFamily: 'monospace', fontSize: '9px' }}>
-          {/* Header */}
-          <div className="bg-gray-100 border-b border-gray-300 p-1 mb-1 text-xs grid grid-cols-3 gap-2 font-bold">
-            <span>Name</span>
-            <span>Type</span>
-            <span>Size</span>
+        {/* Navigation Bar */}
+        <div className="bg-gray-100 border-b border-gray-400 px-2 py-1 flex items-center space-x-2">
+          <button
+            onClick={handleBackClick}
+            disabled={currentView === 'explorer'}
+            className={`text-xs px-2 py-1 border rounded ${
+              currentView === 'explorer' 
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                : 'bg-white hover:bg-gray-50 cursor-pointer'
+            }`}
+            data-testid="nav-back"
+          >
+            ← Back
+          </button>
+          <button
+            disabled
+            className="text-xs px-2 py-1 border rounded bg-gray-200 text-gray-400 cursor-not-allowed"
+          >
+            → Forward
+          </button>
+          <div className="flex-1 bg-white border border-gray-400 px-2 py-1 text-xs pixel-text">
+            {currentPath}
           </div>
-          
-          {/* File Listings */}
-          <div className="space-y-1">
-            {files.map((file, index) => (
-              <button
-                key={file.name}
-                onClick={() => handleFileClick(file)}
-                className="w-full text-left hover:bg-blue-100 p-1 rounded transition-colors grid grid-cols-3 gap-2 text-xs border border-transparent hover:border-blue-300 animate-slideIn"
-                style={{ animationDelay: `${index * 0.05}s`, fontFamily: 'monospace' }}
-                data-testid={`file-${file.name.toLowerCase().replace(/\s+/g, '-')}`}
-              >
-                {/* File Name with Icon */}
-                <div className="flex items-center space-x-1 truncate">
-                  <span className="text-blue-600">
-                    {file.name === 'Communities' && '📁'}
-                    {file.name === 'Videos' && '🎥'}
-                    {file.name === 'Contact Me' && '📞'}
-                    {file.name === 'My Tools' && '🔧'}
-                    {file.name === 'AI Talk' && '🤖'}
-                  </span>
-                  <span className="truncate text-black">{file.name}</span>
-                </div>
-                
-                {/* File Type */}
-                <span className="text-gray-600 text-xs">
-                  {file.name === 'My Tools' ? 'Link' : 'Folder'}
-                </span>
-                
-                {/* File Size */}
-                <span className="text-gray-500 text-xs">
-                  {file.name === 'Videos' ? '2.1 GB' : 
-                   file.name === 'Communities' ? '4.2 KB' :
-                   file.name === 'Contact Me' ? '1.8 KB' :
-                   file.name === 'My Tools' ? '512 B' :
-                   file.name === 'AI Talk' ? '16.5 MB' : '--'}
-                </span>
-              </button>
-            ))}
-          </div>
-          
-          {/* Directory Info */}
-          <div className="mt-4 pt-2 border-t border-gray-200 text-xs text-gray-500">
-            <div className="grid grid-cols-2">
-              <span>{files.length} items</span>
-              <span className="text-right">Free: 8.7 GB</span>
-            </div>
-          </div>
+        </div>
+
+        {/* Main Content Area */}
+        <div className="flex-1 h-full overflow-hidden">
+          {renderContentView()}
         </div>
       </div>
-
-      {/* Communities Modal */}
-      {modals.communities && (
-        <div 
-          className="fixed inset-0 bg-background/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-slideIn"
-          onClick={(e) => e.target === e.currentTarget && closeModal('communities')}
-          data-testid="modal-communities"
-        >
-          <div className="bg-card border border-primary/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-primary/20">
-              <h2 className="pixel-text text-sm text-foreground">Communities</h2>
-              <button 
-                onClick={() => closeModal('communities')}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                data-testid="button-close-communities"
-              >
-                <i className="fas fa-times"></i>
-              </button>
-            </div>
-            <div className="space-y-3">
-              <a 
-                href="https://discord.gg/community" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 p-3 bg-muted/20 rounded-lg hover:bg-primary/10 transition-colors group"
-                data-testid="link-discord"
-              >
-                <i className="fab fa-discord text-primary text-xl group-hover:text-accent transition-colors"></i>
-                <div>
-                  <p className="pixel-text text-xs text-foreground">Discord Server</p>
-                  <p className="text-xs text-muted-foreground">Join our community chat</p>
-                </div>
-              </a>
-              <a 
-                href="https://reddit.com/r/programming" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 p-3 bg-muted/20 rounded-lg hover:bg-primary/10 transition-colors group"
-                data-testid="link-reddit"
-              >
-                <i className="fab fa-reddit text-primary text-xl group-hover:text-accent transition-colors"></i>
-                <div>
-                  <p className="pixel-text text-xs text-foreground">Reddit Community</p>
-                  <p className="text-xs text-muted-foreground">Development discussions</p>
-                </div>
-              </a>
-              <a 
-                href="https://twitter.com/developer" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 p-3 bg-muted/20 rounded-lg hover:bg-primary/10 transition-colors group"
-                data-testid="link-twitter"
-              >
-                <i className="fab fa-twitter text-primary text-xl group-hover:text-accent transition-colors"></i>
-                <div>
-                  <p className="pixel-text text-xs text-foreground">Twitter Updates</p>
-                  <p className="text-xs text-muted-foreground">Follow for latest news</p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Videos Modal */}
-      {modals.videos && (
-        <div 
-          className="fixed inset-0 bg-background/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-slideIn"
-          onClick={(e) => e.target === e.currentTarget && closeModal('videos')}
-          data-testid="modal-videos"
-        >
-          <div className="bg-card border border-primary/30 rounded-2xl p-6 max-w-lg w-full shadow-2xl">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-primary/20">
-              <h2 className="pixel-text text-sm text-foreground">Videos</h2>
-              <button 
-                onClick={() => closeModal('videos')}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                data-testid="button-close-videos"
-              >
-                <i className="fas fa-times"></i>
-              </button>
-            </div>
-            <div className="space-y-4">
-              {/* Video Player Placeholder */}
-              <div className="bg-muted/20 rounded-lg p-8 text-center border border-primary/20">
-                <i className="fas fa-play-circle text-4xl text-primary mb-4"></i>
-                <p className="pixel-text text-xs text-foreground mb-2">Demo Reel</p>
-                <p className="text-xs text-muted-foreground mb-4">Showcase of recent projects</p>
-                <button 
-                  className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors pixel-text text-xs"
-                  data-testid="button-play-demo"
-                >
-                  PLAY
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-muted/10 rounded-lg p-3 text-center hover:bg-primary/10 transition-colors cursor-pointer" data-testid="video-tutorial-1">
-                  <i className="fas fa-video text-accent text-lg mb-2"></i>
-                  <p className="pixel-text text-xs text-foreground">Tutorial #1</p>
-                </div>
-                <div className="bg-muted/10 rounded-lg p-3 text-center hover:bg-primary/10 transition-colors cursor-pointer" data-testid="video-tutorial-2">
-                  <i className="fas fa-video text-accent text-lg mb-2"></i>
-                  <p className="pixel-text text-xs text-foreground">Tutorial #2</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Contact Modal */}
-      {modals.contact && (
-        <div 
-          className="fixed inset-0 bg-background/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-slideIn"
-          onClick={(e) => e.target === e.currentTarget && closeModal('contact')}
-          data-testid="modal-contact"
-        >
-          <div className="bg-card border border-primary/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-primary/20">
-              <h2 className="pixel-text text-sm text-foreground">Contact Me</h2>
-              <button 
-                onClick={() => closeModal('contact')}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                data-testid="button-close-contact"
-              >
-                <i className="fas fa-times"></i>
-              </button>
-            </div>
-            <div className="space-y-3">
-              <a 
-                href="mailto:hello@example.com" 
-                className="flex items-center space-x-3 p-3 bg-muted/20 rounded-lg hover:bg-primary/10 transition-colors group"
-                data-testid="link-email-contact"
-              >
-                <i className="fas fa-envelope text-accent text-xl group-hover:text-primary transition-colors"></i>
-                <div>
-                  <p className="pixel-text text-xs text-foreground">Email</p>
-                  <p className="text-xs text-muted-foreground">hello@example.com</p>
-                </div>
-              </a>
-              <a 
-                href="https://linkedin.com/in/profile" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 p-3 bg-muted/20 rounded-lg hover:bg-primary/10 transition-colors group"
-                data-testid="link-linkedin-contact"
-              >
-                <i className="fab fa-linkedin text-accent text-xl group-hover:text-primary transition-colors"></i>
-                <div>
-                  <p className="pixel-text text-xs text-foreground">LinkedIn</p>
-                  <p className="text-xs text-muted-foreground">Professional profile</p>
-                </div>
-              </a>
-              <a 
-                href="https://github.com/username" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 p-3 bg-muted/20 rounded-lg hover:bg-primary/10 transition-colors group"
-                data-testid="link-github-contact"
-              >
-                <i className="fab fa-github text-accent text-xl group-hover:text-primary transition-colors"></i>
-                <div>
-                  <p className="pixel-text text-xs text-foreground">GitHub</p>
-                  <p className="text-xs text-muted-foreground">Code repositories</p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* AI Chat Modal */}
-      {modals.chat && (
-        <div 
-          className="fixed inset-0 bg-background/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-slideIn"
-          onClick={(e) => e.target === e.currentTarget && closeModal('chat')}
-          data-testid="modal-ai-chat"
-        >
-          <div className="bg-card border border-primary/30 rounded-2xl p-6 max-w-md w-full max-h-96 flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-primary/20">
-              <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
-                  <span className="pixel-text text-xs text-primary-foreground">AI</span>
-                </div>
-                <h2 className="pixel-text text-sm text-foreground">AI Talk</h2>
-              </div>
-              <button 
-                onClick={() => closeModal('chat')}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                data-testid="button-close-ai-chat"
-              >
-                <i className="fas fa-times"></i>
-              </button>
-            </div>
-            
-            <div className="flex-1 overflow-y-auto mb-4 space-y-3 custom-scrollbar" data-testid="ai-chat-messages">
-              <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 bg-primary rounded flex items-center justify-center flex-shrink-0">
-                  <span className="pixel-text text-xs text-primary-foreground">AI</span>
-                </div>
-                <div className="bg-muted/20 rounded-lg p-3 flex-1">
-                  <p className="text-sm text-foreground">Hi! I'm BMO's AI assistant. How can I help you today?</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex space-x-3">
-              <input 
-                type="text" 
-                placeholder="Type your message..." 
-                className="flex-1 bg-muted/20 border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                data-testid="input-ai-message"
-              />
-              <button 
-                className="bg-primary text-primary-foreground rounded-lg px-4 py-2 hover:bg-primary/90 transition-colors"
-                data-testid="button-send-ai-message"
-              >
-                <i className="fas fa-paper-plane text-sm"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
   );
 }
