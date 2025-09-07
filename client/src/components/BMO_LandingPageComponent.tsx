@@ -76,33 +76,35 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
         {/* BMO Body - More rectangular and authentic */}
         <div className="bg-gradient-to-br from-cyan-400 via-cyan-450 to-cyan-500 rounded-xl border-4 border-cyan-700 shadow-2xl relative p-6" style={{ aspectRatio: '0.65', width: '320px' }}>
           
-          {/* BMO Screen - More realistic with darker frame */}
-          <div className="bg-gradient-to-br from-gray-200 via-gray-100 to-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center" style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)' }}>
-            {/* BMO Pixel Face */}
-            <div className="relative z-10" style={{ imageRendering: 'pixelated' }}>
-              {/* Eyes - Pixel style squares that follow mouse */}
-              <div className="flex space-x-10 mb-4">
-                <div 
-                  className="w-2 h-2 bg-black transition-transform duration-100 ease-out"
-                  style={{
-                    transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
-                    imageRendering: 'pixelated'
-                  }}
-                  data-testid="bmo-left-eye"
-                ></div>
-                <div 
-                  className="w-2 h-2 bg-black transition-transform duration-100 ease-out"
-                  style={{
-                    transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
-                    imageRendering: 'pixelated'
-                  }}
-                  data-testid="bmo-right-eye"
-                ></div>
+          {/* BMO Screen - White screen with animated face */}
+          <div className="bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center" style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)' }}>
+            {/* BMO Animated Face */}
+            <div className="relative z-10 animate-bounce" style={{ imageRendering: 'pixelated', animationDuration: '3s' }}>
+              {/* Eyes - Black circles that follow mouse */}
+              <div className="flex space-x-12 mb-6">
+                <div className="relative">
+                  <div className="w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out"
+                    style={{
+                      transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
+                      imageRendering: 'pixelated'
+                    }}
+                    data-testid="bmo-left-eye"
+                  ></div>
+                </div>
+                <div className="relative">
+                  <div className="w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out"
+                    style={{
+                      transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
+                      imageRendering: 'pixelated'
+                    }}
+                    data-testid="bmo-right-eye"
+                  ></div>
+                </div>
               </div>
               
-              {/* BMO Smile - More authentic curved smile */}
-              <div className="relative w-12 h-4 mx-auto">
-                <div className="absolute bottom-0 left-2 w-8 h-2 border-b-2 border-l-2 border-r-2 border-black rounded-b-full" style={{ imageRendering: 'pixelated' }}></div>
+              {/* BMO Smile */}
+              <div className="relative w-16 h-6 mx-auto">
+                <div className="absolute bottom-0 left-2 w-12 h-3 border-b-4 border-l-2 border-r-2 border-black rounded-b-full" style={{ imageRendering: 'pixelated' }}></div>
               </div>
             </div>
             
@@ -165,18 +167,6 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
           <div className="w-2 h-16 bg-black rounded-full shadow-md"></div>
         </div>
         
-        {/* Speaker Holes - More authentic pattern */}
-        <div className="absolute right-6 top-1/4 grid grid-cols-3 gap-1">
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-          <div className="w-1.5 h-1.5 bg-cyan-800 rounded-full shadow-inner"></div>
-        </div>
       </div>
       
     </div>
