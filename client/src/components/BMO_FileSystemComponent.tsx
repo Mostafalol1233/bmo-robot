@@ -194,33 +194,17 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           <div className="p-4 h-full bg-white">
             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Character Gallery</h3>
             
-            {/* Files Grid - Adventure Time Style */}
+            {/* Files Grid - Adventure Time Characters using real cropped images */}
             <div className="grid grid-cols-6 gap-4">
-              {/* BMO File */}
-              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
-                <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg relative overflow-hidden shadow-sm border border-cyan-700">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-white font-bold text-xs">BMO</div>
-                    </div>
-                    <div className="absolute top-1 left-1 w-2 h-1 bg-black rounded-full"></div>
-                    <div className="absolute top-1 right-1 w-2 h-1 bg-black rounded-full"></div>
-                    <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-1 border border-black rounded-b-full"></div>
-                  </div>
-                </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">BMO</span>
-              </button>
-
               {/* Finn File */}
               <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-300 to-blue-500 rounded-lg relative overflow-hidden shadow-sm border border-blue-600">
-                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-pink-200 rounded-full"></div>
-                    <div className="absolute top-3 left-6 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute top-3 right-6 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-6 bg-white rounded-t-full"></div>
-                    <div className="absolute top-1 left-4 w-3 h-6 bg-white rounded-t-full"></div>
-                    <div className="absolute top-1 right-4 w-3 h-6 bg-white rounded-t-full"></div>
+                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src="/attached_assets/generated_images/Finn_character_icon_crop_db38cbd0.png" 
+                      alt="Finn" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">Finn</span>
@@ -229,12 +213,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               {/* Jake File */}
               <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg relative overflow-hidden shadow-sm border border-orange-700">
-                    <div className="absolute top-2 left-2 w-3 h-3 bg-black rounded-full"></div>
-                    <div className="absolute top-2 right-2 w-3 h-3 bg-black rounded-full"></div>
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-4 h-2 bg-black rounded-full"></div>
-                    <div className="absolute top-1 left-1 w-4 h-4 bg-orange-300 rounded-full"></div>
-                    <div className="absolute top-1 right-1 w-4 h-4 bg-orange-300 rounded-full"></div>
+                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src="/attached_assets/generated_images/Jake_character_icon_crop_331d1026.png" 
+                      alt="Jake" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">Jake</span>
@@ -243,12 +227,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               {/* Princess Bubblegum File */}
               <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-lg relative overflow-hidden shadow-sm border border-pink-700">
-                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-pink-300 rounded-t-full"></div>
-                    <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-8 h-6 bg-pink-200 rounded-full"></div>
-                    <div className="absolute top-4 left-5 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute top-4 right-5 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-3 h-1 bg-black rounded-full"></div>
+                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src="/attached_assets/generated_images/Princess_Bubblegum_icon_crop_ab2edfbb.png" 
+                      alt="Princess Bubblegum" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">P.Gum</span>
@@ -257,63 +241,44 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               {/* Marceline File */}
               <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg relative overflow-hidden shadow-sm border border-gray-800">
-                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-300 rounded-full"></div>
-                    <div className="absolute top-3 left-5 w-1 h-1 bg-red-500 rounded-full"></div>
-                    <div className="absolute top-3 right-5 w-1 h-1 bg-red-500 rounded-full"></div>
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-2 h-1 bg-red-600"></div>
-                    <div className="absolute top-1 left-2 w-8 h-4 bg-black rounded-b-full"></div>
+                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src="/attached_assets/generated_images/Marceline_character_icon_crop_2afa88e8.png" 
+                      alt="Marceline" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
                 </div>
                 <span className="text-sm text-center text-gray-800 leading-tight font-medium">Marcy</span>
               </button>
 
-              {/* Ice King File */}
+              {/* BMO File */}
               <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-200 to-blue-400 rounded-lg relative overflow-hidden shadow-sm border border-blue-500">
-                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-yellow-300 rounded-t-lg"></div>
-                    <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-8 h-6 bg-blue-100 rounded-full"></div>
-                    <div className="absolute top-4 left-5 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute top-4 right-5 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-2 bg-white"></div>
+                  <div className="w-16 h-16 bg-white rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src="/attached_assets/generated_images/BMO_character_icon_crop_f83ac667.png" 
+                      alt="BMO" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
                 </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Ice King</span>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">BMO</span>
               </button>
 
-              {/* LSP File */}
+              {/* Placeholder for more characters */}
               <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-500 rounded-lg relative overflow-hidden shadow-sm border border-purple-600">
-                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-10 h-8 bg-purple-200 rounded-full"></div>
-                    <div className="absolute top-3 left-4 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute top-3 right-4 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-4 h-1 bg-black rounded-full"></div>
-                    <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-2 bg-purple-300 rounded-b-full"></div>
+                  <div className="w-16 h-16 bg-gray-100 rounded-lg relative overflow-hidden shadow-sm border-2 border-dashed border-gray-300 flex items-center justify-center">
+                    <div className="text-gray-400 text-2xl">📷</div>
                   </div>
                 </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">LSP</span>
-              </button>
-
-              {/* Tree Trunks File */}
-              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
-                <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg relative overflow-hidden shadow-sm border border-yellow-600">
-                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-yellow-200 rounded-full"></div>
-                    <div className="absolute top-3 left-4 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute top-3 right-4 w-2 h-2 bg-black rounded-full"></div>
-                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-4 h-2 bg-black rounded-full"></div>
-                    <div className="absolute top-1 left-2 w-3 h-3 bg-yellow-400 rounded-full"></div>
-                    <div className="absolute top-1 right-2 w-3 h-3 bg-yellow-400 rounded-full"></div>
-                  </div>
-                </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Tree</span>
+                <span className="text-sm text-center text-gray-500 leading-tight font-medium">More...</span>
               </button>
             </div>
 
             <div className="mt-6 text-center text-sm text-gray-500">
-              🎭 Adventure Time Characters Collection
+              🎭 Adventure Time Characters from your images
             </div>
           </div>
         );
