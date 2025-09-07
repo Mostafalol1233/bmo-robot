@@ -173,6 +173,28 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
+@keyframes fadeInUp {
+  from { 
+    transform: translateY(10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes windowsExplorerOpen {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes zoomIn {
   from { 
     transform: scale(1);
@@ -198,6 +220,42 @@
 
 .animate-zoomIn {
   animation: zoomIn 0.8s ease-out;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.animate-windowsExplorer {
+  animation: windowsExplorerOpen 0.3s ease-out;
+}
+
+/* Windows Explorer specific styles */
+.windows-button {
+  background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+  border: 1px solid #999;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.windows-button:hover {
+  background: linear-gradient(to bottom, #e0e0f0, #d0d0e0);
+  border-color: #666;
+}
+
+.windows-button:active {
+  background: linear-gradient(to bottom, #d0d0d0, #c0c0c0);
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.windows-toolbar {
+  background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+  border-bottom: 1px solid #ccc;
+}
+
+.windows-addressbar {
+  background: white;
+  border: 2px inset #ddd;
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 /* Custom scrollbar for sections */

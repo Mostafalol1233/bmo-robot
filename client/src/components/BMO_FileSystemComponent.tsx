@@ -291,7 +291,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
   return (
       <div 
-        className="w-full h-full bg-gray-200 text-black animate-slideIn"
+        className="w-full h-full bg-gray-200 text-black animate-windowsExplorer"
         style={{ imageRendering: 'pixelated', fontSize: '10px' }}
         data-testid="bmo-filesystem"
       >
@@ -346,8 +346,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 h-full overflow-hidden transition-all duration-300">
-          <div className="h-full transform transition-transform duration-300 ease-in-out">
+        <div className="flex-1 h-full overflow-hidden">
+          <div className="h-full animate-fadeInUp">
             {renderContentView()}
           </div>
         </div>
