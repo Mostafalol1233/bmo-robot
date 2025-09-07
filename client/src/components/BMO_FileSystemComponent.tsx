@@ -16,7 +16,7 @@ interface FolderItem {
 }
 
 export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemComponentProps) {
-  const [showFace, setShowFace] = useState(true);
+  const [showFace, setShowFace] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('explorer');
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
   const [chatMessages, setChatMessages] = useState([
