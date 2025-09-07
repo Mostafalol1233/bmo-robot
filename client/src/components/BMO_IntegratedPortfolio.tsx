@@ -74,11 +74,11 @@ export default function BMO_IntegratedPortfolio() {
 
   // Navigation functions
   const handleStartBMO = () => {
-    setIsZoomed(true);
-    // Wait for zoom animation to complete, then show filesystem
+    // Start zoom animation on the screen, then switch to filesystem
     setTimeout(() => {
+      setIsZoomed(true);
       setCurrentSection('filesystem');
-    }, 800);
+    }, 100);
   };
 
   const handleBackToLanding = () => {

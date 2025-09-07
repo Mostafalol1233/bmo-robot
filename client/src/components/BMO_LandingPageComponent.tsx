@@ -8,6 +8,8 @@ interface BMO_LandingPageComponentProps {
 export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageComponentProps) {
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [isMouthMoving, setIsMouthMoving] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const bmoRef = useRef<HTMLDivElement>(null);
 
@@ -36,6 +38,26 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
 
     document.addEventListener('mousemove', handleMouseMove);
     return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Natural blinking and mouth movements
+  useEffect(() => {
+    // Random blinking
+    const blinkInterval = setInterval(() => {
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 150);
+    }, 2000 + Math.random() * 3000); // Random between 2-5 seconds
+
+    // Random mouth movements
+    const mouthInterval = setInterval(() => {
+      setIsMouthMoving(true);
+      setTimeout(() => setIsMouthMoving(false), 800);
+    }, 3000 + Math.random() * 4000); // Random between 3-7 seconds
+
+    return () => {
+      clearInterval(blinkInterval);
+      clearInterval(mouthInterval);
+    };
   }, []);
 
   // Play welcome sound when component mounts (website opens)
@@ -83,7 +105,7 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
               {/* Eyes - Black circles that follow mouse */}
               <div className="flex space-x-12 mb-6">
                 <div className="relative">
-                  <div className="w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out"
+                  <div className={`w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out ${isBlinking ? 'animate-blink' : ''}`}
                     style={{
                       transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
                       imageRendering: 'pixelated'
@@ -92,7 +114,7 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
                   ></div>
                 </div>
                 <div className="relative">
-                  <div className="w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out"
+                  <div className={`w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out ${isBlinking ? 'animate-blink' : ''}`}
                     style={{
                       transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
                       imageRendering: 'pixelated'
@@ -102,9 +124,13 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
                 </div>
               </div>
               
-              {/* BMO Smile */}
+              {/* BMO Smile with movement */}
               <div className="relative w-16 h-6 mx-auto">
-                <div className="absolute bottom-0 left-2 w-12 h-3 border-b-4 border-l-2 border-r-2 border-black rounded-b-full" style={{ imageRendering: 'pixelated' }}></div>
+                <div className={`absolute bottom-0 left-2 w-12 h-3 border-b-4 border-l-2 border-r-2 border-black rounded-b-full transition-transform duration-200 ${isMouthMoving ? 'animate-pulse' : ''}`} 
+                     style={{ 
+                       imageRendering: 'pixelated',
+                       transform: isMouthMoving ? 'scaleX(1.1) scaleY(0.9)' : 'scaleX(1) scaleY(1)'
+                     }}></div>
               </div>
             </div>
             
