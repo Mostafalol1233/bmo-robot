@@ -90,58 +90,80 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   return (
     <>
       <div 
-        className="w-full h-full bg-gradient-to-br from-card via-card to-muted/40 p-4 animate-slideIn"
+        className="w-full h-full bg-gradient-to-br from-gray-100 via-gray-50 to-white p-2 animate-slideIn font-mono text-black"
+        style={{ imageRendering: 'pixelated', fontSize: '10px' }}
         data-testid="bmo-filesystem"
       >
-        {/* File Explorer Header */}
-        <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/30">
-          <div className="flex items-center space-x-2">
-            <i className="fas fa-folder-open text-accent text-sm"></i>
-            <span className="pixel-text text-xs text-foreground">BMO_SYSTEM</span>
+        {/* Terminal-style File System Header */}
+        <div className="bg-gray-800 text-green-400 p-1 mb-2 rounded-sm" style={{ fontFamily: 'monospace' }}>
+          <div className="flex items-center justify-between">
+            <span className="text-xs">BMO:/home/user$</span>
+            {onBack && (
+              <button 
+                onClick={onBack}
+                className="text-red-400 hover:text-red-300 transition-colors text-xs"
+                data-testid="button-back-to-face"
+              >
+                [X]
+              </button>
+            )}
           </div>
-          {onBack && (
-            <button 
-              onClick={onBack}
-              className="text-accent hover:text-accent/80 transition-colors transform hover:scale-110"
-              data-testid="button-back-to-face"
-            >
-              <i className="fas fa-home text-sm"></i>
-            </button>
-          )}
         </div>
 
-        {/* File Grid */}
-        <div className="grid grid-cols-2 gap-4 h-full">
-          {files.map((file, index) => (
-            <button
-              key={file.name}
-              onClick={() => handleFileClick(file)}
-              className="flex flex-col items-center justify-center space-y-2 p-3 rounded-lg hover:bg-primary/10 transition-all duration-300 transform hover:scale-105 hover:shadow-lg group animate-slideIn border border-transparent hover:border-primary/20"
-              style={{ animationDelay: `${index * 0.1}s` }}
-              data-testid={`file-${file.name.toLowerCase().replace(/\s+/g, '-')}`}
-            >
-              {/* File Icon */}
-              <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 border border-primary/20 group-hover:border-primary/40">
-                  <i className={`${file.icon} text-lg text-primary group-hover:text-accent transition-colors duration-300`}></i>
+        {/* Directory Listing - Computer-like */}
+        <div className="bg-white border border-gray-300 p-2 h-full overflow-auto" style={{ fontFamily: 'monospace', fontSize: '9px' }}>
+          {/* Header */}
+          <div className="bg-gray-100 border-b border-gray-300 p-1 mb-1 text-xs grid grid-cols-3 gap-2 font-bold">
+            <span>Name</span>
+            <span>Type</span>
+            <span>Size</span>
+          </div>
+          
+          {/* File Listings */}
+          <div className="space-y-1">
+            {files.map((file, index) => (
+              <button
+                key={file.name}
+                onClick={() => handleFileClick(file)}
+                className="w-full text-left hover:bg-blue-100 p-1 rounded transition-colors grid grid-cols-3 gap-2 text-xs border border-transparent hover:border-blue-300 animate-slideIn"
+                style={{ animationDelay: `${index * 0.05}s`, fontFamily: 'monospace' }}
+                data-testid={`file-${file.name.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                {/* File Name with Icon */}
+                <div className="flex items-center space-x-1 truncate">
+                  <span className="text-blue-600">
+                    {file.name === 'Communities' && '📁'}
+                    {file.name === 'Videos' && '🎥'}
+                    {file.name === 'Contact Me' && '📞'}
+                    {file.name === 'My Tools' && '🔧'}
+                    {file.name === 'AI Talk' && '🤖'}
+                  </span>
+                  <span className="truncate text-black">{file.name}</span>
                 </div>
-                {/* Folder corner */}
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-br-lg opacity-60 group-hover:opacity-100 transition-opacity"></div>
-              </div>
-
-              {/* File Name */}
-              <span className="pixel-text text-xs text-foreground group-hover:text-primary transition-colors text-center leading-tight">
-                {file.name}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* System Info */}
-        <div className="absolute bottom-2 left-2 right-2">
-          <div className="flex justify-between items-center text-xs pixel-text text-muted-foreground">
-            <span>{files.length} items</span>
-            <span>BMO v1.0</span>
+                
+                {/* File Type */}
+                <span className="text-gray-600 text-xs">
+                  {file.name === 'My Tools' ? 'Link' : 'Folder'}
+                </span>
+                
+                {/* File Size */}
+                <span className="text-gray-500 text-xs">
+                  {file.name === 'Videos' ? '2.1 GB' : 
+                   file.name === 'Communities' ? '4.2 KB' :
+                   file.name === 'Contact Me' ? '1.8 KB' :
+                   file.name === 'My Tools' ? '512 B' :
+                   file.name === 'AI Talk' ? '16.5 MB' : '--'}
+                </span>
+              </button>
+            ))}
+          </div>
+          
+          {/* Directory Info */}
+          <div className="mt-4 pt-2 border-t border-gray-200 text-xs text-gray-500">
+            <div className="grid grid-cols-2">
+              <span>{files.length} items</span>
+              <span className="text-right">Free: 8.7 GB</span>
+            </div>
           </div>
         </div>
       </div>
