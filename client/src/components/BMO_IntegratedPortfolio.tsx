@@ -119,6 +119,7 @@ export default function BMO_IntegratedPortfolio() {
               // Zoomed screen view - fullscreen BMO screen only
               <div 
                 className="fixed inset-0 bg-gradient-to-br from-cyan-200 to-cyan-300 border-4 border-cyan-700 animate-zoomIn z-50"
+                style={{ transformOrigin: 'center center' }}
                 data-testid="bmo-filesystem-zoomed"
               >
                 <BMO_FileSystemComponent onBack={handleBackToLanding} />
