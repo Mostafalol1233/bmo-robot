@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 
 interface VideoItem {
   id: string;
@@ -109,7 +110,15 @@ export default function VideoPlayerModalComponent({
             </div>
           </div>
           <button 
-            onClick={onClose}
+            onClick={() => {
+              // Play close sound when X is clicked
+              const audio = new Audio(bmoCloseSound);
+              audio.volume = 0.3;
+              audio.play().catch(() => {
+                // Handle audio play failure silently
+              });
+              onClose();
+            }}
             className="text-muted-foreground hover:text-foreground transition-colors transform hover:scale-110"
             data-testid="button-close-video-modal"
           >
