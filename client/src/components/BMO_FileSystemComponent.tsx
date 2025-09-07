@@ -192,56 +192,128 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       case 'images':
         return (
           <div className="p-4 h-full bg-white">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Images Gallery</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Character Gallery</h3>
             
-            {/* Image Grid */}
-            <div className="grid grid-cols-4 gap-4 h-full overflow-y-auto">
-              {/* Placeholder for future images - will be replaced when user sends photos */}
-              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
-                <div className="text-center text-gray-400">
-                  <div className="text-3xl mb-2">📷</div>
-                  <div className="text-xs font-medium">Photo 1</div>
+            {/* Files Grid - Adventure Time Style */}
+            <div className="grid grid-cols-6 gap-4">
+              {/* BMO File */}
+              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg relative overflow-hidden shadow-sm border border-cyan-700">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-white font-bold text-xs">BMO</div>
+                    </div>
+                    <div className="absolute top-1 left-1 w-2 h-1 bg-black rounded-full"></div>
+                    <div className="absolute top-1 right-1 w-2 h-1 bg-black rounded-full"></div>
+                    <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-1 border border-black rounded-b-full"></div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
-                <div className="text-center text-gray-400">
-                  <div className="text-3xl mb-2">📷</div>
-                  <div className="text-xs font-medium">Photo 2</div>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">BMO</span>
+              </button>
+
+              {/* Finn File */}
+              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-300 to-blue-500 rounded-lg relative overflow-hidden shadow-sm border border-blue-600">
+                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-pink-200 rounded-full"></div>
+                    <div className="absolute top-3 left-6 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute top-3 right-6 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-6 bg-white rounded-t-full"></div>
+                    <div className="absolute top-1 left-4 w-3 h-6 bg-white rounded-t-full"></div>
+                    <div className="absolute top-1 right-4 w-3 h-6 bg-white rounded-t-full"></div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
-                <div className="text-center text-gray-400">
-                  <div className="text-3xl mb-2">📷</div>
-                  <div className="text-xs font-medium">Photo 3</div>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Finn</span>
+              </button>
+
+              {/* Jake File */}
+              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg relative overflow-hidden shadow-sm border border-orange-700">
+                    <div className="absolute top-2 left-2 w-3 h-3 bg-black rounded-full"></div>
+                    <div className="absolute top-2 right-2 w-3 h-3 bg-black rounded-full"></div>
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-4 h-2 bg-black rounded-full"></div>
+                    <div className="absolute top-1 left-1 w-4 h-4 bg-orange-300 rounded-full"></div>
+                    <div className="absolute top-1 right-1 w-4 h-4 bg-orange-300 rounded-full"></div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
-                <div className="text-center text-gray-400">
-                  <div className="text-3xl mb-2">📷</div>
-                  <div className="text-xs font-medium">Photo 4</div>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Jake</span>
+              </button>
+
+              {/* Princess Bubblegum File */}
+              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-lg relative overflow-hidden shadow-sm border border-pink-700">
+                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-pink-300 rounded-t-full"></div>
+                    <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-8 h-6 bg-pink-200 rounded-full"></div>
+                    <div className="absolute top-4 left-5 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute top-4 right-5 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-3 h-1 bg-black rounded-full"></div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
-                <div className="text-center text-gray-400">
-                  <div className="text-3xl mb-2">📷</div>
-                  <div className="text-xs font-medium">Photo 5</div>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">P.Gum</span>
+              </button>
+
+              {/* Marceline File */}
+              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg relative overflow-hidden shadow-sm border border-gray-800">
+                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-300 rounded-full"></div>
+                    <div className="absolute top-3 left-5 w-1 h-1 bg-red-500 rounded-full"></div>
+                    <div className="absolute top-3 right-5 w-1 h-1 bg-red-500 rounded-full"></div>
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-2 h-1 bg-red-600"></div>
+                    <div className="absolute top-1 left-2 w-8 h-4 bg-black rounded-b-full"></div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
-                <div className="text-center text-gray-400">
-                  <div className="text-3xl mb-2">📷</div>
-                  <div className="text-xs font-medium">Photo 6</div>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Marcy</span>
+              </button>
+
+              {/* Ice King File */}
+              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-200 to-blue-400 rounded-lg relative overflow-hidden shadow-sm border border-blue-500">
+                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-yellow-300 rounded-t-lg"></div>
+                    <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-8 h-6 bg-blue-100 rounded-full"></div>
+                    <div className="absolute top-4 left-5 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute top-4 right-5 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-2 bg-white"></div>
+                  </div>
                 </div>
-              </div>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Ice King</span>
+              </button>
+
+              {/* LSP File */}
+              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-500 rounded-lg relative overflow-hidden shadow-sm border border-purple-600">
+                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-10 h-8 bg-purple-200 rounded-full"></div>
+                    <div className="absolute top-3 left-4 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute top-3 right-4 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-4 h-1 bg-black rounded-full"></div>
+                    <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-2 bg-purple-300 rounded-b-full"></div>
+                  </div>
+                </div>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">LSP</span>
+              </button>
+
+              {/* Tree Trunks File */}
+              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg relative overflow-hidden shadow-sm border border-yellow-600">
+                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-yellow-200 rounded-full"></div>
+                    <div className="absolute top-3 left-4 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute top-3 right-4 w-2 h-2 bg-black rounded-full"></div>
+                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-4 h-2 bg-black rounded-full"></div>
+                    <div className="absolute top-1 left-2 w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div className="absolute top-1 right-2 w-3 h-3 bg-yellow-400 rounded-full"></div>
+                  </div>
+                </div>
+                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Tree</span>
+              </button>
             </div>
-            
-            <div className="mt-4 text-center text-sm text-gray-500">
-              📸 Ready for your personal photos! Send them and I'll add them here.
+
+            <div className="mt-6 text-center text-sm text-gray-500">
+              🎭 Adventure Time Characters Collection
             </div>
           </div>
         );
