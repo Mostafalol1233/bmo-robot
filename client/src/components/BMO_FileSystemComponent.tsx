@@ -7,7 +7,7 @@ interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
 
-type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools';
+type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images';
 
 interface FolderItem {
   name: string;
@@ -37,6 +37,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       emoji: '🎬',
       type: 'videos',
       description: 'Project demos and tutorials'
+    },
+    {
+      name: 'Images',
+      emoji: '🖼️',
+      type: 'images',
+      description: 'Personal photos and gallery'
     },
     {
       name: 'Contact Me',
@@ -179,6 +185,63 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-xs text-gray-500">YouTube • 8:45</div>
                 </div>
               </button>
+            </div>
+          </div>
+        );
+
+      case 'images':
+        return (
+          <div className="p-4 h-full bg-white">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Images Gallery</h3>
+            
+            {/* Image Grid */}
+            <div className="grid grid-cols-4 gap-4 h-full overflow-y-auto">
+              {/* Placeholder for future images - will be replaced when user sends photos */}
+              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
+                <div className="text-center text-gray-400">
+                  <div className="text-3xl mb-2">📷</div>
+                  <div className="text-xs font-medium">Photo 1</div>
+                </div>
+              </div>
+              
+              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
+                <div className="text-center text-gray-400">
+                  <div className="text-3xl mb-2">📷</div>
+                  <div className="text-xs font-medium">Photo 2</div>
+                </div>
+              </div>
+              
+              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
+                <div className="text-center text-gray-400">
+                  <div className="text-3xl mb-2">📷</div>
+                  <div className="text-xs font-medium">Photo 3</div>
+                </div>
+              </div>
+              
+              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
+                <div className="text-center text-gray-400">
+                  <div className="text-3xl mb-2">📷</div>
+                  <div className="text-xs font-medium">Photo 4</div>
+                </div>
+              </div>
+              
+              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
+                <div className="text-center text-gray-400">
+                  <div className="text-3xl mb-2">📷</div>
+                  <div className="text-xs font-medium">Photo 5</div>
+                </div>
+              </div>
+              
+              <div className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center group hover:bg-gray-50 transition-colors">
+                <div className="text-center text-gray-400">
+                  <div className="text-3xl mb-2">📷</div>
+                  <div className="text-xs font-medium">Photo 6</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4 text-center text-sm text-gray-500">
+              📸 Ready for your personal photos! Send them and I'll add them here.
             </div>
           </div>
         );
