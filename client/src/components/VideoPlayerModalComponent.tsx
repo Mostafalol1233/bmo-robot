@@ -74,7 +74,7 @@ export default function VideoPlayerModalComponent({
     setIsPlaying(!isPlaying);
   };
 
-  const handleProgress = (progress: { played: number }) => {
+  const handleProgress = (progress: any) => {
     setPlayed(progress.played);
   };
 
@@ -122,7 +122,7 @@ export default function VideoPlayerModalComponent({
           <div className="flex-1">
             {/* Video Player */}
             <div className="relative bg-black aspect-video">
-              {currentVideo && ReactPlayer.canPlay(currentVideo.url) ? (
+              {currentVideo ? (
                 <ReactPlayer
                   url={currentVideo.url}
                   width="100%"
