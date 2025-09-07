@@ -140,15 +140,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             
             {/* Video Player Area */}
             <div className="flex-1 bg-black rounded-lg border border-gray-300 mb-4 overflow-hidden">
-              <div className="w-full h-64 flex items-center justify-center">
-                <ReactPlayer
-                  url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                  width="100%"
-                  height="100%"
-                  controls={true}
-                  playing={false}
-                  light={true}
-                />
+              <div className="w-full h-64 flex items-center justify-center text-white">
+                <div className="text-center">
+                  <div className="text-6xl mb-4">🎬</div>
+                  <div className="text-lg font-medium">Video Player</div>
+                  <div className="text-sm text-gray-300 mt-2">Select a video from the list below</div>
+                </div>
               </div>
             </div>
             
