@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 
 interface BMO_LandingPageComponentProps {
   onStart: () => void;
@@ -35,6 +36,20 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
 
     document.addEventListener('mousemove', handleMouseMove);
     return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Play welcome sound when component mounts (website opens)
+  useEffect(() => {
+    const playWelcomeSound = () => {
+      const audio = new Audio(bmoWelcomeSound);
+      audio.volume = 0.3;
+      audio.play().catch(() => {
+        // Handle audio play failure silently
+      });
+    };
+
+    // Play sound when component mounts
+    playWelcomeSound();
   }, []);
 
   const handleStart = () => {
