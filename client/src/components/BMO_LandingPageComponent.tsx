@@ -164,12 +164,6 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
         </div>
       </div>
       
-      {/* Welcome Text */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center">
-        <p className="pixel-text text-sm text-primary animate-pulse">
-          Move your mouse to see BMO's eyes follow!
-        </p>
-      </div>
     </div>
   );
 }
