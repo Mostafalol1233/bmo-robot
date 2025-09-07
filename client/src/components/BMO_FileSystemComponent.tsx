@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ReactPlayer from 'react-player';
+import BMOFace from './BMOFace';
 
 interface BMO_FileSystemComponentProps {
   onBack?: () => void;
@@ -15,6 +16,7 @@ interface FolderItem {
 }
 
 export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemComponentProps) {
+  const [showFace, setShowFace] = useState(true);
   const [currentView, setCurrentView] = useState<ViewType>('explorer');
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
   const [chatMessages, setChatMessages] = useState([
@@ -88,6 +90,10 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     }, 1000);
     
     setChatInput('');
+  };
+
+  const handleFaceComplete = () => {
+    setShowFace(false);
   };
 
   const renderExplorerView = () => (
@@ -234,6 +240,15 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         return renderExplorerView();
     }
   };
+
+  // Show BMO face first, then transition to file explorer
+  if (showFace) {
+    return (
+      <div className="w-full h-full relative">
+        <BMOFace isVisible={showFace} onFaceComplete={handleFaceComplete} />
+      </div>
+    );
+  }
 
   return (
       <div 
