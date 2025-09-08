@@ -163,26 +163,22 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
                 <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 pixel-text text-xs text-black font-bold">GAMES</span>
               </div>
               
+              {/* Red Button - Start Button */}
+              <div className="relative mr-2">
+                <button
+                  onClick={handleStart}
+                  className="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 border-4 border-red-800 rounded-full shadow-lg transform hover:scale-110 active:scale-95 transition-all duration-200 hover:from-red-300 hover:to-red-500"
+                  style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.2)' }}
+                  title="Start Portfolio"
+                  data-testid="button-start-red"
+                >
+                  <div className="w-full h-full rounded-full bg-gradient-to-br from-red-300 to-red-500 opacity-40"></div>
+                </button>
+                <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 pixel-text text-xs text-black font-bold">START</span>
+              </div>
+              
             </div>
             
-            {/* BMO Physics Ball */}
-            <div className="flex justify-center mt-6">
-              <div className="relative w-20 h-20">
-                <div 
-                  className="absolute w-6 h-6 bg-gradient-to-br from-cyan-300 to-cyan-500 rounded-full border-2 border-cyan-700 shadow-lg animate-bounce cursor-pointer transform hover:scale-110 transition-all"
-                  style={{ 
-                    animationDuration: '2s',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.3)'
-                  }}
-                  data-testid="bmo-physics-ball"
-                >
-                  <div className="absolute inset-1 bg-cyan-200 rounded-full opacity-50"></div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         
