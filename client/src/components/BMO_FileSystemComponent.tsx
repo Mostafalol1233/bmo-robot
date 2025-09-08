@@ -7,6 +7,7 @@ import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX, SiLinkedin } from 'react-icons/si';
 import TicTacToeGame from './TicTacToeGame';
 import MazeGame from './MazeGame';
+import BMOQuizGame from './BMOQuizGame';
 
 // Import BMO interface background
 import bmoInterfaceBg from '@assets/S5e28_BMO\'s_interface_1757341096013.webp';
@@ -68,7 +69,7 @@ interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
 
-type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character' | 'games' | 'tictactoe' | 'maze';
+type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character' | 'games' | 'tictactoe' | 'maze' | 'bmoquiz';
 
 interface FolderItem {
   name: string;
@@ -82,8 +83,6 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [currentView, setCurrentView] = useState<ViewType>('explorer');
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
   const [selectedCharacter, setSelectedCharacter] = useState<string>('');
-  const [activeVideoSection, setActiveVideoSection] = useState<string | null>(null);
-  const [currentVideo, setCurrentVideo] = useState<any>(null);
 
   // Character images mapping
   const characterImages: Record<string, string[]> = {
@@ -207,9 +206,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     setCurrentPath(`C:\\Portfolio\\Images\\${characterName}\\`);
   };
 
-  const handleGameClick = (gameType: 'tictactoe' | 'maze') => {
+  const handleGameClick = (gameType: 'tictactoe' | 'maze' | 'bmoquiz') => {
     setCurrentView(gameType);
-    setCurrentPath(`C:\\Portfolio\\Games\\${gameType === 'tictactoe' ? 'TicTacToe' : 'Maze'}\\`);
+    const gamePath = gameType === 'tictactoe' ? 'TicTacToe' : 
+                     gameType === 'maze' ? 'Maze' : 'BMOQuiz';
+    setCurrentPath(`C:\\Portfolio\\Games\\${gamePath}\\`);
   };
 
   const handleBackClick = () => {
@@ -285,124 +286,90 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     switch (currentView) {
       case 'videos':
         return (
-          <div className="h-full bg-white flex flex-col">
-            <div className="screen-toolbar flex items-center gap-2 p-2 bg-gray-100 border-b">
-              <button 
-                className={`tab px-3 py-1 rounded text-sm ${activeVideoSection === null ? "bg-blue-500 text-white" : "bg-gray-200"}`} 
-                onClick={() => { setActiveVideoSection(null); setCurrentVideo(null); }}
-                data-testid="tab-home"
-              >
-                Home
-              </button>
-              <button 
-                className={`tab px-3 py-1 rounded text-sm ${activeVideoSection === "videos" ? "bg-blue-500 text-white" : "bg-gray-200"}`} 
-                onClick={() => { setActiveVideoSection("videos"); setCurrentVideo(null); }}
-                data-testid="tab-videos"
-              >
-                Videos
-              </button>
-              <button 
-                className={`tab px-3 py-1 rounded text-sm ${activeVideoSection === "ai" ? "bg-blue-500 text-white" : "bg-gray-200"}`} 
-                onClick={() => { setActiveVideoSection("ai"); setCurrentVideo(null); }}
-                data-testid="tab-ai"
-              >
-                AI Talk
-              </button>
-              <div className="path ml-auto text-sm text-gray-600">
-                C:\Portfolio\{activeVideoSection ? activeVideoSection : ""}
-              </div>
-            </div>
-
-            <div className="screen-body flex-1 p-4 bg-gradient-to-b from-blue-900 to-blue-800 text-white">
-              {!activeVideoSection && (
-                <div className="grid-icons grid grid-cols-3 gap-4 h-full content-center">
-                  <div 
-                    className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors" 
-                    onClick={() => setActiveVideoSection("videos")}
-                    data-testid="icon-videos"
-                  >
-                    <div className="icon text-4xl mb-2">🎬</div>
-                    <div className="label text-sm">Videos</div>
+          <div className="p-4 h-full bg-white overflow-y-auto custom-scrollbar">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b-2 border-gray-300 pb-2">📹 Videos</h3>
+            
+            {/* Video Grid with Thumbnails */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-80 overflow-y-auto custom-scrollbar">
+              {videoList.map((video) => (
+                <div
+                  key={video.id}
+                  className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-all hover:scale-105"
+                  onClick={() => handleVideoClick(video)}
+                  data-testid={`video-item-${video.id}`}
+                >
+                  {/* Video Thumbnail */}
+                  <div className="aspect-video bg-black relative group">
+                    <img 
+                      src={video.thumbnail} 
+                      alt={video.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextSibling as HTMLDivElement;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    {/* Fallback for failed images */}
+                    <div className="absolute inset-0 bg-gray-600 hidden items-center justify-center">
+                      <span className="text-white text-xl">🎥</span>
+                    </div>
+                    
+                    {/* Play Button */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center transition-all">
+                      <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
+                        <span className="text-white text-lg ml-1">▶</span>
+                      </div>
+                    </div>
                   </div>
-                  <div 
-                    className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors" 
-                    onClick={() => setActiveVideoSection("ai")}
-                    data-testid="icon-ai"
-                  >
-                    <div className="icon text-4xl mb-2">💬</div>
-                    <div className="label text-sm">AI Talk</div>
-                  </div>
-                  <div className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors">
-                    <div className="icon text-4xl mb-2">👥</div>
-                    <div className="label text-sm">Communities</div>
-                  </div>
-                  <div className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors">
-                    <div className="icon text-4xl mb-2">📒</div>
-                    <div className="label text-sm">Contact Me</div>
-                  </div>
-                  <div className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors">
-                    <div className="icon text-4xl mb-2">🛠</div>
-                    <div className="label text-sm">My Tools</div>
-                  </div>
-                </div>
-              )}
-
-              {activeVideoSection === "videos" && (
-                <div className="videos-area flex gap-4 h-full">
-                  <div className="videos-left w-1/3 bg-white/10 rounded-lg p-3 overflow-auto">
-                    <div className="list-title text-sm mb-3 text-blue-200">Playlist</div>
-                    {videoList.map(v => (
-                      <div 
-                        key={v.id} 
-                        className={`playlist-item p-3 mb-2 rounded cursor-pointer text-sm transition-all ${
-                          currentVideo?.id === v.id 
-                            ? "bg-blue-500/30 text-white" 
-                            : "bg-white/5 hover:bg-white/10 text-blue-100"
-                        }`} 
-                        onClick={() => setCurrentVideo(v)}
-                        data-testid={`playlist-item-${v.id}`}
+                  
+                  {/* Video Info */}
+                  <div className="p-3">
+                    <div className="text-sm font-medium text-gray-800 line-clamp-2 mb-2">
+                      {video.title}
+                    </div>
+                    <div className="text-xs text-gray-500 mb-2">
+                      Duration: {video.duration}
+                    </div>
+                    {/* YouTube Link */}
+                    {video.youtubeUrl && (
+                      <a 
+                        href={video.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1 text-xs text-red-600 hover:text-red-700 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                        data-testid={`youtube-link-${video.id}`}
                       >
-                        {v.title}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="videos-player flex-1 bg-black rounded-lg overflow-hidden">
-                    {currentVideo ? (
-                      <ReactPlayer 
-                        url={currentVideo.youtubeUrl || currentVideo.url} 
-                        controls={true}
-                        width="100%" 
-                        height="100%"
-                        data-testid="react-player"
-                      />
-                    ) : (
-                      <div className="player-empty h-full flex items-center justify-center text-gray-400">
-                        <div className="text-center">
-                          <div className="text-4xl mb-2">🎥</div>
-                          <div>Choose a video from the playlist</div>
-                        </div>
-                      </div>
+                        <span>🔴</span>
+                        <span>Watch on YouTube</span>
+                      </a>
                     )}
                   </div>
                 </div>
-              )}
-
-              {activeVideoSection === "ai" && (
-                <div className="ai-area flex items-center justify-center h-full">
-                  <div className="ai-note text-center text-blue-200">
-                    <div className="text-4xl mb-4">🤖</div>
-                    <div>AI Chat will appear here (inside BMO screen).</div>
-                  </div>
-                </div>
-              )}
+              ))}
+            </div>
+            
+            {/* Main Channel Link */}
+            <div className="mt-6 text-center">
+              <a 
+                href="https://www.youtube.com/@Bemora-site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
+                data-testid="youtube-channel-link"
+              >
+                <span>🔴</span>
+                <span>Visit Bemora Channel</span>
+              </a>
             </div>
           </div>
         );
 
       case 'images':
         return (
-          <div className="p-4 h-full bg-white">
+          <div className="p-4 h-full bg-white overflow-y-auto custom-scrollbar">
             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Character Gallery</h3>
             
             {/* Files Grid - Adventure Time Characters using real cropped images */}
@@ -824,7 +791,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'games':
         return (
-          <div className="p-6 h-full bg-gradient-to-br from-indigo-900 via-purple-800 to-pink-700 relative overflow-hidden overflow-y-auto">
+          <div className="p-6 h-full bg-gradient-to-br from-indigo-900 via-purple-800 to-pink-700 relative overflow-hidden overflow-y-auto custom-scrollbar">
             {/* Retro grid background */}
             <div className="absolute inset-0 opacity-20">
               <div className="grid grid-cols-8 grid-rows-6 h-full w-full">
@@ -917,6 +884,42 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   {/* Retro glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-yellow-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
                 </button>
+
+                {/* BMO Quiz Game Card */}
+                <div className="md:col-span-2 flex justify-center">
+                  <button
+                    onClick={() => handleGameClick('bmoquiz')}
+                    className="relative group w-full max-w-md"
+                    data-testid="game-bmoquiz"
+                  >
+                    <div className="bg-black border-4 border-green-400 rounded-none p-8 hover:border-teal-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-400/50 transform group-hover:scale-105">
+                      <div className="absolute top-2 left-2 w-2 h-2 bg-green-400 animate-pulse"></div>
+                      <div className="absolute top-2 right-2 w-2 h-2 bg-teal-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                      <div className="absolute bottom-2 left-2 w-2 h-2 bg-blue-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                      <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                      
+                      <div className="text-center">
+                        <div className="text-6xl mb-4 text-green-400 group-hover:text-teal-400 transition-colors font-mono">🎮</div>
+                        <h3 className="text-2xl font-bold text-white mb-2 font-mono tracking-wide">BMO QUIZ</h3>
+                        <p className="text-green-300 mb-4 font-mono text-sm">CHARACTER CHALLENGE</p>
+                        
+                        {/* Character icons */}
+                        <div className="flex justify-center space-x-2 mb-4">
+                          <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-xs">👑</div>
+                          <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center text-xs">🐕</div>
+                          <div className="w-8 h-8 bg-pink-400 rounded-full flex items-center justify-center text-xs">👸</div>
+                          <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-xs">🧛</div>
+                          <div className="w-8 h-8 bg-teal-400 rounded-full flex items-center justify-center text-xs">🤖</div>
+                        </div>
+                        
+                        <div className="text-xs text-gray-400 font-mono">5 QUESTIONS • RANDOM</div>
+                      </div>
+                    </div>
+                    
+                    {/* Retro glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-teal-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+                  </button>
+                </div>
               </div>
 
               {/* Bottom retro message */}
@@ -944,6 +947,9 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'maze':
         return <MazeGame onBack={() => setCurrentView('games')} />;
+
+      case 'bmoquiz':
+        return <BMOQuizGame onBack={() => setCurrentView('games')} />;
 
       default:
         return renderExplorerView();
