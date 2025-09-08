@@ -12,12 +12,7 @@ import BMOQuizGame from './BMOQuizGame';
 // Import BMO interface background
 import bmoInterfaceBg from '@assets/S5e28_BMO\'s_interface_1757341096013.webp';
 
-// Import video files
-import video1 from '@assets/httpsyoutube.comshortsA1eUITFLvrAsi=bnhSVkuk7PKrzwLc_1757353731223.mp4';
-import video2 from '@assets/httpsyoutube.comshorts920D9DjKgCosi=VukS-JgpFUwm8dAX_1757353731223.mp4';
-import video3 from '@assets/httpsyoutube.comshortsQl7tURnDdzksi=h9TrJTS3ckwGjhoU_1757353731223.mp4';
-import video4 from '@assets/httpsyoutu.bepuFy652XCl8si=mzofzJQTQK9TY8AF_1757353731223.mp4';
-import video5 from '@assets/httpsyoutu.bewjwNBUB_iXksi=aITShYe6osV_4tN2_1757353731223.mp4';
+// Dynamic video imports to reduce bundle size
 
 // Import character images
 import finnMainImg from '@assets/characters/finn_main.jpg';
@@ -99,12 +94,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   
-  // Video list with connected local files and YouTube URLs
+  // Video list with YouTube URLs (removed local video files to reduce bundle size)
   const videoList = [
     {
       id: '1',
       title: 'BMO Adventure Short #1',
-      url: video1, // Local video file
+      url: 'https://youtube.com/shorts/A1eUITFLvrA', // Use YouTube directly
       youtubeUrl: 'https://youtube.com/shorts/A1eUITFLvrA',
       thumbnail: 'https://img.youtube.com/vi/A1eUITFLvrA/mqdefault.jpg',
       duration: '0:15'
@@ -112,7 +107,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '2', 
       title: 'BMO Adventure Short #2',
-      url: video2, // Local video file
+      url: 'https://youtube.com/shorts/920D9DjKgCo', // Use YouTube directly
       youtubeUrl: 'https://youtube.com/shorts/920D9DjKgCo',
       thumbnail: 'https://img.youtube.com/vi/920D9DjKgCo/mqdefault.jpg',
       duration: '0:20'
@@ -120,7 +115,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '3',
       title: 'BMO Adventure Short #3', 
-      url: video3, // Local video file
+      url: 'https://youtube.com/shorts/Ql7tURnDdzk', // Use YouTube directly
       youtubeUrl: 'https://youtube.com/shorts/Ql7tURnDdzk',
       thumbnail: 'https://img.youtube.com/vi/Ql7tURnDdzk/mqdefault.jpg',
       duration: '0:18'
@@ -128,7 +123,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '4',
       title: 'Adventure Time Tutorial',
-      url: video4, // Local video file
+      url: 'https://www.youtube.com/watch?v=puFy652XCl8', // Use YouTube directly
       youtubeUrl: 'https://www.youtube.com/watch?v=puFy652XCl8',
       thumbnail: 'https://img.youtube.com/vi/puFy652XCl8/mqdefault.jpg',
       duration: '2:45'
@@ -136,7 +131,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '5',
       title: 'BMO Coding Session',
-      url: video5, // Local video file
+      url: 'https://www.youtube.com/watch?v=wjwNBUB_iXk', // Use YouTube directly
       youtubeUrl: 'https://www.youtube.com/watch?v=wjwNBUB_iXk', 
       thumbnail: 'https://img.youtube.com/vi/wjwNBUB_iXk/mqdefault.jpg',
       duration: '1:30'
