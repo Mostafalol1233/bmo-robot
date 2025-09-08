@@ -757,7 +757,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'games':
         return (
-          <div className="p-6 h-full bg-gradient-to-br from-indigo-900 via-purple-800 to-pink-700 relative overflow-hidden">
+          <div className="p-6 h-full bg-gradient-to-br from-indigo-900 via-purple-800 to-pink-700 relative overflow-hidden overflow-y-auto">
             {/* Retro grid background */}
             <div className="absolute inset-0 opacity-20">
               <div className="grid grid-cols-8 grid-rows-6 h-full w-full">
