@@ -127,11 +127,11 @@ export function setupProtection() {
               box-shadow: 0 20px 40px rgba(0,0,0,0.2);
               max-width: 500px;
             ">
-              <h2 style="color: #e74c3c; margin-bottom: 20px;">⚠️ تحذير - حقوق النشر محفوظة</h2>
+              <h2 style="color: #e74c3c; margin-bottom: 20px;">⚠️ COPYRIGHT PROTECTED</h2>
               <p style="color: #2c3e50; margin-bottom: 20px; line-height: 1.6;">
-                هذا الموقع محمي بحقوق النشر.<br>
-                فتح أدوات المطور غير مسموح.<br>
-                جميع الحقوق محفوظة للمطور.
+                This website is protected by copyright.<br>
+                Developer tools access is prohibited.<br>
+                All rights reserved © BMO Robot Portfolio 2025.
               </p>
               <button onclick="window.location.reload()" style="
                 background: #3498db;
@@ -142,7 +142,7 @@ export function setupProtection() {
                 cursor: pointer;
                 font-size: 16px;
               ">
-                إعادة تحميل الصفحة
+                Reload Page
               </button>
             </div>
           </div>
@@ -159,10 +159,10 @@ export function setupProtection() {
   function showConsoleWarning() {
     if (!consoleWarningShown) {
       console.clear();
-      console.log('%c⚠️ تحذير - حقوق النشر', 'color: red; font-size: 30px; font-weight: bold;');
-      console.log('%cهذا الموقع محمي بحقوق النشر', 'color: red; font-size: 16px;');
-      console.log('%cأي محاولة لسرقة الكود أو المحتوى مخالفة قانونية', 'color: red; font-size: 16px;');
-      console.log('%cجميع الحقوق محفوظة للمطور', 'color: red; font-size: 16px;');
+      console.log('%c⚠️ COPYRIGHT PROTECTED', 'color: red; font-size: 30px; font-weight: bold;');
+      console.log('%cThis website is protected by copyright', 'color: red; font-size: 16px;');
+      console.log('%cAny attempt to steal code or content is illegal', 'color: red; font-size: 16px;');
+      console.log('%cAll rights reserved © BMO Robot Portfolio', 'color: red; font-size: 16px;');
       consoleWarningShown = true;
       
       // Reset flag after some time
@@ -221,10 +221,10 @@ function showCopyrightAlert() {
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         max-width: 400px;
       ">
-        <h3 style="color: #e74c3c; margin-bottom: 15px;">🚫 غير مسموح</h3>
+        <h3 style="color: #e74c3c; margin-bottom: 15px;">🚫 ACCESS DENIED</h3>
         <p style="color: #2c3e50; margin-bottom: 20px;">
-          هذا الموقع محمي بحقوق النشر<br>
-          جميع الحقوق محفوظة
+          This website is protected by copyright<br>
+          All rights reserved © BMO Robot 2025
         </p>
         <button onclick="this.parentElement.parentElement.remove()" style="
           background: #3498db;
@@ -234,7 +234,7 @@ function showCopyrightAlert() {
           border-radius: 5px;
           cursor: pointer;
         ">
-          موافق
+          OK
         </button>
       </div>
     </div>
