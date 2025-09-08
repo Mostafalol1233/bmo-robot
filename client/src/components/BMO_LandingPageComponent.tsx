@@ -179,12 +179,13 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
               <div className="relative mr-2">
                 <button
                   onClick={handleStart}
-                  className="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 border-4 border-red-800 rounded-full shadow-lg transform hover:scale-110 active:scale-95 transition-all duration-200 hover:from-red-300 hover:to-red-500"
+                  className="relative w-14 h-14 bg-gradient-to-br from-red-400 to-red-600 border-4 border-red-800 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 hover:from-red-300 hover:to-red-500"
                   style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.2)' }}
                   title="Start Portfolio"
                   data-testid="button-start-red"
                 >
-                  <div className="w-full h-full rounded-full bg-gradient-to-br from-red-300 to-red-500 opacity-40"></div>
+                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-red-300 to-red-500 opacity-40"></div>
+                  <div className="absolute inset-3 rounded-full bg-white opacity-20"></div>
                 </button>
                 <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 pixel-text text-xs text-black font-bold">START</span>
               </div>
@@ -199,47 +200,80 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
           <span className="pixel-text text-xl text-black font-bold tracking-wider" style={{ textShadow: '1px 1px 0px rgba(0,0,0,0.3)' }}>BMO</span>
         </div>
         
-        {/* BMO Robotic Arms - Mechanical with joints */}
+        {/* BMO Robotic Arms - More Authentic Mechanical Design */}
         {/* Left Arm - Static */}
-        <div className="absolute -left-3 top-1/3">
-          {/* Upper arm segment */}
-          <div className="w-2 h-10 bg-gradient-to-b from-gray-700 to-gray-900 rounded-full shadow-md relative">
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gray-600 rounded-full border border-gray-400"></div>
+        <div className="absolute -left-4 top-1/3">
+          {/* Shoulder joint */}
+          <div className="w-4 h-4 bg-gray-800 border-2 border-black rounded-sm shadow-lg relative mb-1">
+            <div className="absolute inset-1 bg-gray-600 rounded-sm"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-red-500 rounded-full"></div>
           </div>
-          {/* Elbow joint */}
-          <div className="w-3 h-3 bg-gray-500 rounded-full mx-auto border-2 border-gray-400 shadow-sm"></div>
+          {/* Upper arm segment - rectangular for authenticity */}
+          <div className="w-3 h-12 bg-gradient-to-b from-black to-gray-800 border border-gray-600 shadow-md relative mx-auto">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gray-600"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-900"></div>
+            {/* Arm details */}
+            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full"></div>
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full"></div>
+          </div>
+          {/* Elbow joint - square and mechanical */}
+          <div className="w-4 h-3 bg-gray-700 border border-black shadow-md mx-auto relative">
+            <div className="absolute inset-0.5 bg-gray-500 border border-gray-400"></div>
+          </div>
           {/* Lower arm segment */}
-          <div className="w-2 h-10 bg-gradient-to-b from-gray-700 to-gray-900 rounded-full shadow-md relative mx-auto">
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-cyan-400 rounded-full"></div>
+          <div className="w-3 h-12 bg-gradient-to-b from-black to-gray-800 border border-gray-600 shadow-md relative mx-auto">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gray-600"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-900"></div>
+            {/* Hand/end effector */}
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-cyan-400 border border-cyan-600 rounded-sm shadow-sm">
+              <div className="absolute inset-0.5 bg-cyan-300 opacity-60"></div>
+            </div>
           </div>
         </div>
         
-        {/* Right Arm - Animated (Waving) */}
+        {/* Right Arm - Animated (Waving) - More Authentic */}
         <div 
-          className={`absolute -right-3 top-1/3 transition-transform duration-500 ${
+          className={`absolute -right-4 top-1/3 transition-transform duration-500 ${
             isWaving ? 'animate-wave' : ''
           }`}
           style={{
             transformOrigin: 'top center',
-            transform: isWaving ? 'rotate(25deg)' : 'rotate(0deg)'
+            transform: isWaving ? 'rotate(20deg)' : 'rotate(0deg)'
           }}
         >
+          {/* Shoulder joint */}
+          <div className="w-4 h-4 bg-gray-800 border-2 border-black rounded-sm shadow-lg relative mb-1">
+            <div className="absolute inset-1 bg-gray-600 rounded-sm"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-red-500 rounded-full animate-robotic-pulse"></div>
+          </div>
           {/* Upper arm segment */}
-          <div className="w-2 h-10 bg-gradient-to-b from-gray-700 to-gray-900 rounded-full shadow-md relative">
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gray-600 rounded-full border border-gray-400"></div>
+          <div className="w-3 h-12 bg-gradient-to-b from-black to-gray-800 border border-gray-600 shadow-md relative mx-auto">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gray-600"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-900"></div>
+            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full"></div>
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full"></div>
           </div>
           {/* Elbow joint */}
-          <div className="w-3 h-3 bg-gray-500 rounded-full mx-auto border-2 border-gray-400 shadow-sm"></div>
+          <div className="w-4 h-3 bg-gray-700 border border-black shadow-md mx-auto relative">
+            <div className="absolute inset-0.5 bg-gray-500 border border-gray-400"></div>
+          </div>
           {/* Lower arm segment (waves more) */}
           <div 
-            className="w-2 h-10 bg-gradient-to-b from-gray-700 to-gray-900 rounded-full shadow-md relative mx-auto"
+            className="w-3 h-12 bg-gradient-to-b from-black to-gray-800 border border-gray-600 shadow-md relative mx-auto"
             style={{
               transformOrigin: 'top center',
-              transform: isWaving ? 'rotate(-30deg)' : 'rotate(0deg)',
-              transition: 'transform 0.3s ease-in-out'
+              transform: isWaving ? 'rotate(-25deg)' : 'rotate(0deg)',
+              transition: 'transform 0.4s ease-in-out'
             }}
           >
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-cyan-400 rounded-full animate-robotic-pulse"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-gray-600"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-900"></div>
+            {/* Hand/end effector with greeting gesture */}
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-cyan-400 border border-cyan-600 rounded-sm shadow-sm animate-robotic-pulse">
+              <div className="absolute inset-0.5 bg-cyan-300 opacity-60"></div>
+              {/* Small greeting indicator */}
+              <div className="absolute -top-1 -right-1 w-1 h-1 bg-yellow-300 rounded-full animate-ping"></div>
+            </div>
           </div>
         </div>
         
