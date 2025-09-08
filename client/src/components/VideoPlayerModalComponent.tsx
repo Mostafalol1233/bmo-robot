@@ -139,17 +139,9 @@ export default function VideoPlayerModalComponent({
                   playing={isPlaying}
                   volume={volume}
                   onProgress={handleProgress}
-                  controls={true}
+                  onDuration={handleDuration}
+                  controls={false}
                   data-testid="react-player"
-                  config={{
-                    youtube: {
-                      playerVars: {
-                        showinfo: 1,
-                        autoplay: 0,
-                        modestbranding: 1
-                      }
-                    }
-                  }}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
