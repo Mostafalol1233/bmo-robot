@@ -2,6 +2,7 @@ import { useState } from 'react';
 import BMOFace from './BMOFace';
 import VideoPlayerModalComponent from './VideoPlayerModalComponent';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
+import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX } from 'react-icons/si';
 
 // Import BMO interface background
@@ -741,8 +742,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           {onBack && (
             <button 
               onClick={() => {
-                // Play BMO sound when going back
-                const audio = new Audio(bmoWelcomeSound);
+                // Play BMO close sound when going back
+                const audio = new Audio(bmoCloseSound);
                 audio.volume = 0.3;
                 audio.play().catch(() => {
                   // Handle audio play failure silently
