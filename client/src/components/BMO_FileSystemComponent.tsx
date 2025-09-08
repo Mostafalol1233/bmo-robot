@@ -644,77 +644,61 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       case 'tools':
         return (
           <div className="p-4 bg-white h-full">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2">🛠 Development Toolkit</h3>
-              <button 
-                onClick={() => window.open('https://bmo-toold.netlify.app', '_blank')}
-                className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded transition-colors"
-              >
-                🔗 Visit Tools Site
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🛠 Development Toolkit</h3>
+            <div className="grid grid-cols-1 gap-3">
               <a 
-                href="https://bmo-toold.netlify.app" 
+                href="https://mui.com/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="block p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors group"
+                className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 rounded-lg transition-colors group"
+                data-testid="tool-mui"
               >
-                <div className="flex items-start space-x-3">
-                  <div className="text-2xl">⚛️</div>
-                  <div>
-                    <div className="font-medium text-gray-800 text-base group-hover:text-blue-700">React Component Library</div>
-                    <div className="text-sm text-gray-600 mt-1">Reusable UI components & custom hooks for modern React applications</div>
-                    <div className="text-xs text-gray-500 mt-2">Click to explore →</div>
-                  </div>
+                <div className="text-2xl">⚛️</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-blue-700">Material-UI (MUI)</div>
+                  <div className="text-sm text-gray-600 mt-1">React component library with Material Design</div>
                 </div>
               </a>
               
               <a 
-                href="https://bmo-toold.netlify.app" 
+                href="https://best-of-web.builder.io/cat/typescript/components" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="block p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors group"
+                className="flex items-center space-x-3 p-4 bg-purple-50 hover:bg-purple-100 border border-purple-200 hover:border-purple-300 rounded-lg transition-colors group"
+                data-testid="tool-typescript-components"
               >
-                <div className="flex items-start space-x-3">
-                  <div className="text-2xl">🟦</div>
-                  <div>
-                    <div className="font-medium text-gray-800 text-base group-hover:text-blue-700">TypeScript Utilities</div>
-                    <div className="text-sm text-gray-600 mt-1">Type definitions & helper functions for better development</div>
-                    <div className="text-xs text-gray-500 mt-2">Click to explore →</div>
-                  </div>
+                <div className="text-2xl">📦</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-purple-700">TypeScript Components</div>
+                  <div className="text-sm text-gray-600 mt-1">Best TypeScript component libraries collection</div>
                 </div>
               </a>
               
               <a 
-                href="https://bmo-toold.netlify.app" 
+                href="https://www.flaticon.com/free-icons/design-system" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="block p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors group"
+                className="flex items-center space-x-3 p-4 bg-green-50 hover:bg-green-100 border border-green-200 hover:border-green-300 rounded-lg transition-colors group"
+                data-testid="tool-flaticon"
               >
-                <div className="flex items-start space-x-3">
-                  <div className="text-2xl">🎨</div>
-                  <div>
-                    <div className="font-medium text-gray-800 text-base group-hover:text-blue-700">Design System</div>
-                    <div className="text-sm text-gray-600 mt-1">Color palettes & component styles for consistent UI</div>
-                    <div className="text-xs text-gray-500 mt-2">Click to explore →</div>
-                  </div>
+                <div className="text-2xl">🎨</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-green-700">Flaticon Design System</div>
+                  <div className="text-sm text-gray-600 mt-1">Free icons and design system resources</div>
                 </div>
               </a>
               
               <a 
-                href="https://bmo-toold.netlify.app" 
+                href="https://www.npmjs.com/package/npm" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="block p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors group"
+                className="flex items-center space-x-3 p-4 bg-red-50 hover:bg-red-100 border border-red-200 hover:border-red-300 rounded-lg transition-colors group"
+                data-testid="tool-npm"
               >
-                <div className="flex items-start space-x-3">
-                  <div className="text-2xl">📦</div>
-                  <div>
-                    <div className="font-medium text-gray-800 text-base group-hover:text-blue-700">NPM Packages</div>
-                    <div className="text-sm text-gray-600 mt-1">Published utilities & libraries for the JavaScript ecosystem</div>
-                    <div className="text-xs text-gray-500 mt-2">Click to explore →</div>
-                  </div>
+                <div className="text-2xl">📦</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-red-700">NPM Package Manager</div>
+                  <div className="text-sm text-gray-600 mt-1">Node.js package manager and registry</div>
                 </div>
               </a>
             </div>
