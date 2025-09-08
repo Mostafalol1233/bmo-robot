@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import finnIcon from '@assets/generated_images/Finn_character_icon_crop_db38cbd0.png';
 import jakeIcon from '@assets/generated_images/Jake_character_icon_crop_331d1026.png';
 import defeatSound from '@assets/defeat_sound.mp3';
+import gameBackground from '@assets/generated_images/Adventure_Time_tic_tac_toe_background_13a80862.png';
 
 type Player = 'X' | 'O' | null;
 type Difficulty = 'easy' | 'medium' | 'hard';
@@ -305,7 +306,12 @@ export default function TicTacToeGame({ onBack }: TicTacToeGameProps) {
   }
 
   return (
-    <div className="p-6 bg-gradient-to-br from-cyan-400 to-cyan-500 min-h-screen overflow-y-auto">
+    <div 
+      className="p-6 min-h-screen overflow-y-auto bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `linear-gradient(rgba(6, 182, 212, 0.85), rgba(14, 165, 233, 0.85)), url(${gameBackground})`,
+      }}
+    >
       <div className="max-w-md mx-auto pb-20">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white">🎮 Tic Tac Toe</h2>
