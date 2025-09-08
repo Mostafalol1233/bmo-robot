@@ -285,41 +285,44 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
             isWaving ? 'animate-wave' : ''
           }`}
           style={{
-            transformOrigin: 'top center',
-            transform: isWaving ? 'rotate(-90deg)' : 'rotate(0deg)'
+            transformOrigin: 'center left',
+            transform: isWaving ? 'rotate(-15deg)' : 'rotate(0deg)'
           }}
         >
           {/* Thin flexible arm */}
           <div className="relative">
             {/* Upper arm curve - mirrored from left arm */}
             <div 
-              className="w-1.5 h-20 bg-gray-900 rounded-full transform rotate-12"
+              className="w-1.5 h-20 bg-gray-900 rounded-full transform -rotate-12"
               style={{
                 borderLeft: '2px solid black',
                 borderRight: '2px solid black',
                 boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
               }}
             ></div>
-            {/* Lower arm curve - mirrored positioning */}
+            {/* Lower arm curve - properly mirrored positioning */}
             <div 
-              className={`w-1.5 h-16 bg-gray-900 rounded-full absolute top-16 -left-2 transition-transform duration-300`}
+              className={`w-1.5 h-16 bg-gray-900 rounded-full absolute top-16 -left-2 transform rotate-45 transition-transform duration-300`}
               style={{
                 borderLeft: '2px solid black',
                 borderRight: '2px solid black',
-                boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)',
-                transformOrigin: 'top center',
-                transform: isWaving ? 'rotate(-45deg)' : 'rotate(-45deg)'
+                boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
               }}
             ></div>
-            {/* Simple mitten hand - Adventure Time style */}
+            {/* Simple mitten hand - Adventure Time style - corrected position */}
             <div 
-              className="absolute top-28 -left-6 w-6 h-8 bg-gray-900 rounded-full border-2 border-black transition-all duration-300"
+              className={`absolute top-28 -left-6 w-6 h-8 bg-gray-900 rounded-full border-2 border-black transition-all duration-300 ${
+                isWaving ? 'animate-bounce' : ''
+              }`}
               style={{
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)'
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)',
+                transform: isWaving ? 'rotate(-10deg)' : 'rotate(0deg)'
               }}
             >
               {/* Hand highlight */}
               <div className="absolute top-1 left-1 w-2 h-2 bg-white opacity-20 rounded-full"></div>
+              {/* Thumb indication */}
+              <div className="absolute -top-1 right-0 w-2 h-3 bg-gray-900 rounded-full border border-black"></div>
             </div>
           </div>
         </div>

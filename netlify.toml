@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
+  to = "/.netlify/functions/server/:splat"
   status = 200
 
 [[redirects]]
@@ -14,6 +14,21 @@
 
 [functions]
   directory = "dist"
-  
+  node_bundler = "esbuild"
+
 [build.environment]
   NODE_VERSION = "20"
+  NPM_VERSION = "10"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY" 
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:;"
+
+[dev]
+  command = "npm run dev"
+  port = 5000
