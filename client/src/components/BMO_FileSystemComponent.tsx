@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BMOFace from './BMOFace';
 import VideoPlayerModalComponent from './VideoPlayerModalComponent';
+import ReactPlayer from 'react-player';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX, SiLinkedin } from 'react-icons/si';
@@ -81,6 +82,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [currentView, setCurrentView] = useState<ViewType>('explorer');
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
   const [selectedCharacter, setSelectedCharacter] = useState<string>('');
+  const [activeVideoSection, setActiveVideoSection] = useState<string | null>(null);
+  const [currentVideo, setCurrentVideo] = useState<any>(null);
 
   // Character images mapping
   const characterImages: Record<string, string[]> = {
@@ -282,66 +285,117 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     switch (currentView) {
       case 'videos':
         return (
-          <div className="p-4 h-full bg-white overflow-y-auto">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b-2 border-gray-300 pb-2">📹 Videos</h3>
-            
-            {/* Simple Video Thumbnails Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {videoList.map((video) => (
-                <div
-                  key={video.id}
-                  className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-all hover:scale-105"
-                  onClick={() => handleVideoClick(video)}
-                  data-testid={`video-item-${video.id}`}
-                >
-                  {/* Video Thumbnail */}
-                  <div className="aspect-video bg-black relative group">
-                    <img 
-                      src={video.thumbnail} 
-                      alt={video.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallback = target.nextSibling as HTMLDivElement;
-                        if (fallback) fallback.style.display = 'flex';
-                      }}
-                    />
-                    {/* Fallback for failed images */}
-                    <div className="absolute inset-0 bg-gray-600 hidden items-center justify-center">
-                      <span className="text-white text-xl">🎥</span>
-                    </div>
-                    
-                    {/* Simple Play Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center transition-all">
-                      <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
-                        <span className="text-white text-lg ml-1">▶</span>
-                      </div>
-                    </div>
+          <div className="h-full bg-white flex flex-col">
+            <div className="screen-toolbar flex items-center gap-2 p-2 bg-gray-100 border-b">
+              <button 
+                className={`tab px-3 py-1 rounded text-sm ${activeVideoSection === null ? "bg-blue-500 text-white" : "bg-gray-200"}`} 
+                onClick={() => { setActiveVideoSection(null); setCurrentVideo(null); }}
+                data-testid="tab-home"
+              >
+                Home
+              </button>
+              <button 
+                className={`tab px-3 py-1 rounded text-sm ${activeVideoSection === "videos" ? "bg-blue-500 text-white" : "bg-gray-200"}`} 
+                onClick={() => { setActiveVideoSection("videos"); setCurrentVideo(null); }}
+                data-testid="tab-videos"
+              >
+                Videos
+              </button>
+              <button 
+                className={`tab px-3 py-1 rounded text-sm ${activeVideoSection === "ai" ? "bg-blue-500 text-white" : "bg-gray-200"}`} 
+                onClick={() => { setActiveVideoSection("ai"); setCurrentVideo(null); }}
+                data-testid="tab-ai"
+              >
+                AI Talk
+              </button>
+              <div className="path ml-auto text-sm text-gray-600">
+                C:\Portfolio\{activeVideoSection ? activeVideoSection : ""}
+              </div>
+            </div>
+
+            <div className="screen-body flex-1 p-4 bg-gradient-to-b from-blue-900 to-blue-800 text-white">
+              {!activeVideoSection && (
+                <div className="grid-icons grid grid-cols-3 gap-4 h-full content-center">
+                  <div 
+                    className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors" 
+                    onClick={() => setActiveVideoSection("videos")}
+                    data-testid="icon-videos"
+                  >
+                    <div className="icon text-4xl mb-2">🎬</div>
+                    <div className="label text-sm">Videos</div>
                   </div>
-                  
-                  {/* Video Title */}
-                  <div className="p-2">
-                    <div className="text-sm font-medium text-gray-800 line-clamp-2">
-                      {video.title}
-                    </div>
+                  <div 
+                    className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors" 
+                    onClick={() => setActiveVideoSection("ai")}
+                    data-testid="icon-ai"
+                  >
+                    <div className="icon text-4xl mb-2">💬</div>
+                    <div className="label text-sm">AI Talk</div>
+                  </div>
+                  <div className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors">
+                    <div className="icon text-4xl mb-2">👥</div>
+                    <div className="label text-sm">Communities</div>
+                  </div>
+                  <div className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors">
+                    <div className="icon text-4xl mb-2">📒</div>
+                    <div className="label text-sm">Contact Me</div>
+                  </div>
+                  <div className="icon-card bg-white/10 border border-white/20 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition-colors">
+                    <div className="icon text-4xl mb-2">🛠</div>
+                    <div className="label text-sm">My Tools</div>
                   </div>
                 </div>
-              ))}
-            </div>
-            
-            {/* Channel Link */}
-            <div className="mt-6 text-center">
-              <a 
-                href="https://www.youtube.com/@Bemora-site"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
-                data-testid="youtube-channel-link"
-              >
-                <span>🔴</span>
-                <span>Visit Bemora Channel</span>
-              </a>
+              )}
+
+              {activeVideoSection === "videos" && (
+                <div className="videos-area flex gap-4 h-full">
+                  <div className="videos-left w-1/3 bg-white/10 rounded-lg p-3 overflow-auto">
+                    <div className="list-title text-sm mb-3 text-blue-200">Playlist</div>
+                    {videoList.map(v => (
+                      <div 
+                        key={v.id} 
+                        className={`playlist-item p-3 mb-2 rounded cursor-pointer text-sm transition-all ${
+                          currentVideo?.id === v.id 
+                            ? "bg-blue-500/30 text-white" 
+                            : "bg-white/5 hover:bg-white/10 text-blue-100"
+                        }`} 
+                        onClick={() => setCurrentVideo(v)}
+                        data-testid={`playlist-item-${v.id}`}
+                      >
+                        {v.title}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="videos-player flex-1 bg-black rounded-lg overflow-hidden">
+                    {currentVideo ? (
+                      <ReactPlayer 
+                        url={currentVideo.youtubeUrl || currentVideo.url} 
+                        controls={true}
+                        width="100%" 
+                        height="100%"
+                        data-testid="react-player"
+                      />
+                    ) : (
+                      <div className="player-empty h-full flex items-center justify-center text-gray-400">
+                        <div className="text-center">
+                          <div className="text-4xl mb-2">🎥</div>
+                          <div>Choose a video from the playlist</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {activeVideoSection === "ai" && (
+                <div className="ai-area flex items-center justify-center h-full">
+                  <div className="ai-note text-center text-blue-200">
+                    <div className="text-4xl mb-4">🤖</div>
+                    <div>AI Chat will appear here (inside BMO screen).</div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         );
