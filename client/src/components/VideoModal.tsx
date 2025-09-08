@@ -1,4 +1,4 @@
-import ReactPlayer from 'react-player/youtube';
+import ReactPlayer from 'react-player';
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -26,12 +26,14 @@ export default function VideoModal({ isOpen, onClose, videoUrl, videoTitle }: Vi
         </div>
         
         <div className="aspect-video bg-black rounded overflow-hidden">
-          <ReactPlayer
-            url={videoUrl}
+          <iframe
+            src={videoUrl.replace('watch?v=', 'embed/').replace('shorts/', 'embed/')}
             width="100%"
             height="100%"
-            controls={true}
-            playing={true}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
           />
         </div>
         
