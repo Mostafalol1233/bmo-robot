@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import BMOFace from './BMOFace';
-import VideoModal from './VideoModal';
+import VideoPlayerModalComponent from './VideoPlayerModalComponent';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX } from 'react-icons/si';
 
@@ -85,7 +85,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState<{url: string, title: string}>({url: '', title: ''});
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   
   // Video list with real YouTube URLs and thumbnails
   const videoList = [
@@ -123,7 +123,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
   // Handle video click
   const handleVideoClick = (video: {id: string, title: string, url: string, thumbnail: string}) => {
-    setSelectedVideo({url: video.url, title: video.title});
+    const videoIndex = videoList.findIndex(v => v.id === video.id);
+    setSelectedVideoIndex(videoIndex);
     setIsVideoModalOpen(true);
   };
 
@@ -863,5 +864,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
         </div>
       </div>
+      
+      {/* Video Player Modal */}
+      <VideoPlayerModalComponent
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        videos={videoList}
+        initialVideoIndex={selectedVideoIndex}
+      />
   );
 }
