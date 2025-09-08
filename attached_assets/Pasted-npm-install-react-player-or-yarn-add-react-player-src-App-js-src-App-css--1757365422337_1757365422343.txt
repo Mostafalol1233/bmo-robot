@@ -1,0 +1,247 @@
+npm install react-player
+# or
+yarn add react-player
+استبدل src/App.js و src/App.css بالكودين الموجودين أدناه، ثم شغل:
+
+bash
+نسخ الكود
+npm start
+# or
+yarn start
+ملف: src/App.js
+jsx
+نسخ الكود
+import React, { useState } from "react";
+import ReactPlayer from "react-player";
+import "./App.css";
+
+const SAMPLE_VIDEOS = [
+  { id: "1", title: "Video 1 - Intro", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+  { id: "2", title: "Video 2 - Demo", url: "https://www.youtube.com/watch?v=3JZ_D3ELwOQ" },
+  { id: "3", title: "Video 3 - Tutorial", url: "https://www.youtube.com/watch?v=L_jWHffIx5E" }
+];
+
+function BMOButton({ onStart }) {
+  return (
+    <div className="bmo-button" onClick={onStart} role="button" tabIndex={0}>
+      <div className="bmo-body">
+        <div className="bmo-screen-small">
+          <div className="eyes">
+            <div className="eye" />
+            <div className="eye" />
+          </div>
+        </div>
+        <div className="bmo-controls">
+          <div className="btn red" />
+          <div className="btn blue" />
+          <div className="dpad" />
+          <div className="btn green" />
+        </div>
+        <div className="bmo-legs">
+          <div className="leg"><div className="shoe"/></div>
+          <div className="leg"><div className="shoe"/></div>
+        </div>
+      </div>
+      <div className="start-hint">Click BMO to Start</div>
+    </div>
+  );
+}
+
+function VideoExplorer({ videos, onSelect }) {
+  return (
+    <div className="video-explorer">
+      <div className="explorer-toolbar">C:\Portfolio\Videos</div>
+      <div className="explorer-content">
+        <div className="video-list">
+          {videos.map(v => (
+            <div key={v.id} className="video-item" onClick={() => onSelect(v)}>
+              <div className="thumb">{/* could put thumbnail */}</div>
+              <div className="v-title">{v.title}</div>
+            </div>
+          ))}
+        </div>
+        <div className="player-placeholder">Select a video to play</div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [started, setStarted] = useState(false);
+  const [activeSection, setActiveSection] = useState(null); // "videos" | null
+  const [currentVideo, setCurrentVideo] = useState(null);
+
+  return (
+    <div className="app">
+      {!started ? (
+        <div className="landing">
+          <BMOButton onStart={() => setStarted(true)} />
+        </div>
+      ) : (
+        <div className="workspace">
+          <div className="bmo-expanded">
+            <div className="bmo-screen-expanded">
+              <div className="screen-toolbar">
+                <button className={`tab ${activeSection === null ? "active":""}`} onClick={() => { setActiveSection(null); setCurrentVideo(null); }}>Home</button>
+                <button className={`tab ${activeSection === "videos" ? "active":""}`} onClick={() => { setActiveSection("videos"); setCurrentVideo(null); }}>Videos</button>
+                <button className={`tab`} onClick={() => { setActiveSection("ai"); setCurrentVideo(null); }}>AI Talk</button>
+                <div className="path">C:\Portfolio\{activeSection ? activeSection : ""}</div>
+              </div>
+
+              <div className="screen-body">
+                {!activeSection && (
+                  <div className="grid-icons">
+                    <div className="icon-card" onClick={() => setActiveSection("videos")}>
+                      <div className="icon">🎬</div>
+                      <div className="label">Videos</div>
+                    </div>
+                    <div className="icon-card" onClick={() => setActiveSection("ai")}>
+                      <div className="icon">💬</div>
+                      <div className="label">AI Talk</div>
+                    </div>
+                    <div className="icon-card">
+                      <div className="icon">👥</div>
+                      <div className="label">Communities</div>
+                    </div>
+                    <div className="icon-card">
+                      <div className="icon">📒</div>
+                      <div className="label">Contact Me</div>
+                    </div>
+                    <div className="icon-card">
+                      <div className="icon">🛠</div>
+                      <div className="label">My Tools</div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSection === "videos" && (
+                  <div className="videos-area">
+                    <div className="videos-left">
+                      <div className="list-title">Playlist</div>
+                      {SAMPLE_VIDEOS.map(v => (
+                        <div 
+                          key={v.id} 
+                          className={`playlist-item ${currentVideo?.id === v.id ? "playing":""}`} 
+                          onClick={() => setCurrentVideo(v)}
+                        >
+                          {v.title}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="videos-player">
+                      {currentVideo ? (
+                        <ReactPlayer 
+                          url={currentVideo.url} 
+                          controls 
+                          width="100%" 
+                          height="100%"
+                        />
+                      ) : (
+                        <div className="player-empty">Choose a video from the playlist</div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {activeSection === "ai" && (
+                  <div className="ai-area">
+                    <div className="ai-note">AI Chat will appear here (inside BMO screen).</div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="bmo-body-expanded">
+              <div className="bmo-controls-expanded">
+                <div className="btn red" />
+                <div className="btn blue" />
+                <div className="dpad" />
+                <div className="btn green" />
+              </div>
+              <div className="bmo-legs-expanded">
+                <div className="leg"><div className="shoe"/></div>
+                <div className="leg"><div className="shoe"/></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
+ملف: src/App.css
+css
+نسخ الكود
+/* Reset basics */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Press Start 2P', monospace; }
+
+/* Page bg */
+.app { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg,#2b2f4a,#11131a); color: #fff; }
+
+/* Landing BMO button */
+.bmo-button { cursor: pointer; text-align: center; }
+.bmo-body { width: 260px; height: 360px; background: #6ad0c9; border-radius: 18px; padding: 18px; display:flex; flex-direction:column; align-items:center; box-shadow: 0 12px 30px rgba(0,0,0,0.6); position: relative; }
+.bmo-screen-small { width: 200px; height: 140px; background: #032; border-radius: 6px; display:flex; align-items:center; justify-content:center; position: relative; }
+.eyes { display:flex; gap:20px; }
+.eye { width:28px; height:28px; background: #ffd84d; border-radius:50%; box-shadow: inset -3px -3px 0 rgba(0,0,0,0.15); }
+.bmo-controls { width:100%; display:flex; justify-content:space-around; margin-top:16px; }
+.btn { width:26px;height:26px;border-radius:50%; box-shadow: 0 3px 0 rgba(0,0,0,0.15); }
+.btn.red{ background:#ff5c5c; } .btn.blue{ background:#6ec6ff; } .btn.green{ background:#7fff9c; }
+.dpad{ width:26px;height:26px;background:#f9d56e;border-radius:6px; }
+.bmo-legs{ display:flex; gap:30px; margin-top:22px; align-items:flex-end; }
+.leg{ width:8px;height:40px;background:#000;border-radius:4px; display:flex; align-items:flex-end; justify-content:center; }
+.shoe{ width:28px;height:16px;background:#000;border-radius:8px 8px 6px 6px; margin-bottom:-6px; }
+
+/* start hint */
+.start-hint { margin-top:12px; font-size:10px; color:#cfe9e6; }
+
+/* Expanded workspace */
+.workspace{ width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; }
+.bmo-expanded{ width:760px; height:560px; display:flex; gap:18px; align-items:flex-start; }
+
+/* Screen expanded */
+.bmo-screen-expanded{ width:560px; height:420px; background:#081827; border-radius:8px; padding:8px; box-shadow: inset 0 0 0 6px rgba(0,0,0,0.2); display:flex; flex-direction:column; }
+.screen-toolbar{ display:flex; align-items:center; gap:8px; padding:6px; color:#bdeaff; }
+.screen-toolbar .tab{ background:transparent; border:none; color:#bdeaff; padding:6px 8px; cursor:pointer; font-size:12px; }
+.screen-toolbar .tab.active{ background: rgba(255,255,255,0.06); border-radius:4px; }
+.path{ margin-left:auto; font-size:11px; color:#9fd8ff; opacity:0.9; }
+
+/* screen body */
+.screen-body{ flex:1; margin-top:6px; padding:8px; background: linear-gradient(180deg,#072034,#03141a); border-radius:6px; display:flex; align-items:stretch; justify-content:center; color:#fff; }
+
+/* grid icons home */
+.grid-icons{ width:100%; display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; padding:18px; }
+.icon-card{ background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.03); border-radius:6px; padding:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; transition: transform .15s; }
+.icon-card:hover{ transform: translateY(-6px); }
+.icon{ font-size:28px; margin-bottom:8px; }
+.label{ font-size:10px; color:#d8f2ff; text-align:center; }
+
+/* Videos area */
+.videos-area{ width:100%; display:flex; gap:12px; height:100%; }
+.videos-left{ width:30%; background: rgba(255,255,255,0.02); border-radius:6px; padding:10px; overflow:auto; }
+.list-title{ font-size:11px; margin-bottom:8px; color:#bfefff; }
+.playlist-item{ padding:8px; margin-bottom:6px; cursor:pointer; border-radius:4px; font-size:11px; color:#dbefff; }
+.playlist-item:hover{ background: rgba(255,255,255,0.03); transform: translateX(4px); }
+.playlist-item.playing{ background: rgba(120,200,255,0.12); color:#fff; }
+
+.videos-player{ flex:1; background:#000; border-radius:6px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.player-empty{ color:#9fbfd8; font-size:13px; }
+
+/* other placeholders */
+.player-placeholder{ color:#9fbfd8; }
+.ai-area{ display:flex; align-items:center; justify-content:center; color:#9fbfd8; }
+
+/* Body part expanded on right */
+.bmo-body-expanded{ width:160px; height:420px; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:16px; }
+.bmo-controls-expanded{ display:flex; gap:8px; }
+.bmo-legs-expanded{ display:flex; gap:20px; align-items:flex-end; }
+
+/* small screens fallback */
+@media (max-width:900px){
+  .bmo-expanded{ flex-direction:column; width:95vw; height:95vh; align-items:center; }
+  .bmo-body-expanded{ width:100%; height:auto; flex-direction:row; padding:8px; }
+  .bmo-screen-expanded{ width:95%; height:60vh; }
