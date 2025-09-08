@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import BMO_LandingPageComponent from './BMO_LandingPageComponent';
-import BMO_FileSystemComponent from './BMO_FileSystemComponent';
+import BMO_SimpleFileSystem from './BMO_SimpleFileSystem';
 import ChatInterface from './ChatInterface';
 import VideoPlayerModalComponent from './VideoPlayerModalComponent';
 
@@ -122,7 +122,7 @@ export default function BMO_IntegratedPortfolio() {
                 style={{ transformOrigin: 'center center' }}
                 data-testid="bmo-filesystem-zoomed"
               >
-                <BMO_FileSystemComponent onBack={handleBackToLanding} />
+                <BMO_SimpleFileSystem onBack={handleBackToLanding} />
               </div>
             ) : (
               // Normal BMO body view
@@ -136,7 +136,7 @@ export default function BMO_IntegratedPortfolio() {
                   
                   {/* BMO Screen with File System */}
                   <div className="bg-gradient-to-br from-cyan-200 to-cyan-300 border-4 border-cyan-700 rounded-lg h-48 mb-6 relative overflow-hidden">
-                    <BMO_FileSystemComponent onBack={handleBackToLanding} />
+                    <BMO_SimpleFileSystem onBack={handleBackToLanding} />
                   </div>
                   
                   {/* Control Buttons - Same as landing but different actions */}

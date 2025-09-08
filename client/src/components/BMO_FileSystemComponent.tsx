@@ -724,19 +724,14 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   return (
     <>
       <div 
-        className="w-full h-full bg-white text-black"
-        style={{ fontSize: '12px' }}
+        className="w-full h-full bg-gradient-to-br from-green-300 via-green-400 to-green-500 text-black"
+        style={{ fontSize: '12px', fontFamily: 'monospace' }}
         data-testid="bmo-filesystem"
       >
-        {/* Modern Windows 10 Style Top Bar */}
-        <div className="bg-white border-b border-gray-300 px-3 py-2 flex items-center justify-between shadow-sm">
+        {/* BMO Classic Interface Header */}
+        <div className="bg-gray-700 text-green-400 px-3 py-2 flex items-center justify-between border-b-2 border-black">
           <div className="flex items-center space-x-2">
-            <div className="flex space-x-1">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            </div>
-            <span className="text-sm font-medium text-gray-700">File Explorer</span>
+            <span className="text-sm font-bold tracking-wider">FILE  EDIT  VIEW  WINDOW  HELP</span>
           </div>
           {onBack && (
             <button 
@@ -749,27 +744,16 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 });
                 onBack();
               }}
-              className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 p-1 rounded"
+              className="text-green-400 hover:text-green-200 font-bold text-lg"
               data-testid="button-back-to-face"
-              title="Close File Explorer"
+              title="Close"
             >
               ✕
             </button>
           )}
         </div>
 
-        {/* Ribbon Menu */}
-        <div className="bg-gray-50 border-b border-gray-300 px-3 py-1">
-          <div className="flex items-center space-x-4 text-xs text-gray-600">
-            <button className="hover:bg-gray-200 px-2 py-1 rounded">File</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded">Home</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded">Share</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded">View</button>
-          </div>
-        </div>
-
-        {/* Navigation Bar - Modern Windows Style */}
-        <div className="bg-white border-b border-gray-300 px-3 py-2 flex items-center space-x-3">
+        {/* BMO Navigation removed for classic look */}
           <div className="flex items-center space-x-1">
             <button
               onClick={handleBackClick}

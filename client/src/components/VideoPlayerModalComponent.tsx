@@ -139,8 +139,7 @@ export default function VideoPlayerModalComponent({
                   playing={isPlaying}
                   volume={volume}
                   onProgress={handleProgress}
-                  onDuration={handleDuration}
-                  controls={false}
+                  controls={true}
                   data-testid="react-player"
                 />
               ) : (
