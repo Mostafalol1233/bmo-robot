@@ -99,7 +99,12 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
         <div className="bg-gradient-to-br from-cyan-400 via-cyan-450 to-cyan-500 rounded-xl border-4 border-cyan-700 shadow-2xl relative p-6" style={{ aspectRatio: '0.65', width: '320px' }}>
           
           {/* BMO Screen - White screen with animated face */}
-          <div className="bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center" style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)' }}>
+          <div 
+            className="bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors" 
+            style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)' }}
+            onClick={handleStart}
+            data-testid="bmo-screen-clickable"
+          >
             {/* BMO Animated Face */}
             <div className="relative z-10 animate-bounce" style={{ imageRendering: 'pixelated', animationDuration: '3s' }}>
               {/* Eyes - Black circles that follow mouse */}
@@ -158,18 +163,6 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
                 <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 pixel-text text-xs text-black font-bold">GAMES</span>
               </div>
               
-              {/* Red Start Button - more authentic */}
-              <div className="flex flex-col items-center">
-                <button 
-                  onClick={handleStart}
-                  className="w-16 h-16 bg-gradient-to-b from-red-400 to-red-600 rounded-full border-4 border-red-700 shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 mr-2"
-                  style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.3)' }}
-                  data-testid="button-start-landing"
-                >
-                  <span className="sr-only">Start</span>
-                </button>
-                <span className="pixel-text text-xs text-black mt-2 font-bold">START</span>
-              </div>
             </div>
             
             {/* BMO Physics Ball */}

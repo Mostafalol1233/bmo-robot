@@ -722,6 +722,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   }
 
   return (
+    <>
       <div 
         className="w-full h-full bg-white text-black"
         style={{ fontSize: '12px' }}
@@ -872,5 +873,6 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         videos={videoList}
         initialVideoIndex={selectedVideoIndex}
       />
+    </>
   );
 }
