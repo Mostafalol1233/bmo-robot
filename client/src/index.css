@@ -276,3 +276,26 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: hsl(174, 64%, 45%);
 }
+
+/* BMO Robotic Arm Wave Animation */
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  50% { transform: rotate(-15deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wave {
+  animation: wave 1s ease-in-out infinite;
+}
+
+/* Additional robotic joint animations */
+@keyframes roboticPulse {
+  0%, 100% { background-color: hsl(174, 64%, 55%); }
+  50% { background-color: hsl(174, 84%, 65%); }
+}
+
+.animate-robotic-pulse {
+  animation: roboticPulse 2s ease-in-out infinite;
+}

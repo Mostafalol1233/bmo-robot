@@ -10,6 +10,7 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
   const [isMouthMoving, setIsMouthMoving] = useState(false);
+  const [isWaving, setIsWaving] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const bmoRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +41,7 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
     return () => document.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Natural blinking and mouth movements
+  // Natural blinking, mouth movements, and robotic arm waving
   useEffect(() => {
     // Random blinking
     const blinkInterval = setInterval(() => {
@@ -54,9 +55,16 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
       setTimeout(() => setIsMouthMoving(false), 800);
     }, 3000 + Math.random() * 4000); // Random between 3-7 seconds
 
+    // Random robotic arm waving - greeting animation
+    const waveInterval = setInterval(() => {
+      setIsWaving(true);
+      setTimeout(() => setIsWaving(false), 2000); // Wave for 2 seconds
+    }, 8000 + Math.random() * 5000); // Random between 8-13 seconds
+
     return () => {
       clearInterval(blinkInterval);
       clearInterval(mouthInterval);
+      clearInterval(waveInterval);
     };
   }, []);
 
@@ -75,6 +83,10 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
   }, []);
 
   const handleStart = () => {
+    // Trigger robotic arm wave on interaction
+    setIsWaving(true);
+    setTimeout(() => setIsWaving(false), 2000);
+    
     // Play welcome audio on first interaction
     if (!hasInteracted) {
       setHasInteracted(true);
@@ -187,9 +199,49 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
           <span className="pixel-text text-xl text-black font-bold tracking-wider" style={{ textShadow: '1px 1px 0px rgba(0,0,0,0.3)' }}>BMO</span>
         </div>
         
-        {/* BMO Arms - More authentic thin black sticks */}
-        <div className="absolute -left-3 top-1/3 w-2 h-20 bg-black rounded-full shadow-md"></div>
-        <div className="absolute -right-3 top-1/3 w-2 h-20 bg-black rounded-full shadow-md"></div>
+        {/* BMO Robotic Arms - Mechanical with joints */}
+        {/* Left Arm - Static */}
+        <div className="absolute -left-3 top-1/3">
+          {/* Upper arm segment */}
+          <div className="w-2 h-10 bg-gradient-to-b from-gray-700 to-gray-900 rounded-full shadow-md relative">
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gray-600 rounded-full border border-gray-400"></div>
+          </div>
+          {/* Elbow joint */}
+          <div className="w-3 h-3 bg-gray-500 rounded-full mx-auto border-2 border-gray-400 shadow-sm"></div>
+          {/* Lower arm segment */}
+          <div className="w-2 h-10 bg-gradient-to-b from-gray-700 to-gray-900 rounded-full shadow-md relative mx-auto">
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-cyan-400 rounded-full"></div>
+          </div>
+        </div>
+        
+        {/* Right Arm - Animated (Waving) */}
+        <div 
+          className={`absolute -right-3 top-1/3 transition-transform duration-500 ${
+            isWaving ? 'animate-wave' : ''
+          }`}
+          style={{
+            transformOrigin: 'top center',
+            transform: isWaving ? 'rotate(25deg)' : 'rotate(0deg)'
+          }}
+        >
+          {/* Upper arm segment */}
+          <div className="w-2 h-10 bg-gradient-to-b from-gray-700 to-gray-900 rounded-full shadow-md relative">
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gray-600 rounded-full border border-gray-400"></div>
+          </div>
+          {/* Elbow joint */}
+          <div className="w-3 h-3 bg-gray-500 rounded-full mx-auto border-2 border-gray-400 shadow-sm"></div>
+          {/* Lower arm segment (waves more) */}
+          <div 
+            className="w-2 h-10 bg-gradient-to-b from-gray-700 to-gray-900 rounded-full shadow-md relative mx-auto"
+            style={{
+              transformOrigin: 'top center',
+              transform: isWaving ? 'rotate(-30deg)' : 'rotate(0deg)',
+              transition: 'transform 0.3s ease-in-out'
+            }}
+          >
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-cyan-400 rounded-full animate-robotic-pulse"></div>
+          </div>
+        </div>
         
         {/* BMO Legs - More authentic */}
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full flex space-x-16">
