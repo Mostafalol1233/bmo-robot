@@ -13,7 +13,17 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
   const [isMouthMoving, setIsMouthMoving] = useState(false);
   const [isWaving, setIsWaving] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
   const bmoRef = useRef<HTMLDivElement>(null);
+
+  // Function to stop any currently playing audio
+  const stopCurrentAudio = () => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+    }
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -72,15 +82,27 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
   // Play welcome sound when component mounts (website opens)
   useEffect(() => {
     const playWelcomeSound = () => {
+      // Stop any currently playing audio first
+      stopCurrentAudio();
+      
       const audio = new Audio(bmoWelcomeSound);
       audio.volume = 0.3;
+      currentAudioRef.current = audio;
+      
       audio.play().catch(() => {
         // Handle audio play failure silently
       });
+      
+      // Clear reference when audio ends
+      audio.addEventListener('ended', () => {
+        currentAudioRef.current = null;
+      });
     };
 
-    // Play sound when component mounts
-    playWelcomeSound();
+    // Only play sound when component mounts (not when returning from filesystem)
+    if (!hasInteracted) {
+      playWelcomeSound();
+    }
   }, []);
 
   const handleStart = () => {
@@ -88,14 +110,24 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
     setIsWaving(true);
     setTimeout(() => setIsWaving(false), 2000);
     
+    // Stop any currently playing audio to prevent conflicts
+    stopCurrentAudio();
+    
     // Play welcome audio on first interaction
     if (!hasInteracted) {
       setHasInteracted(true);
       // Create audio element dynamically for welcome sound
       const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmkUDFOq5+61diMGJHfH8N2QQAoUXrTp66hVFApGn+DyvmkUDFOq5+61diMGJHfH8N2QQAoUXrTp66hVFApGn+DyvmkUDFOq5+61diMG');
       audio.volume = 0.3;
+      currentAudioRef.current = audio;
+      
       audio.play().catch(() => {
         // Handle audio play failure silently
+      });
+      
+      // Clear reference when audio ends
+      audio.addEventListener('ended', () => {
+        currentAudioRef.current = null;
       });
     }
     onStart();
