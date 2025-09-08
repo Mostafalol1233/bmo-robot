@@ -7,6 +7,7 @@ export function setupProtection() {
   // Disable right-click context menu
   document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
+    showConsoleWarning();
     showCopyrightAlert();
     return false;
   });
@@ -16,6 +17,7 @@ export function setupProtection() {
     // Disable F12 (Developer Tools)
     if (e.keyCode === 123) {
       e.preventDefault();
+      showConsoleWarning();
       showCopyrightAlert();
       return false;
     }
@@ -23,6 +25,7 @@ export function setupProtection() {
     // Disable Ctrl+Shift+I (Developer Tools)
     if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
       e.preventDefault();
+      showConsoleWarning();
       showCopyrightAlert();
       return false;
     }
@@ -30,6 +33,7 @@ export function setupProtection() {
     // Disable Ctrl+Shift+C (Element Inspector)
     if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
       e.preventDefault();
+      showConsoleWarning();
       showCopyrightAlert();
       return false;
     }
@@ -37,6 +41,7 @@ export function setupProtection() {
     // Disable Ctrl+Shift+J (Console)
     if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
       e.preventDefault();
+      showConsoleWarning();
       showCopyrightAlert();
       return false;
     }
@@ -44,6 +49,7 @@ export function setupProtection() {
     // Disable Ctrl+U (View Source)
     if (e.ctrlKey && e.keyCode === 85) {
       e.preventDefault();
+      showConsoleWarning();
       showCopyrightAlert();
       return false;
     }
@@ -51,6 +57,7 @@ export function setupProtection() {
     // Disable Ctrl+S (Save Page)
     if (e.ctrlKey && e.keyCode === 83) {
       e.preventDefault();
+      showConsoleWarning();
       showCopyrightAlert();
       return false;
     }
@@ -64,6 +71,7 @@ export function setupProtection() {
     // Disable Ctrl+P (Print)
     if (e.ctrlKey && e.keyCode === 80) {
       e.preventDefault();
+      showConsoleWarning();
       showCopyrightAlert();
       return false;
     }
@@ -94,6 +102,7 @@ export function setupProtection() {
         window.outerWidth - window.innerWidth > threshold) {
       if (!devtools.open) {
         devtools.open = true;
+        showConsoleWarning();
         showCopyrightAlert();
         // Redirect or block access
         document.body.innerHTML = `
@@ -144,19 +153,24 @@ export function setupProtection() {
     }
   }, 500);
 
-  // Console warning message
-  console.clear();
-  console.log('%c⚠️ تحذير - حقوق النشر', 'color: red; font-size: 30px; font-weight: bold;');
-  console.log('%cهذا الموقع محمي بحقوق النشر', 'color: red; font-size: 16px;');
-  console.log('%cأي محاولة لسرقة الكود أو المحتوى مخالفة قانونية', 'color: red; font-size: 16px;');
-  console.log('%cجميع الحقوق محفوظة للمطور', 'color: red; font-size: 16px;');
-
-  // Clear console periodically
-  setInterval(function() {
-    console.clear();
-    console.log('%c⚠️ تحذير - حقوق النشر', 'color: red; font-size: 30px; font-weight: bold;');
-    console.log('%cهذا الموقع محمي بحقوق النشر', 'color: red; font-size: 16px;');
-  }, 3000);
+  // Show console warning only when needed
+  let consoleWarningShown = false;
+  
+  function showConsoleWarning() {
+    if (!consoleWarningShown) {
+      console.clear();
+      console.log('%c⚠️ تحذير - حقوق النشر', 'color: red; font-size: 30px; font-weight: bold;');
+      console.log('%cهذا الموقع محمي بحقوق النشر', 'color: red; font-size: 16px;');
+      console.log('%cأي محاولة لسرقة الكود أو المحتوى مخالفة قانونية', 'color: red; font-size: 16px;');
+      console.log('%cجميع الحقوق محفوظة للمطور', 'color: red; font-size: 16px;');
+      consoleWarningShown = true;
+      
+      // Reset flag after some time
+      setTimeout(() => {
+        consoleWarningShown = false;
+      }, 10000);
+    }
+  }
 
   // Disable printing
   window.addEventListener('beforeprint', function(e) {
