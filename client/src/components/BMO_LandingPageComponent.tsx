@@ -235,87 +235,138 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
           <span className="pixel-text text-xl text-black font-bold tracking-wider" style={{ textShadow: '1px 1px 0px rgba(0,0,0,0.3)' }}>BMO</span>
         </div>
         
-        {/* BMO Robotic Arms - More Authentic Mechanical Design */}
+        {/* BMO Arms - Authentic Adventure Time Style */}
         {/* Left Arm - Static */}
-        <div className="absolute -left-4 top-1/3">
-          {/* Shoulder joint */}
-          <div className="w-4 h-4 bg-gray-800 border-2 border-black rounded-sm shadow-lg relative mb-1">
-            <div className="absolute inset-1 bg-gray-600 rounded-sm"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-red-500 rounded-full"></div>
-          </div>
-          {/* Upper arm segment - rectangular for authenticity */}
-          <div className="w-3 h-12 bg-gradient-to-b from-black to-gray-800 border border-gray-600 shadow-md relative mx-auto">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gray-600"></div>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-900"></div>
-            {/* Arm details */}
-            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full"></div>
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full"></div>
-          </div>
-          {/* Elbow joint - square and mechanical */}
-          <div className="w-4 h-3 bg-gray-700 border border-black shadow-md mx-auto relative">
-            <div className="absolute inset-0.5 bg-gray-500 border border-gray-400"></div>
-          </div>
-          {/* Lower arm segment */}
-          <div className="w-3 h-12 bg-gradient-to-b from-black to-gray-800 border border-gray-600 shadow-md relative mx-auto">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gray-600"></div>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-900"></div>
-            {/* Hand/end effector */}
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-cyan-400 border border-cyan-600 rounded-sm shadow-sm">
-              <div className="absolute inset-0.5 bg-cyan-300 opacity-60"></div>
+        <div className="absolute -left-6 top-1/2 transform -translate-y-1/2">
+          {/* Thin flexible arm */}
+          <div className="relative">
+            {/* Upper arm curve */}
+            <div 
+              className="w-1.5 h-20 bg-gray-900 rounded-full transform rotate-12"
+              style={{
+                borderLeft: '2px solid black',
+                borderRight: '2px solid black',
+                boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
+              }}
+            ></div>
+            {/* Lower arm curve */}
+            <div 
+              className="w-1.5 h-16 bg-gray-900 rounded-full absolute top-16 left-2 transform -rotate-45"
+              style={{
+                borderLeft: '2px solid black',
+                borderRight: '2px solid black',
+                boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
+              }}
+            ></div>
+            {/* Simple mitten hand - Adventure Time style */}
+            <div 
+              className="absolute top-28 left-6 w-6 h-8 bg-gray-900 rounded-full border-2 border-black"
+              style={{
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)'
+              }}
+            >
+              {/* Hand highlight */}
+              <div className="absolute top-1 left-1 w-2 h-2 bg-white opacity-20 rounded-full"></div>
             </div>
           </div>
         </div>
         
-        {/* Right Arm - Animated (Waving) - More Authentic */}
+        {/* Right Arm - Animated (Waving) - Adventure Time Style */}
         <div 
-          className={`absolute -right-4 top-1/3 transition-transform duration-500 ${
+          className={`absolute -right-6 top-1/2 transform -translate-y-1/2 transition-transform duration-500 ${
             isWaving ? 'animate-wave' : ''
           }`}
           style={{
-            transformOrigin: 'top center',
-            transform: isWaving ? 'rotate(20deg)' : 'rotate(0deg)'
+            transformOrigin: 'top left',
+            transform: isWaving ? 'rotate(-15deg)' : 'rotate(0deg)'
           }}
         >
-          {/* Shoulder joint */}
-          <div className="w-4 h-4 bg-gray-800 border-2 border-black rounded-sm shadow-lg relative mb-1">
-            <div className="absolute inset-1 bg-gray-600 rounded-sm"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-red-500 rounded-full animate-robotic-pulse"></div>
-          </div>
-          {/* Upper arm segment */}
-          <div className="w-3 h-12 bg-gradient-to-b from-black to-gray-800 border border-gray-600 shadow-md relative mx-auto">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gray-600"></div>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-900"></div>
-            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full"></div>
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full"></div>
-          </div>
-          {/* Elbow joint */}
-          <div className="w-4 h-3 bg-gray-700 border border-black shadow-md mx-auto relative">
-            <div className="absolute inset-0.5 bg-gray-500 border border-gray-400"></div>
-          </div>
-          {/* Lower arm segment (waves more) */}
-          <div 
-            className="w-3 h-12 bg-gradient-to-b from-black to-gray-800 border border-gray-600 shadow-md relative mx-auto"
-            style={{
-              transformOrigin: 'top center',
-              transform: isWaving ? 'rotate(-25deg)' : 'rotate(0deg)',
-              transition: 'transform 0.4s ease-in-out'
-            }}
-          >
-            <div className="absolute top-0 left-0 w-full h-1 bg-gray-600"></div>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-900"></div>
-            {/* Hand/end effector with greeting gesture */}
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-cyan-400 border border-cyan-600 rounded-sm shadow-sm animate-robotic-pulse">
-              <div className="absolute inset-0.5 bg-cyan-300 opacity-60"></div>
-              {/* Small greeting indicator */}
-              <div className="absolute -top-1 -right-1 w-1 h-1 bg-yellow-300 rounded-full animate-ping"></div>
+          {/* Thin flexible arm */}
+          <div className="relative">
+            {/* Upper arm curve */}
+            <div 
+              className="w-1.5 h-20 bg-gray-900 rounded-full transform -rotate-12"
+              style={{
+                borderLeft: '2px solid black',
+                borderRight: '2px solid black',
+                boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
+              }}
+            ></div>
+            {/* Lower arm curve - waves more when waving */}
+            <div 
+              className="w-1.5 h-16 bg-gray-900 rounded-full absolute top-16 -left-2 transition-transform duration-300"
+              style={{
+                borderLeft: '2px solid black',
+                borderRight: '2px solid black',
+                boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)',
+                transformOrigin: 'top center',
+                transform: isWaving ? 'rotate(60deg)' : 'rotate(45deg)'
+              }}
+            ></div>
+            {/* Simple mitten hand - Adventure Time style */}
+            <div 
+              className={`absolute w-6 h-8 bg-gray-900 rounded-full border-2 border-black transition-all duration-300 ${
+                isWaving ? 'top-24 -left-8' : 'top-28 -left-6'
+              }`}
+              style={{
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)'
+              }}
+            >
+              {/* Hand highlight */}
+              <div className="absolute top-1 left-1 w-2 h-2 bg-white opacity-20 rounded-full"></div>
             </div>
           </div>
         </div>
         
-        {/* BMO Legs - More authentic */}
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full flex space-x-16">
-          <div className="w-2 h-16 bg-black rounded-full shadow-md"></div>
-          <div className="w-2 h-16 bg-black rounded-full shadow-md"></div>
+        {/* BMO Legs - Authentic Adventure Time Style */}
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
+          {/* Left Leg */}
+          <div className="absolute -left-12 top-0">
+            {/* Thin black leg */}
+            <div 
+              className="w-1.5 h-16 bg-black rounded-full"
+              style={{
+                border: '1px solid #333',
+                boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
+              }}
+            ></div>
+            {/* BMO's iconic rounded shoe */}
+            <div 
+              className="absolute -bottom-2 -left-2 w-6 h-4 bg-black rounded-full border-2 border-gray-800"
+              style={{
+                boxShadow: '0 2px 4px rgba(0,0,0,0.3)'
+              }}
+            >
+              {/* White shine highlight on shoe */}
+              <div className="absolute top-0.5 left-1 w-2 h-1.5 bg-white opacity-40 rounded-full"></div>
+              {/* Simple sole line */}
+              <div className="absolute bottom-0 left-1 right-1 h-0.5 bg-gray-600 rounded-full"></div>
+            </div>
+          </div>
+          
+          {/* Right Leg */}
+          <div className="absolute -right-12 top-0">
+            {/* Thin black leg */}
+            <div 
+              className="w-1.5 h-16 bg-black rounded-full"
+              style={{
+                border: '1px solid #333',
+                boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
+              }}
+            ></div>
+            {/* BMO's iconic rounded shoe */}
+            <div 
+              className="absolute -bottom-2 -left-2 w-6 h-4 bg-black rounded-full border-2 border-gray-800"
+              style={{
+                boxShadow: '0 2px 4px rgba(0,0,0,0.3)'
+              }}
+            >
+              {/* White shine highlight on shoe */}
+              <div className="absolute top-0.5 left-1 w-2 h-1.5 bg-white opacity-40 rounded-full"></div>
+              {/* Simple sole line */}
+              <div className="absolute bottom-0 left-1 right-1 h-0.5 bg-gray-600 rounded-full"></div>
+            </div>
+          </div>
         </div>
         
       </div>
