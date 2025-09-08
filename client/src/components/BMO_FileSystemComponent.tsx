@@ -254,7 +254,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b-2 border-gray-800 pb-2 font-mono">📹 Video Gallery</h3>
             
             {/* Simple Video Grid */}
-            <div className="grid grid-cols-3 gap-4 h-full overflow-y-auto">
+            <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
+              <div className="grid grid-cols-3 gap-4">
               {videoList.map((video) => (
                 <div
                   key={video.id}
@@ -294,6 +295,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   </div>
                 </div>
               ))}
+              </div>
             </div>
             
             {/* Channel Link */}
@@ -317,7 +319,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Character Gallery</h3>
             
             {/* Files Grid - Adventure Time Characters using real cropped images */}
-            <div className="grid grid-cols-5 gap-3">
+            <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
+              <div className="grid grid-cols-5 gap-3">
               {/* Finn File */}
               <button 
                 onClick={() => handleCharacterClick('Finn')}
@@ -402,6 +405,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 </div>
                 <span className="text-xs text-center text-gray-800 leading-tight font-medium">BMO</span>
               </button>
+              </div>
             </div>
 
             <div className="mt-6 text-center text-sm text-gray-500">
@@ -427,7 +431,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </div>
             
             {/* Character Images Gallery */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
+              <div className="grid grid-cols-3 gap-3">
               {(characterImages[selectedCharacter] || []).map((imageUrl, index) => (
                 <div key={index} className="aspect-square bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden group hover:shadow-md transition-all duration-200">
                   <img 
@@ -446,6 +451,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm">No images found for {selectedCharacter}</div>
                 </div>
               )}
+              </div>
             </div>
 
             <div className="mt-4 p-3 bg-teal-50 rounded-lg border border-teal-200">
