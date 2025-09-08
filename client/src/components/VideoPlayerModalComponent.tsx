@@ -6,6 +6,7 @@ interface VideoItem {
   id: string;
   title: string;
   url: string;
+  youtubeUrl?: string;
   thumbnail?: string;
   duration?: string;
 }
@@ -225,9 +226,20 @@ export default function VideoPlayerModalComponent({
                   <p className="pixel-text text-xs text-foreground mb-1">
                     {currentVideo?.title}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground mb-2">
                     Video {currentVideoIndex + 1} of {videos.length}
                   </p>
+                  {currentVideo?.youtubeUrl && (
+                    <a 
+                      href={currentVideo.youtubeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 text-xs text-red-600 hover:text-red-700 transition-colors"
+                    >
+                      <i className="fab fa-youtube"></i>
+                      <span>شاهد على يوتيوب</span>
+                    </a>
+                  )}
                 </div>
 
                 <button 

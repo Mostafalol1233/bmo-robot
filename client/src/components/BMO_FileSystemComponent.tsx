@@ -93,37 +93,42 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '1',
       title: 'BMO Adventure Short #1',
-      url: 'https://youtube.com/shorts/A1eUITFLvrA',
+      url: '/videos/bmo_adventure_1.mp4', // Local video file
+      youtubeUrl: 'https://youtube.com/shorts/A1eUITFLvrA',
       thumbnail: 'https://img.youtube.com/vi/A1eUITFLvrA/mqdefault.jpg'
     },
     {
       id: '2', 
       title: 'BMO Adventure Short #2',
-      url: 'https://youtube.com/shorts/920D9DjKgCo',
+      url: '/videos/bmo_adventure_2.mp4', // Local video file
+      youtubeUrl: 'https://youtube.com/shorts/920D9DjKgCo',
       thumbnail: 'https://img.youtube.com/vi/920D9DjKgCo/mqdefault.jpg'
     },
     {
       id: '3',
       title: 'BMO Adventure Short #3', 
-      url: 'https://youtube.com/shorts/Ql7tURnDdzk',
+      url: '/videos/bmo_adventure_3.mp4', // Local video file
+      youtubeUrl: 'https://youtube.com/shorts/Ql7tURnDdzk',
       thumbnail: 'https://img.youtube.com/vi/Ql7tURnDdzk/mqdefault.jpg'
     },
     {
       id: '4',
       title: 'Adventure Time Tutorial',
-      url: 'https://www.youtube.com/watch?v=puFy652XCl8',
+      url: '/videos/adventure_tutorial.mp4', // Local video file
+      youtubeUrl: 'https://www.youtube.com/watch?v=puFy652XCl8',
       thumbnail: 'https://img.youtube.com/vi/puFy652XCl8/mqdefault.jpg'
     },
     {
       id: '5',
       title: 'BMO Coding Session',
-      url: 'https://www.youtube.com/watch?v=wjwNBUB_iXk', 
+      url: '/videos/bmo_coding.mp4', // Local video file
+      youtubeUrl: 'https://www.youtube.com/watch?v=wjwNBUB_iXk', 
       thumbnail: 'https://img.youtube.com/vi/wjwNBUB_iXk/mqdefault.jpg'
     }
   ];
 
   // Handle video click
-  const handleVideoClick = (video: {id: string, title: string, url: string, thumbnail: string}) => {
+  const handleVideoClick = (video: {id: string, title: string, url: string, thumbnail: string, youtubeUrl?: string}) => {
     const videoIndex = videoList.findIndex(v => v.id === video.id);
     setSelectedVideoIndex(videoIndex);
     setIsVideoModalOpen(true);
@@ -137,10 +142,10 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Social links and communities'
     },
     {
-      name: 'Videos',
+      name: 'فيديوز',
       emoji: '🎬',
       type: 'videos',
-      description: 'Project demos and tutorials'
+      description: 'مقاطع فيديو المشاريع والدروس'
     },
     {
       name: 'Images',
