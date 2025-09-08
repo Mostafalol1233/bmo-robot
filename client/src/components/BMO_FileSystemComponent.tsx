@@ -814,33 +814,6 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           {/* Left Sidebar */}
           <div className="w-48 bg-gray-50 border-r border-gray-300 p-2">
             <div className="space-y-1">
-              <div className="text-xs font-medium text-gray-600 mb-2">Quick access</div>
-              <button 
-                onClick={() => setCurrentView('explorer')}
-                className={`flex items-center space-x-2 w-full text-left px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors ${
-                  currentView === 'explorer' ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
-                }`}
-              >
-                <span>🏠</span>
-                <span>Home</span>
-              </button>
-              <button className="flex items-center space-x-2 w-full text-left px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors text-gray-700">
-                <span>💻</span>
-                <span>This PC</span>
-              </button>
-              <button className="flex items-center space-x-2 w-full text-left px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors text-gray-700">
-                <span>📁</span>
-                <span>Documents</span>
-              </button>
-              <button className="flex items-center space-x-2 w-full text-left px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors text-gray-700">
-                <span>⬇️</span>
-                <span>Downloads</span>
-              </button>
-              <button className="flex items-center space-x-2 w-full text-left px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors text-gray-700">
-                <span>🖼️</span>
-                <span>Pictures</span>
-              </button>
-              <div className="border-t border-gray-300 my-2"></div>
               <div className="text-xs font-medium text-gray-600 mb-2">BMO Portfolio</div>
               {folders.map((folder) => (
                 <button
