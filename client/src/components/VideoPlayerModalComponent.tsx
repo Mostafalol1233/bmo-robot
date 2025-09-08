@@ -84,6 +84,12 @@ export default function VideoPlayerModalComponent({
     setDuration(duration);
   };
 
+  const handleReady = (player: any) => {
+    if (player && player.getDuration) {
+      setDuration(player.getDuration());
+    }
+  };
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -140,7 +146,6 @@ export default function VideoPlayerModalComponent({
                   playing={isPlaying}
                   volume={volume}
                   onProgress={handleProgress}
-                  onDuration={handleDuration}
                   controls={false}
                   data-testid="react-player"
                 />
