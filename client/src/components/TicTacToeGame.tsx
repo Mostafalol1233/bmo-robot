@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import finnIcon from '@assets/generated_images/Finn_character_icon_crop_db38cbd0.png';
 import jakeIcon from '@assets/generated_images/Jake_character_icon_crop_331d1026.png';
+import defeatSound from '@assets/defeat_sound.mp3';
 
 type Player = 'X' | 'O' | null;
 type Difficulty = 'easy' | 'medium' | 'hard';
@@ -34,6 +35,15 @@ export default function TicTacToeGame({ onBack }: TicTacToeGameProps) {
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
           setWinner(board[a]);
           setScore(prev => ({ ...prev, [board[a]!]: prev[board[a]!] + 1 }));
+          
+          // Play defeat sound if player (X) loses against bot
+          if (gameMode === 'vs-bot' && board[a] === 'O') {
+            const audio = new Audio(defeatSound);
+            audio.volume = 0.5;
+            audio.play().catch(() => {
+              // Handle audio play failure silently
+            });
+          }
           return;
         }
       }
@@ -45,7 +55,7 @@ export default function TicTacToeGame({ onBack }: TicTacToeGameProps) {
     };
 
     checkWinner();
-  }, [board]);
+  }, [board, gameMode]);
 
   // Bot move logic
   const getBotMove = (board: Player[], difficulty: Difficulty): number => {
