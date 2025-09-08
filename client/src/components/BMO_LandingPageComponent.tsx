@@ -277,13 +277,13 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
             isWaving ? 'animate-wave' : ''
           }`}
           style={{
-            transformOrigin: 'top left',
-            transform: isWaving ? 'rotate(-15deg)' : 'rotate(0deg)'
+            transformOrigin: 'top right',
+            transform: isWaving ? 'rotate(15deg)' : 'rotate(0deg)'
           }}
         >
           {/* Thin flexible arm */}
           <div className="relative">
-            {/* Upper arm curve */}
+            {/* Upper arm curve - mirrored from left arm */}
             <div 
               className="w-1.5 h-20 bg-gray-900 rounded-full transform -rotate-12"
               style={{
@@ -292,28 +292,28 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
                 boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
               }}
             ></div>
-            {/* Lower arm curve - waves more when waving */}
+            {/* Lower arm curve - mirrored positioning */}
             <div 
-              className="w-1.5 h-16 bg-gray-900 rounded-full absolute top-16 -left-2 transition-transform duration-300"
+              className={`w-1.5 h-16 bg-gray-900 rounded-full absolute top-16 -right-2 transition-transform duration-300`}
               style={{
                 borderLeft: '2px solid black',
                 borderRight: '2px solid black',
                 boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)',
                 transformOrigin: 'top center',
-                transform: isWaving ? 'rotate(60deg)' : 'rotate(45deg)'
+                transform: isWaving ? 'rotate(-60deg)' : 'rotate(45deg)'
               }}
             ></div>
             {/* Simple mitten hand - Adventure Time style */}
             <div 
               className={`absolute w-6 h-8 bg-gray-900 rounded-full border-2 border-black transition-all duration-300 ${
-                isWaving ? 'top-24 -left-8' : 'top-28 -left-6'
+                isWaving ? 'top-24 -right-8' : 'top-28 -right-6'
               }`}
               style={{
                 boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)'
               }}
             >
               {/* Hand highlight */}
-              <div className="absolute top-1 left-1 w-2 h-2 bg-white opacity-20 rounded-full"></div>
+              <div className="absolute top-1 right-1 w-2 h-2 bg-white opacity-20 rounded-full"></div>
             </div>
           </div>
         </div>
