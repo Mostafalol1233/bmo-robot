@@ -7,26 +7,26 @@
   "regions": ["iad1"],
   "builds": [
     {
-      "src": "server/index.ts",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "client/**",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "buildCommand": "npm run build",
-        "outputDirectory": "dist/public"
+        "buildCommand": "npm run build"
       }
     }
   ],
+  "functions": {
+    "dist/index.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/server/index.ts"
+      "dest": "/dist/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/server/index.ts"
+      "dest": "/dist/index.js"
     }
   ],
   "headers": [
