@@ -270,21 +270,20 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     switch (currentView) {
       case 'videos':
         return (
-          <div className="p-4 h-full" style={{ background: 'linear-gradient(135deg, #90EE90, #98FB98)' }}>
-            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b-2 border-gray-800 pb-2 font-mono">📹 Video Gallery</h3>
+          <div className="p-4 h-full bg-white overflow-y-auto">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b-2 border-gray-300 pb-2">📹 Videos</h3>
             
-            {/* Simple Video Grid */}
-            <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
-              <div className="grid grid-cols-3 gap-4">
+            {/* Simple Video Thumbnails Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {videoList.map((video) => (
                 <div
                   key={video.id}
-                  className="bg-white border-2 border-gray-800 rounded cursor-pointer hover:bg-gray-100 transition-colors p-2"
+                  className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-all hover:scale-105"
                   onClick={() => handleVideoClick(video)}
                   data-testid={`video-item-${video.id}`}
                 >
                   {/* Video Thumbnail */}
-                  <div className="aspect-video bg-black rounded mb-2 overflow-hidden relative group">
+                  <div className="aspect-video bg-black relative group">
                     <img 
                       src={video.thumbnail} 
                       alt={video.title}
@@ -297,37 +296,39 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       }}
                     />
                     {/* Fallback for failed images */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-400 to-red-600 hidden items-center justify-center">
-                      <span className="text-white text-2xl">🎬</span>
+                    <div className="absolute inset-0 bg-gray-600 hidden items-center justify-center">
+                      <span className="text-white text-xl">🎥</span>
                     </div>
                     
-                    {/* Play Button Overlay */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all">
-                      <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span className="text-white text-sm ml-0.5">▶</span>
+                    {/* Simple Play Button */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center transition-all">
+                      <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
+                        <span className="text-white text-lg ml-1">▶</span>
                       </div>
                     </div>
                   </div>
                   
                   {/* Video Title */}
-                  <div className="text-xs font-mono text-center text-gray-800 leading-tight">
-                    {video.title}
+                  <div className="p-2">
+                    <div className="text-sm font-medium text-gray-800 line-clamp-2">
+                      {video.title}
+                    </div>
                   </div>
                 </div>
               ))}
-              </div>
             </div>
             
             {/* Channel Link */}
-            <div className="mt-4 text-center">
+            <div className="mt-6 text-center">
               <a 
                 href="https://www.youtube.com/@Bemora-site"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-red-500 hover:bg-red-600 text-white px-4 py-2 border-2 border-gray-800 font-mono text-sm transition-colors"
+                className="inline-flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
                 data-testid="youtube-channel-link"
               >
-                🔴 Visit Bemora Channel
+                <span>🔴</span>
+                <span>Visit Bemora Channel</span>
               </a>
             </div>
           </div>
