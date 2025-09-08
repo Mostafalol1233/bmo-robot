@@ -122,13 +122,6 @@ export default function VideoPlayerModalComponent({
                   playing={isPlaying}
                   volume={volume}
                   controls={true}
-                  config={{
-                    youtube: {
-                      controls: 1,
-                      modestbranding: 1,
-                      rel: 0
-                    }
-                  }}
                   onError={(error) => {
                     console.log('Video error:', error);
                   }}
