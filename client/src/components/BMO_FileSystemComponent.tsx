@@ -4,6 +4,8 @@ import VideoPlayerModalComponent from './VideoPlayerModalComponent';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX, SiLinkedin } from 'react-icons/si';
+import TicTacToeGame from './TicTacToeGame';
+import MazeGame from './MazeGame';
 
 // Import BMO interface background
 import bmoInterfaceBg from '@assets/S5e28_BMO\'s_interface_1757341096013.webp';
@@ -58,7 +60,7 @@ interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
 
-type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character';
+type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character' | 'games' | 'tictactoe' | 'maze';
 
 interface FolderItem {
   name: string;
@@ -148,6 +150,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Project videos and tutorials'
     },
     {
+      name: 'Games',
+      emoji: '🎮',
+      type: 'games',
+      description: 'Adventure Time games'
+    },
+    {
       name: 'Images',
       emoji: '🖼️',
       type: 'images',
@@ -182,6 +190,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     setSelectedCharacter(characterName);
     setCurrentView('character');
     setCurrentPath(`C:\\Portfolio\\Images\\${characterName}\\`);
+  };
+
+  const handleGameClick = (gameType: 'tictactoe' | 'maze') => {
+    setCurrentView(gameType);
+    setCurrentPath(`C:\\Portfolio\\Games\\${gameType === 'tictactoe' ? 'TicTacToe' : 'Maze'}\\`);
   };
 
   const handleBackClick = () => {
@@ -741,6 +754,65 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </div>
           </div>
         );
+
+      case 'games':
+        return (
+          <div className="p-4 h-full" style={{ background: 'linear-gradient(135deg, #FF6B6B, #4ECDC4)' }}>
+            <h3 className="text-lg font-semibold mb-4 text-white border-b-2 border-white pb-2 font-mono">🎮 Adventure Time Games</h3>
+            
+            <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
+              <button
+                onClick={() => handleGameClick('tictactoe')}
+                className="bg-white border-4 border-cyan-600 rounded-lg p-6 hover:bg-cyan-50 transition-colors group shadow-lg"
+                data-testid="game-tictactoe"
+              >
+                <div className="text-center">
+                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">⭕</div>
+                  <h4 className="text-lg font-bold text-cyan-800 mb-2">Tic Tac Toe</h4>
+                  <p className="text-sm text-cyan-600">Finn vs Jake</p>
+                  <div className="mt-3 flex justify-center space-x-1">
+                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                    <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                  </div>
+                  <div className="text-xs text-cyan-500 mt-1">Easy • Medium • Hard</div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleGameClick('maze')}
+                className="bg-white border-4 border-purple-600 rounded-lg p-6 hover:bg-purple-50 transition-colors group shadow-lg"
+                data-testid="game-maze"
+              >
+                <div className="text-center">
+                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">🌟</div>
+                  <h4 className="text-lg font-bold text-purple-800 mb-2">Maze Adventure</h4>
+                  <p className="text-sm text-purple-600">10 Levels</p>
+                  <div className="mt-3 flex justify-center">
+                    <div className="grid grid-cols-3 gap-1">
+                      {[...Array(9)].map((_, i) => (
+                        <div key={i} className="w-1 h-1 bg-purple-400 rounded-full"></div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-xs text-purple-500 mt-1">Mobile Joystick</div>
+                </div>
+              </button>
+            </div>
+
+            <div className="mt-6 text-center">
+              <div className="bg-white/20 rounded-lg p-4 backdrop-blur-sm">
+                <p className="text-white text-sm font-medium">🎯 Challenge yourself with Adventure Time games!</p>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'tictactoe':
+        return <TicTacToeGame onBack={() => setCurrentView('games')} />;
+
+      case 'maze':
+        return <MazeGame onBack={() => setCurrentView('games')} />;
 
       default:
         return renderExplorerView();
