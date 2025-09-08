@@ -240,79 +240,109 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     switch (currentView) {
       case 'videos':
         return (
-          <div className="p-4 h-full flex flex-col bg-white">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">📹 Video Gallery</h3>
-            
-            {/* Video Player Area */}
-            <div className="flex-1 bg-black rounded-lg border border-gray-300 mb-4 overflow-hidden">
-              {currentVideo ? (
-                <ReactPlayer 
-                  url={currentVideo}
-                  width="100%"
-                  height="256px"
-                  controls={true}
-                  playing={false}
-                />
-              ) : (
-                <div className="w-full h-64 flex items-center justify-center text-white">
-                  <div className="text-center">
-                    <div className="text-6xl mb-4">🎬</div>
-                    <div className="text-lg font-medium">BMO Video Player</div>
-                    <div className="text-sm text-gray-300 mt-2">Select a video from the list below</div>
-                  </div>
-                </div>
-              )}
-            </div>
-            
-            {/* Video List */}
-            <div className="space-y-2 max-h-40 overflow-y-auto">
-              {videoList.map((video, index) => (
-                <button
-                  key={video.id}
-                  onClick={() => setCurrentVideo(video.url)}
-                  className={`w-full text-left p-3 border rounded-lg text-sm transition-colors flex items-center space-x-3 ${
-                    currentVideo === video.url 
-                      ? 'bg-blue-50 border-blue-300' 
-                      : 'bg-gray-50 hover:bg-blue-50 border-gray-200 hover:border-blue-200'
-                  }`}
-                  data-testid={`video-${video.id}`}
-                >
-                  <div className="w-12 h-9 bg-red-100 rounded flex items-center justify-center">
-                    <span className="text-lg">{video.thumbnail}</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-800">{video.title}</div>
-                    <div className="text-xs text-gray-500">Click to play in BMO</div>
-                  </div>
-                  {currentVideo === video.url && (
-                    <div className="text-blue-500 text-xs font-medium">▶️ Playing</div>
-                  )}
-                </button>
-              ))}
-            </div>
-            
-            <div className="mt-4 flex items-center justify-between">
-              <a 
-                href="https://www.youtube.com/@Bemora-site"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 px-3 py-2 bg-red-500 hover:bg-red-600 text-white text-xs rounded-lg transition-colors"
-                data-testid="youtube-channel-button"
-              >
-                <SiYoutube className="text-sm" />
-                <span>Visit Channel</span>
-              </a>
-              
+          <div className="p-4 h-full bg-white">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2">📹 Video Gallery</h3>
               {currentVideo && (
                 <button
                   onClick={() => setCurrentVideo('')}
-                  className="px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white text-xs rounded-lg transition-colors"
-                  data-testid="stop-video"
+                  className="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white text-xs rounded-lg transition-colors flex items-center space-x-1"
+                  data-testid="back-to-gallery"
                 >
-                  ⏹️ Stop Video
+                  <span>←</span>
+                  <span>Back to Gallery</span>
                 </button>
               )}
             </div>
+            
+            {currentVideo ? (
+              /* Video Player Mode */
+              <div className="h-full">
+                <div className="bg-black rounded-lg border border-gray-300 mb-4 overflow-hidden">
+                  <ReactPlayer 
+                    url={currentVideo}
+                    width="100%"
+                    height="300px"
+                    controls={true}
+                    playing={false}
+                  />
+                </div>
+                
+                {/* Current Video Info */}
+                <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="font-medium text-gray-800 mb-1">
+                    {videoList.find(v => v.url === currentVideo)?.title || 'Video'}
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="text-gray-600">Playing from Bemora Channel</div>
+                    <a 
+                      href="https://www.youtube.com/@Bemora-site"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 px-2 py-1 bg-red-500 hover:bg-red-600 text-white text-xs rounded transition-colors"
+                    >
+                      <SiYoutube className="text-xs" />
+                      <span>Visit Channel</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* Gallery Mode - YouTube Style Thumbnails */
+              <div className="h-full">
+                <div className="grid grid-cols-2 gap-4 h-full overflow-y-auto">
+                  {videoList.map((video, index) => (
+                    <button
+                      key={video.id}
+                      onClick={() => setCurrentVideo(video.url)}
+                      className="group bg-gray-100 rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-md transition-all duration-200 overflow-hidden"
+                      data-testid={`video-thumbnail-${video.id}`}
+                    >
+                      {/* Video Thumbnail */}
+                      <div className="aspect-video bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center relative">
+                        <span className="text-4xl">{video.thumbnail}</span>
+                        
+                        {/* Play Button Overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 flex items-center justify-center transition-all duration-200">
+                          <div className="w-12 h-12 bg-red-500 bg-opacity-90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span className="text-white text-xl ml-1">▶️</span>
+                          </div>
+                        </div>
+                        
+                        {/* BMO Badge */}
+                        <div className="absolute top-2 right-2 bg-teal-500 text-white text-xs px-2 py-1 rounded">
+                          BMO
+                        </div>
+                      </div>
+                      
+                      {/* Video Info */}
+                      <div className="p-3 text-left">
+                        <div className="font-medium text-gray-800 text-sm leading-tight mb-1 group-hover:text-red-700 transition-colors">
+                          {video.title}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Bemora Channel • Click to play
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                
+                {/* Bottom Info */}
+                <div className="mt-4 text-center">
+                  <a 
+                    href="https://www.youtube.com/@Bemora-site"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg transition-colors"
+                    data-testid="youtube-channel-main"
+                  >
+                    <SiYoutube className="text-lg" />
+                    <span>Visit Bemora YouTube Channel</span>
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         );
 
