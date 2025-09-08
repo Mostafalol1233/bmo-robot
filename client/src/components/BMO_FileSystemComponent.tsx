@@ -81,6 +81,41 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     { id: 1, sender: 'bmo', text: "Hi! I'm BMO! Ask me anything about my creator's work!" }
   ]);
   const [chatInput, setChatInput] = useState('');
+  const [currentVideo, setCurrentVideo] = useState('');
+  
+  // Video list with real YouTube URLs
+  const videoList = [
+    {
+      id: '1',
+      title: 'BMO Adventure Short #1',
+      url: 'https://youtube.com/shorts/A1eUITFLvrA',
+      thumbnail: '🎮'
+    },
+    {
+      id: '2', 
+      title: 'BMO Adventure Short #2',
+      url: 'https://youtube.com/shorts/920D9DjKgCo',
+      thumbnail: '🎬'
+    },
+    {
+      id: '3',
+      title: 'BMO Adventure Short #3', 
+      url: 'https://youtube.com/shorts/Ql7tURnDdzk',
+      thumbnail: '🎪'
+    },
+    {
+      id: '4',
+      title: 'Adventure Time Tutorial',
+      url: 'https://www.youtube.com/watch?v=puFy652XCl8',
+      thumbnail: '📚'
+    },
+    {
+      id: '5',
+      title: 'BMO Coding Session',
+      url: 'https://www.youtube.com/watch?v=wjwNBUB_iXk', 
+      thumbnail: '💻'
+    }
+  ];
 
   const folders: FolderItem[] = [
     {
@@ -210,75 +245,81 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             
             {/* Video Player Area */}
             <div className="flex-1 bg-black rounded-lg border border-gray-300 mb-4 overflow-hidden">
-              <div className="w-full h-64 flex items-center justify-center text-white">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🎬</div>
-                  <div className="text-lg font-medium">Video Player</div>
-                  <div className="text-sm text-gray-300 mt-2">Select a video from the list below</div>
+              {currentVideo ? (
+                <ReactPlayer 
+                  url={currentVideo}
+                  width="100%"
+                  height="256px"
+                  controls={true}
+                  playing={false}
+                  config={{
+                    youtube: {
+                      playerVars: {
+                        showinfo: 1,
+                        modestbranding: 1
+                      }
+                    }
+                  }}
+                />
+              ) : (
+                <div className="w-full h-64 flex items-center justify-center text-white">
+                  <div className="text-center">
+                    <div className="text-6xl mb-4">🎬</div>
+                    <div className="text-lg font-medium">BMO Video Player</div>
+                    <div className="text-sm text-gray-300 mt-2">Select a video from the list below</div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             
             {/* Video List */}
-            <div className="space-y-3 max-h-40 overflow-y-auto">
-              <a 
-                href="https://www.youtube.com/@Bemora-site"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full text-left p-3 bg-gray-50 hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-lg text-sm transition-colors flex items-center space-x-3 group"
-                data-testid="video-channel-link"
-              >
-                <div className="w-16 h-12 bg-red-100 rounded flex items-center justify-center">
-                  <SiYoutube className="text-red-600 text-xl" />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-800 group-hover:text-red-700">Visit Bemora YouTube Channel</div>
-                  <div className="text-xs text-red-600">Watch all latest videos and tutorials</div>
-                </div>
-              </a>
-              
-              <div className="w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm flex items-center space-x-3">
-                <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
-                  <span className="text-xl">🎬</span>
-                </div>
-                <div>
-                  <div className="font-medium text-gray-800">BMO Portfolio Tutorial</div>
-                  <div className="text-xs text-gray-500">Latest video from channel</div>
-                </div>
-              </div>
-              
-              <div className="w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm flex items-center space-x-3">
-                <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
-                  <span className="text-xl">🎮</span>
-                </div>
-                <div>
-                  <div className="font-medium text-gray-800">Adventure Time Web Development</div>
-                  <div className="text-xs text-gray-500">Coding with BMO theme</div>
-                </div>
-              </div>
-              
-              <div className="w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm flex items-center space-x-3">
-                <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
-                  <span className="text-xl">💻</span>
-                </div>
-                <div>
-                  <div className="font-medium text-gray-800">React Projects Showcase</div>
-                  <div className="text-xs text-gray-500">Interactive portfolio builds</div>
-                </div>
-              </div>
+            <div className="space-y-2 max-h-40 overflow-y-auto">
+              {videoList.map((video, index) => (
+                <button
+                  key={video.id}
+                  onClick={() => setCurrentVideo(video.url)}
+                  className={`w-full text-left p-3 border rounded-lg text-sm transition-colors flex items-center space-x-3 ${
+                    currentVideo === video.url 
+                      ? 'bg-blue-50 border-blue-300' 
+                      : 'bg-gray-50 hover:bg-blue-50 border-gray-200 hover:border-blue-200'
+                  }`}
+                  data-testid={`video-${video.id}`}
+                >
+                  <div className="w-12 h-9 bg-red-100 rounded flex items-center justify-center">
+                    <span className="text-lg">{video.thumbnail}</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-800">{video.title}</div>
+                    <div className="text-xs text-gray-500">Click to play in BMO</div>
+                  </div>
+                  {currentVideo === video.url && (
+                    <div className="text-blue-500 text-xs font-medium">▶️ Playing</div>
+                  )}
+                </button>
+              ))}
             </div>
             
-            <div className="mt-4 text-center">
+            <div className="mt-4 flex items-center justify-between">
               <a 
                 href="https://www.youtube.com/@Bemora-site"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg transition-colors"
+                className="inline-flex items-center space-x-2 px-3 py-2 bg-red-500 hover:bg-red-600 text-white text-xs rounded-lg transition-colors"
                 data-testid="youtube-channel-button"
               >
-                <SiYoutube className="text-lg" />
-                <span>Visit YouTube Channel</span>
+                <SiYoutube className="text-sm" />
+                <span>Visit Channel</span>
               </a>
+              
+              {currentVideo && (
+                <button
+                  onClick={() => setCurrentVideo('')}
+                  className="px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white text-xs rounded-lg transition-colors"
+                  data-testid="stop-video"
+                >
+                  ⏹️ Stop Video
+                </button>
+              )}
             </div>
           </div>
         );
