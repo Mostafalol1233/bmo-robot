@@ -406,8 +406,8 @@ export default function MazeGame({ onBack }: MazeGameProps) {
   // Level completed screen
   if (levelCompleted) {
     return (
-      <div className="p-6 bg-gradient-to-br from-green-400 to-green-500 min-h-full">
-        <div className="max-w-md mx-auto">
+      <div className="p-6 bg-gradient-to-br from-green-400 to-green-500 min-h-screen overflow-y-auto">
+        <div className="max-w-md mx-auto pb-20">
           <div className="bg-white border-4 border-green-700 rounded-lg p-6 text-center">
             {isCompleted ? (
               <div className="space-y-4">
@@ -463,8 +463,8 @@ export default function MazeGame({ onBack }: MazeGameProps) {
   // Game screen
   if (gameStarted) {
     return (
-      <div className="p-4 bg-gradient-to-br from-purple-400 to-purple-500 min-h-full">
-        <div className="max-w-4xl mx-auto">
+      <div className="p-4 bg-gradient-to-br from-purple-400 to-purple-500 min-h-screen overflow-y-auto">
+        <div className="max-w-4xl mx-auto pb-20">
           {/* Game Header */}
           <div className="bg-white border-4 border-purple-700 rounded-lg p-4 mb-4 flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -557,8 +557,8 @@ export default function MazeGame({ onBack }: MazeGameProps) {
 
   // Level selection screen
   return (
-    <div className="p-6 bg-gradient-to-br from-purple-400 to-purple-500 min-h-full">
-      <div className="max-w-2xl mx-auto">
+    <div className="p-6 bg-gradient-to-br from-purple-400 to-purple-500 min-h-screen overflow-y-auto">
+      <div className="max-w-2xl mx-auto pb-20">
         <div className="bg-white border-4 border-purple-700 rounded-lg p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-purple-800">🌟 Maze Adventure</h2>

@@ -305,8 +305,8 @@ export default function TicTacToeGame({ onBack }: TicTacToeGameProps) {
   }
 
   return (
-    <div className="p-6 bg-gradient-to-br from-cyan-400 to-cyan-500 min-h-full">
-      <div className="max-w-md mx-auto">
+    <div className="p-6 bg-gradient-to-br from-cyan-400 to-cyan-500 min-h-screen overflow-y-auto">
+      <div className="max-w-md mx-auto pb-20">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white">🎮 Tic Tac Toe</h2>
           <button 
