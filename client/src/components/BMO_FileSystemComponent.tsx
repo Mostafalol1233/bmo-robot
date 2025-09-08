@@ -514,7 +514,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">👥 Communities & Social</h3>
             <div className="grid grid-cols-1 gap-3">
               <a 
-                href="https://discord.gg/Yn97zEd4" 
+                href="https://discord.gg/bem0ra" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center space-x-3 p-4 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 hover:border-indigo-300 rounded-lg transition-colors group"
@@ -522,13 +522,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               >
                 <SiDiscord className="text-2xl text-indigo-600" />
                 <div>
-                  <div className="font-medium text-gray-800 group-hover:text-indigo-700">Discord Community</div>
-                  <div className="text-sm text-gray-600 mt-1">Join our active development community</div>
+                  <div className="font-medium text-gray-800 group-hover:text-indigo-700">Discord: bem0ra</div>
+                  <div className="text-sm text-gray-600 mt-1">Find me on Discord as bem0ra</div>
                 </div>
               </a>
               
               <a 
-                href="https://chat.whatsapp.com/CmQ8KDLZtmz0BmOKoHCzZh" 
+                href="https://api.whatsapp.com/send/?phone=201500302461&text&type=phone_number&app_absent=0" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center space-x-3 p-4 bg-green-50 hover:bg-green-100 border border-green-200 hover:border-green-300 rounded-lg transition-colors group"
@@ -536,8 +536,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               >
                 <SiWhatsapp className="text-2xl text-green-600" />
                 <div>
-                  <div className="font-medium text-gray-800 group-hover:text-green-700">WhatsApp Group</div>
-                  <div className="text-sm text-gray-600 mt-1">Chat with community members</div>
+                  <div className="font-medium text-gray-800 group-hover:text-green-700">WhatsApp Direct</div>
+                  <div className="text-sm text-gray-600 mt-1">Contact me directly on WhatsApp</div>
                 </div>
               </a>
               
@@ -603,7 +603,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               </a>
               
               <a 
-                href="https://linkedin.com/in/bmo-developer" 
+                href="https://www.linkedin.com/in/mostafa-mohamed-409540336/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 rounded-lg transition-colors group"
@@ -615,18 +615,6 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 </div>
               </a>
               
-              <a 
-                href="https://github.com/bmo-portfolio" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors group"
-              >
-                <div className="text-2xl">🐙</div>
-                <div>
-                  <div className="font-medium text-gray-800 group-hover:text-gray-700">GitHub Repository</div>
-                  <div className="text-sm text-gray-600 mt-1">View code and contribute</div>
-                </div>
-              </a>
               
               <a 
                 href="https://calendly.com/bmo-developer" 
