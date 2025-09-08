@@ -27,15 +27,12 @@ export default function VideoPlayerModalComponent({
   const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.8);
-  const [played, setPlayed] = useState(0);
-  const [duration, setDuration] = useState(0);
 
   // Reset to initial video when modal opens
   useEffect(() => {
     if (isOpen) {
       setCurrentVideoIndex(initialVideoIndex);
       setIsPlaying(false);
-      setPlayed(0);
     }
   }, [isOpen, initialVideoIndex]);
 
@@ -57,7 +54,6 @@ export default function VideoPlayerModalComponent({
   const handleVideoSelect = (index: number) => {
     setCurrentVideoIndex(index);
     setIsPlaying(false);
-    setPlayed(0);
   };
 
   const handleNext = () => {
@@ -74,26 +70,6 @@ export default function VideoPlayerModalComponent({
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
-  };
-
-  const handleProgress = (progress: any) => {
-    setPlayed(progress.played);
-  };
-
-  const handleDuration = (duration: number) => {
-    setDuration(duration);
-  };
-
-  const handleReady = (player: any) => {
-    if (player && player.getDuration) {
-      setDuration(player.getDuration());
-    }
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   if (!isOpen) return null;
@@ -145,8 +121,7 @@ export default function VideoPlayerModalComponent({
                   height="100%"
                   playing={isPlaying}
                   volume={volume}
-                  onProgress={handleProgress}
-                  controls={false}
+                  controls={true}
                   data-testid="react-player"
                 />
               ) : (
@@ -159,55 +134,6 @@ export default function VideoPlayerModalComponent({
                   </div>
                 </div>
               )}
-
-              {/* Custom Controls Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                {/* Progress Bar */}
-                <div className="mb-3">
-                  <div className="w-full bg-white/20 rounded-full h-1 cursor-pointer">
-                    <div 
-                      className="bg-primary h-1 rounded-full transition-all duration-200"
-                      style={{ width: `${played * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-
-                {/* Control Buttons */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    {/* Play/Pause */}
-                    <button 
-                      onClick={handlePlayPause}
-                      className="text-white hover:text-primary transition-colors transform hover:scale-110"
-                      data-testid="button-play-pause"
-                    >
-                      <i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'} text-xl`}></i>
-                    </button>
-
-                    {/* Time Display */}
-                    <span className="pixel-text text-xs text-white">
-                      {formatTime(played * duration)} / {formatTime(duration)}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center space-x-3">
-                    {/* Volume Control */}
-                    <div className="flex items-center space-x-2">
-                      <i className="fas fa-volume-up text-white text-sm"></i>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.1"
-                        value={volume}
-                        onChange={(e) => setVolume(parseFloat(e.target.value))}
-                        className="w-16 h-1 bg-white/20 rounded-full outline-none slider"
-                        data-testid="volume-slider"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Navigation Controls */}
