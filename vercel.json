@@ -5,13 +5,22 @@
     "NODE_ENV": "production"
   },
   "regions": ["iad1"],
-  "functions": {
-    "dist/index.js": {
-      "runtime": "@vercel/node@3.0.0",
-      "memory": 1024,
-      "maxDuration": 10
+  "builds": [
+    {
+      "src": "server/index.ts",
+      "use": "@vercel/node"
     }
-  },
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/index.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server/index.ts"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -41,8 +50,6 @@
       "destination": "/"
     }
   ],
-  "cleanUrls": true,
-  "trailingSlash": false,
   "git": {
     "deploymentEnabled": {
       "main": true
