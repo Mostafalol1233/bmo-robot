@@ -8,6 +8,21 @@ BMO Interactive Portfolio is a creative web application inspired by the characte
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (September 8, 2025)
+
+### Enhanced Video Player Integration
+- Fixed Vercel deployment configuration for serverless functions
+- Integrated enhanced video player interface inspired by BMO's retro aesthetic
+- Added playlist-style video section with ReactPlayer integration
+- Implemented tabbed interface (Home, Videos, AI Talk) within video section
+- Connected local video files with YouTube URLs for dual playback options
+- Enhanced video browsing experience with Adventure Time themed styling
+
+### Deployment Fixes
+- Updated Vercel configuration to properly handle serverless functions at `dist/index.js`
+- Fixed asset import paths to work correctly on both Netlify and Vercel
+- Resolved build output directory structure for seamless deployment
+
 ## System Architecture
 
 ### Frontend Architecture
