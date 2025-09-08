@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ReactPlayer from 'react-player';
 import BMOFace from './BMOFace';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
+import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX } from 'react-icons/si';
 
 // Import character images
 import finnMainImg from '@assets/characters/finn_main.jpg';
@@ -452,7 +453,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 className="flex items-center space-x-3 p-4 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 hover:border-indigo-300 rounded-lg transition-colors group"
                 data-testid="link-discord"
               >
-                <div className="text-2xl">💬</div>
+                <SiDiscord className="text-2xl text-indigo-600" />
                 <div>
                   <div className="font-medium text-gray-800 group-hover:text-indigo-700">Discord Community</div>
                   <div className="text-sm text-gray-600 mt-1">Join our active development community</div>
@@ -466,7 +467,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 className="flex items-center space-x-3 p-4 bg-green-50 hover:bg-green-100 border border-green-200 hover:border-green-300 rounded-lg transition-colors group"
                 data-testid="link-whatsapp"
               >
-                <div className="text-2xl">📱</div>
+                <SiWhatsapp className="text-2xl text-green-600" />
                 <div>
                   <div className="font-medium text-gray-800 group-hover:text-green-700">WhatsApp Group</div>
                   <div className="text-sm text-gray-600 mt-1">Chat with community members</div>
@@ -477,12 +478,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 href="https://x.com/Bemora_BEMO" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 rounded-lg transition-colors group"
+                className="flex items-center space-x-3 p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors group"
                 data-testid="link-twitter"
               >
-                <div className="text-2xl">🐦</div>
+                <SiX className="text-2xl text-gray-800" />
                 <div>
-                  <div className="font-medium text-gray-800 group-hover:text-blue-700">Twitter @Bemora_BEMO</div>
+                  <div className="font-medium text-gray-800 group-hover:text-gray-700">X @Bemora_BEMO</div>
                   <div className="text-sm text-gray-600 mt-1">Follow for updates and tips</div>
                 </div>
               </a>
@@ -494,7 +495,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 className="flex items-center space-x-3 p-4 bg-red-50 hover:bg-red-100 border border-red-200 hover:border-red-300 rounded-lg transition-colors group"
                 data-testid="link-youtube"
               >
-                <div className="text-2xl">📺</div>
+                <SiYoutube className="text-2xl text-red-600" />
                 <div>
                   <div className="font-medium text-gray-800 group-hover:text-red-700">YouTube Channel</div>
                   <div className="text-sm text-gray-600 mt-1">Watch tutorials and project demos</div>
@@ -508,7 +509,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 rounded-lg transition-colors group"
                 data-testid="link-facebook"
               >
-                <div className="text-2xl">📘</div>
+                <SiFacebook className="text-2xl text-blue-600" />
                 <div>
                   <div className="font-medium text-gray-800 group-hover:text-blue-700">Facebook Page</div>
                   <div className="text-sm text-gray-600 mt-1">Connect and stay updated</div>
