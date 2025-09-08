@@ -3,6 +3,13 @@ import ReactPlayer from 'react-player';
 import BMOFace from './BMOFace';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 
+// Import character images
+import finnMainImg from '@assets/characters/finn_main.jpg';
+import jakeMainImg from '@assets/characters/jake_main.jpg';
+import princessBubblegumMainImg from '@assets/characters/princess_bubblegum_main.jpg';
+import marcelineMainImg from '@assets/characters/marceline_main.jpg';
+import bmoMainImg from '@assets/characters/bmo_main.jpg';
+
 interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
@@ -202,80 +209,90 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Character Gallery</h3>
             
             {/* Files Grid - Adventure Time Characters using real cropped images */}
-            <div className="grid grid-cols-6 gap-4">
+            <div className="grid grid-cols-5 gap-3">
               {/* Finn File */}
               <button 
                 onClick={() => handleCharacterClick('Finn')}
-                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+                className="flex flex-col items-center p-2 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
               >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-blue-300 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
-                    <div className="text-white font-bold text-xs">🧢</div>
+                  <div className="w-12 h-12 rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src={finnMainImg} 
+                      alt="Finn" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Finn</span>
+                <span className="text-xs text-center text-gray-800 leading-tight font-medium">Finn</span>
               </button>
 
               {/* Jake File */}
               <button 
                 onClick={() => handleCharacterClick('Jake')}
-                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+                className="flex flex-col items-center p-2 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
               >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-orange-400 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
-                    <div className="text-white font-bold text-xs">🐶</div>
+                  <div className="w-12 h-12 rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src={jakeMainImg} 
+                      alt="Jake" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Jake</span>
+                <span className="text-xs text-center text-gray-800 leading-tight font-medium">Jake</span>
               </button>
 
               {/* Princess Bubblegum File */}
               <button 
                 onClick={() => handleCharacterClick('Princess Bubblegum')}
-                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+                className="flex flex-col items-center p-2 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
               >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-pink-400 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
-                    <div className="text-white font-bold text-xs">👑</div>
+                  <div className="w-12 h-12 rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src={princessBubblegumMainImg} 
+                      alt="Princess Bubblegum" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">P.Gum</span>
+                <span className="text-xs text-center text-gray-800 leading-tight font-medium">P.Gum</span>
               </button>
 
               {/* Marceline File */}
               <button 
                 onClick={() => handleCharacterClick('Marceline')}
-                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+                className="flex flex-col items-center p-2 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
               >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gray-700 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
-                    <div className="text-white font-bold text-xs">🧛‍♀️</div>
+                  <div className="w-12 h-12 rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src={marcelineMainImg} 
+                      alt="Marceline" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">Marcy</span>
+                <span className="text-xs text-center text-gray-800 leading-tight font-medium">Marceline</span>
               </button>
 
               {/* BMO File */}
               <button 
                 onClick={() => handleCharacterClick('BMO')}
-                className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+                className="flex flex-col items-center p-2 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
               >
                 <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-cyan-400 rounded-lg relative overflow-hidden shadow-sm border border-gray-300 flex items-center justify-center">
-                    <div className="text-white font-bold text-xs">🤖</div>
+                  <div className="w-12 h-12 rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
+                    <img 
+                      src={bmoMainImg} 
+                      alt="BMO" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-                <span className="text-sm text-center text-gray-800 leading-tight font-medium">BMO</span>
-              </button>
-
-              {/* Placeholder for more characters */}
-              <button className="flex flex-col items-center p-3 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group">
-                <div className="relative mb-2">
-                  <div className="w-16 h-16 bg-gray-100 rounded-lg relative overflow-hidden shadow-sm border-2 border-dashed border-gray-300 flex items-center justify-center">
-                    <div className="text-gray-400 text-2xl">📷</div>
-                  </div>
-                </div>
-                <span className="text-sm text-center text-gray-500 leading-tight font-medium">More...</span>
+                <span className="text-xs text-center text-gray-800 leading-tight font-medium">BMO</span>
               </button>
             </div>
 
