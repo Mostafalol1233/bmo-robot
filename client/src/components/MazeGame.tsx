@@ -6,18 +6,31 @@ interface Position {
   y: number;
 }
 
+interface Enemy {
+  id: number;
+  position: Position;
+  direction: 'up' | 'down' | 'left' | 'right';
+  lastMove: number;
+}
+
+interface PowerUp {
+  id: number;
+  position: Position;
+  type: 'speed' | 'freeze' | 'key';
+}
+
 interface MazeGameProps {
   onBack: () => void;
 }
 
-// Maze templates - 0: wall, 1: path, 2: start, 3: end
+// Maze templates - 0: wall, 1: path, 2: start, 3: end, 4: enemy spawn, 5: power-up spawn
 const mazeTemplates = [
-  // Level 1 - Simple
+  // Level 1 - Simple with enemy
   [
     [1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 0, 1, 0, 0, 0, 1],
+    [1, 2, 0, 1, 0, 5, 0, 1],
     [1, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 0, 1, 0, 1, 0, 1],
+    [1, 0, 4, 1, 0, 1, 0, 1],
     [1, 0, 1, 1, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 1, 3, 1],
     [1, 1, 1, 1, 1, 1, 1, 1]
@@ -157,6 +170,13 @@ export default function MazeGame({ onBack }: MazeGameProps) {
   const [completedLevels, setCompletedLevels] = useState<number[]>([]);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [levelStartTime, setLevelStartTime] = useState(0);
+  const [enemies, setEnemies] = useState<Enemy[]>([]);
+  const [powerUps, setPowerUps] = useState<PowerUp[]>([]);
+  const [playerSpeed, setPlayerSpeed] = useState(1);
+  const [enemiesFrozen, setEnemiesFrozen] = useState(false);
+  const [keys, setKeys] = useState(0);
+  const [lives, setLives] = useState(3);
+  const [gameOver, setGameOver] = useState(false);
 
   const currentMaze = mazeTemplates[currentLevel - 1];
 
@@ -201,9 +221,53 @@ export default function MazeGame({ onBack }: MazeGameProps) {
     }
   }, [playerPosition, currentMaze, currentLevel, completedLevels]);
 
+  // Enemy AI movement
+  useEffect(() => {
+    if (!gameStarted || levelCompleted || enemiesFrozen) return;
+    
+    const moveEnemies = () => {
+      setEnemies(prevEnemies => 
+        prevEnemies.map(enemy => {
+          const now = Date.now();
+          if (now - enemy.lastMove < 1000) return enemy; // Move every second
+          
+          const directions = ['up', 'down', 'left', 'right'] as const;
+          let newPosition = { ...enemy.position };
+          let newDirection = enemy.direction;
+          
+          // Try to move in current direction
+          switch (enemy.direction) {
+            case 'up': newPosition.y = Math.max(0, enemy.position.y - 1); break;
+            case 'down': newPosition.y = Math.min(currentMaze.length - 1, enemy.position.y + 1); break;
+            case 'left': newPosition.x = Math.max(0, enemy.position.x - 1); break;
+            case 'right': newPosition.x = Math.min(currentMaze[0].length - 1, enemy.position.x + 1); break;
+          }
+          
+          // If hit wall or another enemy, change direction randomly
+          if (currentMaze[newPosition.y][newPosition.x] === 1 ||
+              prevEnemies.some(other => other.id !== enemy.id && 
+                other.position.x === newPosition.x && other.position.y === newPosition.y)) {
+            newDirection = directions[Math.floor(Math.random() * 4)];
+            newPosition = enemy.position; // Don't move this turn
+          }
+          
+          return {
+            ...enemy,
+            position: newPosition,
+            direction: newDirection,
+            lastMove: now
+          };
+        })
+      );
+    };
+    
+    const interval = setInterval(moveEnemies, 500);
+    return () => clearInterval(interval);
+  }, [gameStarted, levelCompleted, enemiesFrozen, currentMaze]);
+  
   // Movement handler
   const movePlayer = useCallback((direction: 'up' | 'down' | 'left' | 'right') => {
-    if (!gameStarted || levelCompleted) return;
+    if (!gameStarted || levelCompleted || gameOver) return;
 
     const newPosition = { ...playerPosition };
     
@@ -226,7 +290,7 @@ export default function MazeGame({ onBack }: MazeGameProps) {
     if (currentMaze[newPosition.y][newPosition.x] !== 1) {
       setPlayerPosition(newPosition);
     }
-  }, [playerPosition, currentMaze, gameStarted, levelCompleted]);
+  }, [playerPosition, currentMaze, gameStarted, levelCompleted, gameOver]);
 
   // Keyboard controls
   useEffect(() => {
@@ -430,14 +494,18 @@ export default function MazeGame({ onBack }: MazeGameProps) {
                   const x = index % currentMaze[0].length;
                   const y = Math.floor(index / currentMaze[0].length);
                   const isPlayer = playerPosition.x === x && playerPosition.y === y;
+                  const enemy = enemies.find(e => e.position.x === x && e.position.y === y);
+                  const powerUp = powerUps.find(p => p.position.x === x && p.position.y === y);
                   
                   return (
                     <div
                       key={index}
-                      className={`w-8 h-8 flex items-center justify-center rounded-sm ${
+                      className={`w-8 h-8 flex items-center justify-center rounded-sm relative ${
                         cell === 1 ? 'bg-gray-800' : // wall
                         cell === 3 ? 'bg-yellow-400 animate-pulse' : // exit
-                        'bg-white' // path
+                        enemy && !enemiesFrozen ? 'bg-red-200' : // enemy path
+                        powerUp ? 'bg-blue-200' : // power-up path
+                        'bg-white' // normal path
                       }`}
                       data-testid={`maze-cell-${x}-${y}`}
                     >
@@ -445,10 +513,20 @@ export default function MazeGame({ onBack }: MazeGameProps) {
                         <img 
                           src={finnIcon} 
                           alt="Player" 
-                          className="w-6 h-6 object-contain animate-bounce"
+                          className={`w-6 h-6 object-contain ${playerSpeed > 1 ? 'animate-spin' : 'animate-bounce'}`}
                         />
                       )}
-                      {cell === 3 && !isPlayer && (
+                      {enemy && !isPlayer && (
+                        <span className={`text-red-600 font-bold text-lg ${enemiesFrozen ? 'animate-pulse text-blue-600' : 'animate-bounce'}`}>
+                          👹
+                        </span>
+                      )}
+                      {powerUp && !isPlayer && !enemy && (
+                        <span className="text-blue-600 font-bold animate-pulse">
+                          {powerUp.type === 'speed' ? '⚡' : powerUp.type === 'freeze' ? '❄️' : '🗝️'}
+                        </span>
+                      )}
+                      {cell === 3 && !isPlayer && !enemy && !powerUp && (
                         <span className="text-orange-600 font-bold">🎯</span>
                       )}
                     </div>
