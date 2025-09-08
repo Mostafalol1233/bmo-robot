@@ -3,7 +3,7 @@ import BMOFace from './BMOFace';
 import VideoPlayerModalComponent from './VideoPlayerModalComponent';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
-import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX } from 'react-icons/si';
+import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX, SiLinkedin } from 'react-icons/si';
 
 // Import BMO interface background
 import bmoInterfaceBg from '@assets/S5e28_BMO\'s_interface_1757341096013.webp';
@@ -608,13 +608,54 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 rel="noopener noreferrer"
                 className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 rounded-lg transition-colors group"
               >
-                <div className="text-2xl">💼</div>
+                <SiLinkedin className="text-2xl text-blue-600" />
                 <div>
                   <div className="font-medium text-gray-800 group-hover:text-blue-700">LinkedIn Profile</div>
                   <div className="text-sm text-gray-600 mt-1">Connect for professional opportunities</div>
                 </div>
               </a>
               
+              <a 
+                href="https://discord.gg/bem0ra" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 hover:border-indigo-300 rounded-lg transition-colors group"
+                data-testid="link-discord-contact"
+              >
+                <SiDiscord className="text-2xl text-indigo-600" />
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-indigo-700">Discord: bem0ra</div>
+                  <div className="text-sm text-gray-600 mt-1">Find me on Discord as bem0ra</div>
+                </div>
+              </a>
+
+              <a 
+                href="https://api.whatsapp.com/send/?phone=201500302461&text&type=phone_number&app_absent=0" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-green-50 hover:bg-green-100 border border-green-200 hover:border-green-300 rounded-lg transition-colors group"
+                data-testid="link-whatsapp-contact"
+              >
+                <SiWhatsapp className="text-2xl text-green-600" />
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-green-700">WhatsApp Direct</div>
+                  <div className="text-sm text-gray-600 mt-1">Contact me directly on WhatsApp</div>
+                </div>
+              </a>
+
+              <a 
+                href="https://mustaf.vercel.app" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 p-4 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-lg transition-colors group"
+                data-testid="link-portfolio"
+              >
+                <div className="text-2xl">🌐</div>
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-teal-700">My Portfolio</div>
+                  <div className="text-sm text-gray-600 mt-1">mustaf.vercel.app - View my complete portfolio</div>
+                </div>
+              </a>
               
               <a 
                 href="https://calendly.com/bmo-developer" 
