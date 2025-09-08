@@ -3,9 +3,10 @@ import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 
 interface BMO_LandingPageComponentProps {
   onStart: () => void;
+  isScreenZooming?: boolean;
 }
 
-export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageComponentProps) {
+export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: BMO_LandingPageComponentProps) {
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
@@ -112,7 +113,9 @@ export default function BMO_LandingPageComponent({ onStart }: BMO_LandingPageCom
           
           {/* BMO Screen - White screen with animated face */}
           <div 
-            className="bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors" 
+            className={`bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-all duration-500 ${
+              isScreenZooming ? 'animate-screenZoom' : ''
+            }`}
             style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)' }}
             onClick={handleStart}
             data-testid="bmo-screen-clickable"

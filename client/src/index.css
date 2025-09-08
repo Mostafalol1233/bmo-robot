@@ -299,3 +299,14 @@
 .animate-robotic-pulse {
   animation: roboticPulse 2s ease-in-out infinite;
 }
+
+/* BMO Screen Zoom Animation */
+@keyframes screenZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(20); z-index: 1000; }
+}
+
+.animate-screenZoom {
+  animation: screenZoom 0.8s ease-in-out forwards;
+  z-index: 1000;
+}

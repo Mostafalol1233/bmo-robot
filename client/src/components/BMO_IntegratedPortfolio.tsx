@@ -16,6 +16,7 @@ interface VideoItem {
 
 export default function BMO_IntegratedPortfolio() {
   const [currentSection, setCurrentSection] = useState<AppSection>('landing');
+  const [isScreenZooming, setIsScreenZooming] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [chatOpen, setChatOpen] = useState(false);
@@ -74,16 +75,19 @@ export default function BMO_IntegratedPortfolio() {
 
   // Navigation functions
   const handleStartBMO = () => {
-    // Start zoom animation on the screen, then switch to filesystem
+    // Start screen zoom animation from BMO's face, then switch to filesystem
+    setIsScreenZooming(true);
     setTimeout(() => {
-      setIsZoomed(true);
       setCurrentSection('filesystem');
-    }, 100);
+      setIsZoomed(true);
+      setIsScreenZooming(false);
+    }, 800); // Allow time for zoom animation
   };
 
   const handleBackToLanding = () => {
     setCurrentSection('landing');
     setIsZoomed(false);
+    setIsScreenZooming(false);
   };
 
   const handleOpenChat = () => {
@@ -109,6 +113,7 @@ export default function BMO_IntegratedPortfolio() {
         return (
           <BMO_LandingPageComponent 
             onStart={handleStartBMO}
+            isScreenZooming={isScreenZooming}
           />
         );
       
