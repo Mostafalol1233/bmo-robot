@@ -237,7 +237,7 @@ export default function VideoPlayerModalComponent({
                       className="inline-flex items-center space-x-1 text-xs text-red-600 hover:text-red-700 transition-colors"
                     >
                       <i className="fab fa-youtube"></i>
-                      <span>شاهد على يوتيوب</span>
+                      <span>Watch on YouTube</span>
                     </a>
                   )}
                 </div>

@@ -142,10 +142,10 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Social links and communities'
     },
     {
-      name: 'فيديوز',
+      name: 'Videos',
       emoji: '🎬',
       type: 'videos',
-      description: 'مقاطع فيديو المشاريع والدروس'
+      description: 'Project videos and tutorials'
     },
     {
       name: 'Images',
