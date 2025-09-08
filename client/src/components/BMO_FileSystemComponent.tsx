@@ -10,6 +10,45 @@ import princessBubblegumMainImg from '@assets/characters/princess_bubblegum_main
 import marcelineMainImg from '@assets/characters/marceline_main.jpg';
 import bmoMainImg from '@assets/characters/bmo_main.jpg';
 
+// Import Finn images
+import finnImg1 from '@assets/characters/finn/O34IP.jpg';
+import finnImg2 from '@assets/characters/finn/OI3P.jpg';
+import finnImg3 from '@assets/characters/finn/OI4P.jpg';
+import finnImg4 from '@assets/characters/finn/OIP.jpg';
+import finnImg5 from '@assets/characters/finn/OIP1.jpg';
+import finnImg6 from '@assets/characters/finn/Untitled.jpg';
+
+// Import Jake images
+import jakeImg1 from '@assets/characters/jake/OI3P.jpg';
+import jakeImg2 from '@assets/characters/jake/OIP.jpg';
+import jakeImg3 from '@assets/characters/jake/OIP2.jpg';
+import jakeImg4 from '@assets/characters/jake/Untitled.jpg';
+import jakeImg5 from '@assets/characters/jake/Untitled1.jpg';
+
+// Import Marceline images
+import marcelineImg1 from '@assets/characters/marceline/O12IP.jpg';
+import marcelineImg2 from '@assets/characters/marceline/OI12P.jpg';
+import marcelineImg3 from '@assets/characters/marceline/OIP.jpg';
+import marcelineImg4 from '@assets/characters/marceline/OIP33.jpg';
+import marcelineImg5 from '@assets/characters/marceline/Untitled.jpg';
+import marcelineImg6 from '@assets/characters/marceline/Untitled1.jpg';
+
+// Import Princess Bubblegum images
+import princessImg1 from '@assets/characters/princess_bubblegum/12OIP.jpg';
+import princessImg2 from '@assets/characters/princess_bubblegum/O1IP.jpg';
+import princessImg3 from '@assets/characters/princess_bubblegum/OIP.jpg';
+import princessImg4 from '@assets/characters/princess_bubblegum/Untitled.jpg';
+import princessImg5 from '@assets/characters/princess_bubblegum/Untitled3.jpg';
+
+// Import BMO images
+import bmoImg1 from '@assets/characters/BMO/bmo2.jpg';
+import bmoImg2 from '@assets/characters/BMO/bmo3.jpg';
+import bmoImg3 from '@assets/characters/BMO/bmo4.jpg';
+import bmoImg4 from '@assets/characters/BMO/bmo5P.jpg';
+import bmoImg5 from '@assets/characters/BMO/bmo6.jpg';
+import bmoImg6 from '@assets/characters/BMO/OIP.jpg';
+import bmoImg7 from '@assets/characters/BMO/Untitled.jpg';
+
 interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
@@ -28,6 +67,15 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [currentView, setCurrentView] = useState<ViewType>('explorer');
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
   const [selectedCharacter, setSelectedCharacter] = useState<string>('');
+
+  // Character images mapping
+  const characterImages: Record<string, string[]> = {
+    'Finn': [finnImg1, finnImg2, finnImg3, finnImg4, finnImg5, finnImg6],
+    'Jake': [jakeImg1, jakeImg2, jakeImg3, jakeImg4, jakeImg5],
+    'Princess Bubblegum': [princessImg1, princessImg2, princessImg3, princessImg4, princessImg5],
+    'Marceline': [marcelineImg1, marcelineImg2, marcelineImg3, marcelineImg4, marcelineImg5, marcelineImg6],
+    'BMO': [bmoImg1, bmoImg2, bmoImg3, bmoImg4, bmoImg5, bmoImg6, bmoImg7]
+  };
   const [chatMessages, setChatMessages] = useState([
     { id: 1, sender: 'bmo', text: "Hi! I'm BMO! Ask me anything about my creator's work!" }
   ]);
@@ -318,26 +366,33 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               </button>
             </div>
             
-            {/* Character File Upload Area */}
-            <div className="grid grid-cols-4 gap-4">
-              {/* Photo placeholder slots */}
-              {Array.from({length: 8}).map((_, index) => (
-                <div key={index} className="aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors p-4">
-                  <div className="text-center text-gray-400">
-                    <div className="text-3xl mb-2">📷</div>
-                    <div className="text-xs font-medium">{selectedCharacter} Photo {index + 1}</div>
-                    <div className="text-xs text-gray-500 mt-1">Drop or upload image</div>
-                  </div>
+            {/* Character Images Gallery */}
+            <div className="grid grid-cols-3 gap-3">
+              {(characterImages[selectedCharacter] || []).map((imageUrl, index) => (
+                <div key={index} className="aspect-square bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden group hover:shadow-md transition-all duration-200">
+                  <img 
+                    src={imageUrl} 
+                    alt={`${selectedCharacter} ${index + 1}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                    data-testid={`character-image-${selectedCharacter.toLowerCase()}-${index}`}
+                  />
                 </div>
               ))}
+              
+              {/* Show placeholder if no images */}
+              {(!characterImages[selectedCharacter] || characterImages[selectedCharacter].length === 0) && (
+                <div className="col-span-3 text-center py-8 text-gray-500">
+                  <div className="text-4xl mb-2">📷</div>
+                  <div className="text-sm">No images found for {selectedCharacter}</div>
+                </div>
+              )}
             </div>
 
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <div className="text-sm text-blue-800">
-                <div className="font-medium mb-2">📤 Upload {selectedCharacter} Photos</div>
-                <div className="text-xs text-blue-600">
-                  Click on any slot above or drag and drop images to add photos of {selectedCharacter}. 
-                  Supported formats: JPG, PNG, GIF
+            <div className="mt-4 p-3 bg-teal-50 rounded-lg border border-teal-200">
+              <div className="text-sm text-teal-800">
+                <div className="font-medium mb-1">🎨 {selectedCharacter} Gallery</div>
+                <div className="text-xs text-teal-600">
+                  {characterImages[selectedCharacter]?.length || 0} images available from Adventure Time collection
                 </div>
               </div>
             </div>
