@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import finnIcon from '@assets/generated_images/Finn_character_icon_crop_db38cbd0.png';
+import mazeBackground from '@assets/generated_images/Adventure_Time_maze_game_background_53303ae3.png';
 
 interface Position {
   x: number;
@@ -463,7 +464,12 @@ export default function MazeGame({ onBack }: MazeGameProps) {
   // Game screen
   if (gameStarted) {
     return (
-      <div className="p-4 bg-gradient-to-br from-purple-400 to-purple-500 min-h-screen overflow-y-auto">
+      <div 
+        className="p-4 min-h-screen overflow-y-auto bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `linear-gradient(rgba(147, 51, 234, 0.85), rgba(168, 85, 247, 0.85)), url(${mazeBackground})`,
+        }}
+      >
         <div className="max-w-4xl mx-auto pb-20">
           {/* Game Header */}
           <div className="bg-white border-4 border-purple-700 rounded-lg p-4 mb-4 flex items-center justify-between">

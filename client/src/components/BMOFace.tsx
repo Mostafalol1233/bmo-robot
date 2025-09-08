@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
+import treeHouseBackground from '@assets/image_1757366365841.png';
 
 interface BMOFaceProps {
   isVisible: boolean;
@@ -121,7 +122,10 @@ export default function BMOFace({ isVisible, onFaceComplete }: BMOFaceProps) {
 
   return (
     <div 
-      className="bmo-face-container absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900"
+      className="bmo-face-container absolute inset-0 flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `linear-gradient(rgba(30, 41, 59, 0.7), rgba(51, 65, 85, 0.7)), url(${treeHouseBackground})`,
+      }}
       data-testid="bmo-face"
     >
       {/* Eyes */}
