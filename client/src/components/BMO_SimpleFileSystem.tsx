@@ -104,7 +104,7 @@ export default function BMO_SimpleFileSystem({ onBack }: BMO_SimpleFileSystemPro
             <h2 className="text-lg font-bold mb-4 text-black" style={{fontFamily: 'monospace'}}>🖼️ IMAGES</h2>
             <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
               <div className="grid grid-cols-4 gap-4">
-                {['Finn', 'Jake', 'Princess Bubblegum', 'Marceline', 'BMO'].map((character, index) => (
+                {['Finn', 'Jake', 'Princess Bubblegum', 'Marceline', 'BMO', 'Ice King', 'Tree Trunks', 'Lady Rainicorn'].map((character, index) => (
                   <div
                     key={character}
                     className="bg-cyan-300 border-2 border-black cursor-pointer hover:bg-cyan-200 transition-colors p-3 text-center"
@@ -114,6 +114,122 @@ export default function BMO_SimpleFileSystem({ onBack }: BMO_SimpleFileSystemPro
                     </div>
                     <div className="text-xs font-bold text-black" style={{fontFamily: 'monospace'}}>
                       {character.toUpperCase()}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'chat':
+        return (
+          <div className="p-6">
+            <h2 className="text-lg font-bold mb-4 text-black" style={{fontFamily: 'monospace'}}>💬 CHAT</h2>
+            <div className="bg-black border-2 border-cyan-400 h-64 p-4 overflow-y-auto custom-scrollbar">
+              <div className="text-green-400 font-mono text-sm space-y-2">
+                <div>BMO_SYSTEM &gt; Welcome to BMO Chat!</div>
+                <div>BMO_SYSTEM &gt; I can talk about Adventure Time!</div>
+                <div>USER &gt; Hi BMO!</div>
+                <div>BMO &gt; Hello friend! Want to play a game?</div>
+                <div>USER &gt; Tell me about Finn and Jake</div>
+                <div>BMO &gt; Finn is a brave human boy and Jake is his magical dog brother!</div>
+                <div className="text-cyan-400">BMO_SYSTEM &gt; Type your message...</div>
+              </div>
+            </div>
+            <div className="mt-4 flex">
+              <input 
+                type="text" 
+                placeholder="Type to BMO..."
+                className="flex-1 bg-cyan-300 border-2 border-black p-2 text-black font-mono text-sm"
+              />
+              <button className="bg-green-400 border-2 border-black px-4 text-black font-bold hover:bg-green-300">
+                SEND
+              </button>
+            </div>
+          </div>
+        );
+
+      case 'communities':
+        return (
+          <div className="p-6">
+            <h2 className="text-lg font-bold mb-4 text-black" style={{fontFamily: 'monospace'}}>👥 COMMUNITIES</h2>
+            <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
+              <div className="space-y-3">
+                {[
+                  'Adventure Time Fans',
+                  'BMO Programmers Club', 
+                  'Tree Fort Builders',
+                  'Candy Kingdom Citizens',
+                  'Mathematical Minds',
+                  'Ice King Fan Club'
+                ].map((community, index) => (
+                  <div
+                    key={community}
+                    className="bg-cyan-300 border-2 border-black cursor-pointer hover:bg-cyan-200 transition-colors p-4 flex items-center space-x-4"
+                  >
+                    <div className="w-12 h-12 bg-cyan-400 border border-black flex items-center justify-center">
+                      <span className="text-lg">👥</span>
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-black" style={{fontFamily: 'monospace'}}>
+                        {community.toUpperCase()}
+                      </div>
+                      <div className="text-xs text-gray-700" style={{fontFamily: 'monospace'}}>
+                        {Math.floor(Math.random() * 1000)} MEMBERS
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'contact':
+        return (
+          <div className="p-6">
+            <h2 className="text-lg font-bold mb-4 text-black" style={{fontFamily: 'monospace'}}>📒 CONTACT</h2>
+            <div className="bg-cyan-300 border-2 border-black p-4 space-y-4">
+              <div className="text-center">
+                <div className="w-24 h-24 bg-cyan-400 border-2 border-black mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-3xl">📞</span>
+                </div>
+                <div className="text-lg font-bold text-black" style={{fontFamily: 'monospace'}}>
+                  BMO CONTACT INFO
+                </div>
+              </div>
+              <div className="space-y-2 text-sm font-mono text-black">
+                <div>📧 EMAIL: bmo@adventuretime.ooo</div>
+                <div>🌐 WEBSITE: www.bmo-portfolio.dev</div>
+                <div>📱 PHONE: 1-800-BMO-TIME</div>
+                <div>📍 LOCATION: Tree Fort, Land of Ooo</div>
+                <div>⏰ AVAILABLE: Always for friends!</div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'tools':
+        return (
+          <div className="p-6">
+            <h2 className="text-lg font-bold mb-4 text-black" style={{fontFamily: 'monospace'}}>🛠 TOOLS</h2>
+            <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
+              <div className="grid grid-cols-3 gap-4">
+                {[
+                  'Calculator', 'Clock', 'Compass', 
+                  'Notepad', 'Calendar', 'Music Player',
+                  'Camera', 'Map', 'Weather'
+                ].map((tool, index) => (
+                  <div
+                    key={tool}
+                    className="bg-cyan-300 border-2 border-black cursor-pointer hover:bg-cyan-200 transition-colors p-3 text-center"
+                  >
+                    <div className="w-12 h-12 bg-cyan-400 border border-black mx-auto mb-2 flex items-center justify-center">
+                      <span className="text-lg">🛠️</span>
+                    </div>
+                    <div className="text-xs font-bold text-black" style={{fontFamily: 'monospace'}}>
+                      {tool.toUpperCase()}
                     </div>
                   </div>
                 ))}

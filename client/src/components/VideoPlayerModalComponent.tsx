@@ -141,6 +141,15 @@ export default function VideoPlayerModalComponent({
                   onProgress={handleProgress}
                   controls={true}
                   data-testid="react-player"
+                  config={{
+                    youtube: {
+                      playerVars: {
+                        showinfo: 1,
+                        autoplay: 0,
+                        modestbranding: 1
+                      }
+                    }
+                  }}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
