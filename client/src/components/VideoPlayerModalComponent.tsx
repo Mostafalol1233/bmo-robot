@@ -134,7 +134,7 @@ export default function VideoPlayerModalComponent({
             <div className="relative bg-black aspect-video">
               {currentVideo ? (
                 <ReactPlayer
-                  url={currentVideo.url}
+                  url={currentVideo.youtubeUrl || currentVideo.url}
                   width="100%"
                   height="100%"
                   playing={isPlaying}
