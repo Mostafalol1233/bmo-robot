@@ -10,6 +10,7 @@ interface VideoItem {
   id: string;
   title: string;
   url: string;
+  youtubeUrl?: string;
   thumbnail?: string;
   duration?: string;
 }
@@ -29,18 +30,21 @@ export default function BMO_IntegratedPortfolio() {
       id: '1',
       title: 'BMO\'s Adventure Demo',
       url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       duration: '3:32'
     },
     {
       id: '2', 
       title: 'Coding Tutorial #1',
       url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
+      youtubeUrl: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
       duration: '10:15'
     },
     {
       id: '3',
       title: 'Project Showcase',
       url: 'https://www.youtube.com/watch?v=9bZkp7q19f0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=9bZkp7q19f0',
       duration: '5:45'
     }
   ];
