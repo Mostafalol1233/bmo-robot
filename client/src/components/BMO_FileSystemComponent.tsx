@@ -757,52 +757,116 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'games':
         return (
-          <div className="p-4 h-full" style={{ background: 'linear-gradient(135deg, #FF6B6B, #4ECDC4)' }}>
-            <h3 className="text-lg font-semibold mb-4 text-white border-b-2 border-white pb-2 font-mono">🎮 Adventure Time Games</h3>
-            
-            <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
-              <button
-                onClick={() => handleGameClick('tictactoe')}
-                className="bg-white border-4 border-cyan-600 rounded-lg p-6 hover:bg-cyan-50 transition-colors group shadow-lg"
-                data-testid="game-tictactoe"
-              >
-                <div className="text-center">
-                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">⭕</div>
-                  <h4 className="text-lg font-bold text-cyan-800 mb-2">Tic Tac Toe</h4>
-                  <p className="text-sm text-cyan-600">Finn vs Jake</p>
-                  <div className="mt-3 flex justify-center space-x-1">
-                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                    <div className="w-2 h-2 bg-red-400 rounded-full"></div>
-                  </div>
-                  <div className="text-xs text-cyan-500 mt-1">Easy • Medium • Hard</div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => handleGameClick('maze')}
-                className="bg-white border-4 border-purple-600 rounded-lg p-6 hover:bg-purple-50 transition-colors group shadow-lg"
-                data-testid="game-maze"
-              >
-                <div className="text-center">
-                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">🌟</div>
-                  <h4 className="text-lg font-bold text-purple-800 mb-2">Maze Adventure</h4>
-                  <p className="text-sm text-purple-600">10 Levels</p>
-                  <div className="mt-3 flex justify-center">
-                    <div className="grid grid-cols-3 gap-1">
-                      {[...Array(9)].map((_, i) => (
-                        <div key={i} className="w-1 h-1 bg-purple-400 rounded-full"></div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="text-xs text-purple-500 mt-1">Mobile Joystick</div>
-                </div>
-              </button>
+          <div className="p-6 h-full bg-gradient-to-br from-indigo-900 via-purple-800 to-pink-700 relative overflow-hidden">
+            {/* Retro grid background */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="grid grid-cols-8 grid-rows-6 h-full w-full">
+                {[...Array(48)].map((_, i) => (
+                  <div key={i} className="border border-cyan-400 animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}></div>
+                ))}
+              </div>
             </div>
 
-            <div className="mt-6 text-center">
-              <div className="bg-white/20 rounded-lg p-4 backdrop-blur-sm">
-                <p className="text-white text-sm font-medium">🎯 Challenge yourself with Adventure Time games!</p>
+            {/* Floating geometric shapes */}
+            <div className="absolute top-10 left-10 w-8 h-8 bg-cyan-400 rotate-45 animate-spin opacity-30"></div>
+            <div className="absolute top-20 right-16 w-6 h-6 bg-pink-400 rounded-full animate-bounce opacity-40"></div>
+            <div className="absolute bottom-20 left-20 w-4 h-16 bg-yellow-400 animate-pulse opacity-30"></div>
+            
+            <div className="relative z-10">
+              {/* Retro header with neon effect */}
+              <div className="text-center mb-8">
+                <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-yellow-400 animate-pulse font-mono tracking-wider">
+                  ◄ ADVENTURE ARCADE ►
+                </h1>
+                <div className="flex justify-center items-center space-x-4 mb-4">
+                  <div className="h-1 w-16 bg-gradient-to-r from-cyan-400 to-transparent animate-pulse"></div>
+                  <span className="text-cyan-300 font-mono text-sm tracking-widest">SELECT GAME</span>
+                  <div className="h-1 w-16 bg-gradient-to-l from-cyan-400 to-transparent animate-pulse"></div>
+                </div>
+              </div>
+
+              {/* Game selection cards with retro styling */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {/* Tic Tac Toe Card */}
+                <button
+                  onClick={() => handleGameClick('tictactoe')}
+                  className="relative group"
+                  data-testid="game-tictactoe"
+                >
+                  <div className="bg-black border-4 border-cyan-400 rounded-none p-8 hover:border-pink-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transform group-hover:scale-105">
+                    <div className="absolute top-2 left-2 w-2 h-2 bg-cyan-400 animate-pulse"></div>
+                    <div className="absolute top-2 right-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-green-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                    
+                    <div className="text-center">
+                      <div className="text-6xl mb-4 text-cyan-400 group-hover:text-pink-400 transition-colors font-mono">X◯</div>
+                      <h3 className="text-2xl font-bold text-white mb-2 font-mono tracking-wide">TIC TAC TOE</h3>
+                      <p className="text-cyan-300 mb-4 font-mono text-sm">FINN vs JAKE</p>
+                      
+                      {/* Difficulty indicators */}
+                      <div className="flex justify-center space-x-2 mb-4">
+                        <div className="px-2 py-1 bg-green-500 text-black text-xs font-bold font-mono">EASY</div>
+                        <div className="px-2 py-1 bg-yellow-500 text-black text-xs font-bold font-mono">MEDIUM</div>
+                        <div className="px-2 py-1 bg-red-500 text-black text-xs font-bold font-mono">HARD</div>
+                      </div>
+                      
+                      <div className="text-xs text-gray-400 font-mono">VS BOT • 2 PLAYER</div>
+                    </div>
+                  </div>
+                  
+                  {/* Retro glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-pink-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+                </button>
+
+                {/* Maze Game Card */}
+                <button
+                  onClick={() => handleGameClick('maze')}
+                  className="relative group"
+                  data-testid="game-maze"
+                >
+                  <div className="bg-black border-4 border-purple-400 rounded-none p-8 hover:border-yellow-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50 transform group-hover:scale-105">
+                    <div className="absolute top-2 left-2 w-2 h-2 bg-purple-400 animate-pulse"></div>
+                    <div className="absolute top-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                    
+                    <div className="text-center">
+                      <div className="text-6xl mb-4 text-purple-400 group-hover:text-yellow-400 transition-colors font-mono">⬜</div>
+                      <h3 className="text-2xl font-bold text-white mb-2 font-mono tracking-wide">MAZE RUNNER</h3>
+                      <p className="text-purple-300 mb-4 font-mono text-sm">10 EPIC LEVELS</p>
+                      
+                      {/* Level grid visualization */}
+                      <div className="grid grid-cols-5 gap-1 justify-center mb-4 max-w-20 mx-auto">
+                        {[...Array(10)].map((_, i) => (
+                          <div key={i} className="w-2 h-2 bg-purple-400 border border-purple-300 animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}></div>
+                        ))}
+                      </div>
+                      
+                      <div className="text-xs text-gray-400 font-mono">MOBILE JOYSTICK • KEYBOARD</div>
+                    </div>
+                  </div>
+                  
+                  {/* Retro glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-yellow-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+                </button>
+              </div>
+
+              {/* Bottom retro message */}
+              <div className="mt-12 text-center">
+                <div className="inline-block border-2 border-cyan-400 bg-black px-8 py-4 relative">
+                  <div className="absolute -top-1 -left-1 w-3 h-3 bg-cyan-400"></div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-pink-400"></div>
+                  <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-yellow-400"></div>
+                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400"></div>
+                  
+                  <p className="text-white font-mono text-sm tracking-wider">
+                    ► CHOOSE YOUR ADVENTURE ◄
+                  </p>
+                  <p className="text-cyan-300 font-mono text-xs mt-2">
+                    PRESS [SELECT] TO CONTINUE
+                  </p>
+                </div>
               </div>
             </div>
           </div>
