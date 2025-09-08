@@ -220,34 +220,65 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </div>
             
             {/* Video List */}
-            <div className="space-y-2 max-h-32 overflow-y-auto">
-              <button className="w-full text-left p-3 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded-lg text-sm transition-colors flex items-center space-x-3">
-                <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
-                  <span className="text-2xl">🎥</span>
+            <div className="space-y-3 max-h-40 overflow-y-auto">
+              <a 
+                href="https://www.youtube.com/@Bemora-site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full text-left p-3 bg-gray-50 hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-lg text-sm transition-colors flex items-center space-x-3 group"
+                data-testid="video-channel-link"
+              >
+                <div className="w-16 h-12 bg-red-100 rounded flex items-center justify-center">
+                  <SiYoutube className="text-red-600 text-xl" />
                 </div>
                 <div>
-                  <div className="font-medium text-gray-800">BMO Portfolio Demo</div>
-                  <div className="text-xs text-gray-500">YouTube • 5:32</div>
+                  <div className="font-medium text-gray-800 group-hover:text-red-700">Visit Bemora YouTube Channel</div>
+                  <div className="text-xs text-red-600">Watch all latest videos and tutorials</div>
                 </div>
-              </button>
-              <button className="w-full text-left p-3 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded-lg text-sm transition-colors flex items-center space-x-3">
+              </a>
+              
+              <div className="w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm flex items-center space-x-3">
                 <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
-                  <span className="text-2xl">🎥</span>
+                  <span className="text-xl">🎬</span>
                 </div>
                 <div>
-                  <div className="font-medium text-gray-800">Coding Tutorial</div>
-                  <div className="text-xs text-gray-500">YouTube • 10:15</div>
+                  <div className="font-medium text-gray-800">BMO Portfolio Tutorial</div>
+                  <div className="text-xs text-gray-500">Latest video from channel</div>
                 </div>
-              </button>
-              <button className="w-full text-left p-3 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded-lg text-sm transition-colors flex items-center space-x-3">
+              </div>
+              
+              <div className="w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm flex items-center space-x-3">
                 <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
-                  <span className="text-2xl">🎥</span>
+                  <span className="text-xl">🎮</span>
                 </div>
                 <div>
-                  <div className="font-medium text-gray-800">Project Showcase</div>
-                  <div className="text-xs text-gray-500">YouTube • 8:45</div>
+                  <div className="font-medium text-gray-800">Adventure Time Web Development</div>
+                  <div className="text-xs text-gray-500">Coding with BMO theme</div>
                 </div>
-              </button>
+              </div>
+              
+              <div className="w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm flex items-center space-x-3">
+                <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
+                  <span className="text-xl">💻</span>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-800">React Projects Showcase</div>
+                  <div className="text-xs text-gray-500">Interactive portfolio builds</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4 text-center">
+              <a 
+                href="https://www.youtube.com/@Bemora-site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg transition-colors"
+                data-testid="youtube-channel-button"
+              >
+                <SiYoutube className="text-lg" />
+                <span>Visit YouTube Channel</span>
+              </a>
             </div>
           </div>
         );
