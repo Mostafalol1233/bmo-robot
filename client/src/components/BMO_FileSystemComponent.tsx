@@ -252,14 +252,6 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   height="256px"
                   controls={true}
                   playing={false}
-                  config={{
-                    youtube: {
-                      playerVars: {
-                        showinfo: 1,
-                        modestbranding: 1
-                      }
-                    }
-                  }}
                 />
               ) : (
                 <div className="w-full h-64 flex items-center justify-center text-white">
