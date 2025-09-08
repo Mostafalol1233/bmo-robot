@@ -59,6 +59,8 @@
       "destination": "/"
     }
   ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "git": {
     "deploymentEnabled": {
       "main": true

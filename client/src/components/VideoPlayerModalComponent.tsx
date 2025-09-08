@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
-import type { ReactPlayerProps } from 'react-player';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 
 interface VideoItem {
@@ -125,12 +124,9 @@ export default function VideoPlayerModalComponent({
                   controls={true}
                   config={{
                     youtube: {
-                      playerVars: {
-                        showinfo: 1,
-                        controls: 1,
-                        modestbranding: 1,
-                        rel: 0
-                      }
+                      controls: 1,
+                      modestbranding: 1,
+                      rel: 0
                     }
                   }}
                   onError={(error) => {
