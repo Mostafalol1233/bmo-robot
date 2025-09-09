@@ -134,7 +134,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-background via-background to-muted/20">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-cyan-400/20 via-cyan-500/10 to-cyan-600/20">
       <div 
         ref={bmoRef}
         className="relative w-80 mx-auto transform hover:scale-105 transition-transform duration-300"
