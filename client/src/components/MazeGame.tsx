@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import finnIcon from '@assets/generated_images/Finn_character_icon_crop_db38cbd0.png';
-import mazeBackground from '@assets/generated_images/Adventure_Time_maze_game_background_53303ae3.png';
+import mazeBackground from '@assets/generated_images/Adventure_Time_maze_background_25eebe19.png';
 
 interface Position {
   x: number;
