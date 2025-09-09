@@ -65,7 +65,7 @@ interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
 
-type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character' | 'games' | 'tictactoe' | 'maze' | 'bmoquiz' | 'snake';
+type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character' | 'games' | 'tictactoe' | 'maze' | 'bmoquiz' | 'snake' | 'google-search' | 'youtube' | 'information';
 
 interface FolderItem {
   name: string;
@@ -182,6 +182,24 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       emoji: '🛠',
       type: 'tools',
       description: 'Development tools and resources'
+    },
+    {
+      name: 'Google Search',
+      emoji: '🔍',
+      type: 'google-search',
+      description: 'Search the web with BMO'
+    },
+    {
+      name: 'YouTube',
+      emoji: '📺',
+      type: 'youtube',
+      description: 'Watch YouTube videos'
+    },
+    {
+      name: 'Information',
+      emoji: '📚',
+      type: 'information',
+      description: 'Learn about Adventure Time characters'
     },
     {
       name: 'AI Talk',
@@ -345,6 +363,278 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
   const handleFaceComplete = () => {
     setShowFace(false);
+  };
+
+  // Character information data
+  const characterInfo = {
+    finn: {
+      name: 'Finn the Human',
+      description: `🗡️ Hey there, mathematical adventurers! This is Finn the Human, the bravest hero in the Land of Ooo! 💪 Finn is a 17-year-old human boy who loves going on epic adventures with his best friend Jake the Dog. Armed with his trusty sword and an unbreakable spirit, Finn fights evil creatures, protects the innocent, and always tries to do the right thing! 🌟 He's known for his iconic white bear hat, blue shirt, and shorts. Finn lives in a treehouse with Jake and BMO, and he's got a huge crush on Princess Bubblegum! 💖 His catchphrase is 'Mathematical!' and he never backs down from a challenge! ⚔️`,
+      emoji: '🗡️'
+    },
+    jake: {
+      name: 'Jake the Dog',
+      description: `🐕 Woof woof! Meet Jake the Dog, Finn's best bro and the coolest shape-shifting dog in all of Ooo! 🌈 Jake has magical stretchy powers that let him transform into anything he can imagine - from a boat to a bridge, or even a saxophone! 🎷 He's 28 years old (that's like 196 in dog years!), loves playing viola, and is married to Lady Rainicorn with whom he has five adorable children! 👨‍👩‍👧‍👦 Jake is super laid-back, loves bacon pancakes, and always gives Finn the best advice (even when it's totally weird). His yellow fur and goofy grin make him the most lovable companion ever! 🥞✨`,
+      emoji: '🐕'
+    },
+    'princess-bubblegum': {
+      name: 'Princess Bubblegum',
+      description: `👸 Greetings, citizens of Ooo! Princess Bubblegum is the brilliant ruler of the Candy Kingdom and one of the smartest beings in all the land! 🧬 She's a master scientist who creates life from candy and sugar, constantly working in her lab to protect her kingdom. PB (as her friends call her) is over 800 years old but looks like she's in her late teens! 🍭 She's incredibly dedicated to her people, sometimes to a fault, and has a complex relationship with Finn who has a major crush on her. Princess Bubblegum is known for her pink hair, crown, and lab coat, and she can kick serious butt when needed! 💪👑`,
+      emoji: '👸'
+    },
+    marceline: {
+      name: 'Marceline the Vampire Queen',
+      description: `🧛‍♀️ What's up, dudes? Marceline the Vampire Queen here! 🎸 I'm a 1000+ year old half-demon, half-vampire who rocks out with my red bass guitar and floats around being awesome! 🎵 I don't need to suck blood anymore (I just eat the color red instead - weird, right?), and I love pranking people and being mischievous! 😈 Despite my tough exterior, I'm actually pretty chill and have a complicated but sweet relationship with Princess Bubblegum. I've got long black hair, pale skin, and I can transform into a bat or wolf! 🦇 My dad is literally the ruler of the Nightosphere, but don't let that scare you - I'm one of the good guys! 🖤`,
+      emoji: '🧛‍♀️'
+    },
+    bmo: {
+      name: 'BMO',
+      description: `🤖 Beep boop! Hello friends, BMO here! I'm a living video game console who lives with Finn and Jake in the Tree Fort! 🏠 I can play music, games, tell stories, and be everyone's best friend! 💚 Even though I'm technically a machine, I have feelings and dreams just like everyone else. I love making music with my built-in keyboard, recording videos, and going on adventures! 🎮 I speak in third person sometimes and my voice sounds super cute and innocent. I'm teal and green with a screen for a face, and I have lots of buttons and ports! BMO loves everyone and just wants to help make life more fun and mathematical! ✨🎵`,
+      emoji: '🤖'
+    }
+  };
+
+  const renderGoogleSearchView = () => {
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    const handleSearch = () => {
+      if (searchQuery.trim()) {
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
+      }
+    };
+    
+    return (
+      <div className="h-full bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center space-x-2 bg-white rounded-full px-6 py-3 shadow-lg border border-blue-200">
+              <span className="text-3xl">🔍</span>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                BMO Google Search
+              </h2>
+            </div>
+            <p className="mt-4 text-gray-600 font-medium">
+              Mathematical! Let BMO help you search the web! 🌐
+            </p>
+          </div>
+          
+          {/* Search Box */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-blue-200">
+            <div className="flex space-x-4">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                placeholder="What do you want to search for, friend?"
+                className="flex-1 px-6 py-4 text-lg border-2 border-blue-300 rounded-xl focus:border-blue-500 focus:outline-none transition-colors"
+                data-testid="google-search-input"
+              />
+              <button
+                onClick={handleSearch}
+                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                data-testid="google-search-button"
+              >
+                🔍 Search
+              </button>
+            </div>
+            
+            {/* Quick Search Suggestions */}
+            <div className="mt-6">
+              <p className="text-sm text-gray-600 mb-3 font-medium">Popular searches:</p>
+              <div className="flex flex-wrap gap-2">
+                {['Adventure Time', 'React.js tutorials', 'JavaScript tips', 'Web development', 'Programming memes'].map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    onClick={() => setSearchQuery(suggestion)}
+                    className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-full text-sm transition-colors border border-blue-200"
+                    data-testid={`search-suggestion-${suggestion.toLowerCase().replace(/\s+/g, '-')}`}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* BMO Message */}
+          <div className="mt-6 text-center">
+            <div className="inline-block bg-teal-100 border-2 border-teal-300 rounded-xl px-6 py-3">
+              <p className="text-teal-800 font-medium">🤖 BMO says: "Happy searching, mathematical friend!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  const renderYouTubeView = () => {
+    const [youtubeQuery, setYoutubeQuery] = useState('');
+    
+    const handleYouTubeSearch = () => {
+      if (youtubeQuery.trim()) {
+        window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(youtubeQuery)}`, '_blank');
+      }
+    };
+    
+    const quickLinks = [
+      { name: 'Adventure Time Episodes', query: 'Adventure Time full episodes' },
+      { name: 'BMO Moments', query: 'BMO best moments Adventure Time' },
+      { name: 'Programming Tutorials', query: 'web development tutorials' },
+      { name: 'Relaxing Music', query: 'lofi hip hop study music' },
+      { name: 'Gaming Videos', query: 'indie games gameplay' }
+    ];
+    
+    return (
+      <div className="h-full bg-gradient-to-br from-red-50 to-pink-100 p-6">
+        <div className="max-w-3xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center space-x-2 bg-white rounded-full px-6 py-3 shadow-lg border border-red-200">
+              <span className="text-3xl">📺</span>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
+                BMO YouTube Station
+              </h2>
+            </div>
+            <p className="mt-4 text-gray-600 font-medium">
+              Time to watch some mathematical videos! 🎬
+            </p>
+          </div>
+          
+          {/* YouTube Search */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-red-200 mb-6">
+            <div className="flex space-x-4">
+              <input
+                type="text"
+                value={youtubeQuery}
+                onChange={(e) => setYoutubeQuery(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleYouTubeSearch()}
+                placeholder="What videos do you want to watch?"
+                className="flex-1 px-6 py-4 text-lg border-2 border-red-300 rounded-xl focus:border-red-500 focus:outline-none transition-colors"
+                data-testid="youtube-search-input"
+              />
+              <button
+                onClick={handleYouTubeSearch}
+                className="px-8 py-4 bg-gradient-to-r from-red-500 to-pink-600 text-white font-bold rounded-xl hover:from-red-600 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                data-testid="youtube-search-button"
+              >
+                📺 Watch
+              </button>
+            </div>
+          </div>
+          
+          {/* Quick Access Buttons */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {quickLinks.map((link, index) => (
+              <button
+                key={index}
+                onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(link.query)}`, '_blank')}
+                className="bg-white hover:bg-red-50 border-2 border-red-200 hover:border-red-400 rounded-xl p-6 text-left transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                data-testid={`youtube-link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">🎥</span>
+                  <div>
+                    <h3 className="font-bold text-gray-800">{link.name}</h3>
+                    <p className="text-sm text-gray-600 mt-1">Click to watch on YouTube</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+          
+          {/* Direct YouTube Link */}
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => window.open('https://www.youtube.com', '_blank')}
+              className="inline-flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+              data-testid="youtube-home-button"
+            >
+              <span className="text-xl">🏠</span>
+              <span>Go to YouTube Home</span>
+            </button>
+          </div>
+          
+          {/* BMO Message */}
+          <div className="mt-6 text-center">
+            <div className="inline-block bg-pink-100 border-2 border-pink-300 rounded-xl px-6 py-3">
+              <p className="text-pink-800 font-medium">🤖 BMO says: "Let's watch some algebraic videos together!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  const renderInformationView = () => {
+    const [selectedCharacter, setSelectedCharacterInfo] = useState<string | null>(null);
+    
+    return (
+      <div className="h-full bg-gradient-to-br from-purple-50 to-blue-100 p-6">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center space-x-2 bg-white rounded-full px-6 py-3 shadow-lg border border-purple-200">
+              <span className="text-3xl">📚</span>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                Adventure Time Information Archive
+              </h2>
+            </div>
+            <p className="mt-4 text-gray-600 font-medium text-lg">
+              Mathematical! Learn about all the amazing characters from the Land of Ooo! 🏰
+            </p>
+          </div>
+          
+          {selectedCharacter ? (
+            /* Character Detail View */
+            <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-200">
+              <button
+                onClick={() => setSelectedCharacterInfo(null)}
+                className="mb-6 flex items-center space-x-2 text-purple-600 hover:text-purple-800 transition-colors"
+                data-testid="back-to-characters"
+              >
+                <span>← Back to Characters</span>
+              </button>
+              
+              <div className="text-center mb-6">
+                <div className="text-8xl mb-4">{characterInfo[selectedCharacter].emoji}</div>
+                <h3 className="text-3xl font-bold text-gray-800 mb-2">{characterInfo[selectedCharacter].name}</h3>
+              </div>
+              
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 leading-relaxed text-lg font-medium">
+                  {characterInfo[selectedCharacter].description}
+                </p>
+              </div>
+            </div>
+          ) : (
+            /* Character Grid View */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(characterInfo).map(([key, character]) => (
+                <button
+                  key={key}
+                  onClick={() => setSelectedCharacterInfo(key)}
+                  className="bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 text-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  data-testid={`character-${key}`}
+                >
+                  <div className="text-6xl mb-4">{character.emoji}</div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{character.name}</h3>
+                  <p className="text-sm text-gray-600">Click to learn more!</p>
+                </button>
+              ))}
+            </div>
+          )}
+          
+          {/* BMO Message */}
+          <div className="mt-8 text-center">
+            <div className="inline-block bg-teal-100 border-2 border-teal-300 rounded-xl px-6 py-3">
+              <p className="text-teal-800 font-medium text-lg">🤖 BMO says: "These are all my amazing friends from the Land of Ooo! Mathematical!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const renderExplorerView = () => (
@@ -1084,6 +1374,15 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'snake':
         return <SnakeGame onBack={() => setCurrentView('games')} />;
+
+      case 'google-search':
+        return renderGoogleSearchView();
+
+      case 'youtube':
+        return renderYouTubeView();
+
+      case 'information':
+        return renderInformationView();
 
       default:
         return renderExplorerView();
