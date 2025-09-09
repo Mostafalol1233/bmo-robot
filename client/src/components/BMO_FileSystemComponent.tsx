@@ -100,6 +100,19 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [youtubeQuery, setYoutubeQuery] = useState('');
   const [selectedCharacterInfo, setSelectedCharacterInfo] = useState<keyof typeof characterInfo | null>(null);
 
+  // Helper function to get main character image
+  const getCharacterMainImage = (characterKey: string | null): string => {
+    if (!characterKey) return '';
+    switch (characterKey.toLowerCase()) {
+      case 'finn': return finnMainImg;
+      case 'jake': return jakeMainImg;
+      case 'princess bubblegum': return princessBubblegumMainImg;
+      case 'marceline': return marcelineMainImg;
+      case 'bmo': return bmoMainImg;
+      default: return '';
+    }
+  };
+
   // Video list using local video files
   const videoList = [
     {
@@ -591,19 +604,25 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-200">
               <button
                 onClick={() => setSelectedCharacterInfo(null)}
-                className="mb-6 flex items-center space-x-2 text-purple-600 hover:text-purple-800 transition-colors"
+                className="mb-6 flex items-center space-x-2 text-purple-600 hover:text-purple-800 transition-colors font-semibold"
                 data-testid="back-to-characters"
               >
                 <span>← Back to Characters</span>
               </button>
 
               <div className="text-center mb-6">
-                <div className="text-8xl mb-4">{characterInfo[selectedCharacterInfo].emoji}</div>
-                <h3 className="text-3xl font-bold text-gray-800 mb-2">{characterInfo[selectedCharacterInfo].name}</h3>
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-purple-300 shadow-lg">
+                  <img 
+                    src={getCharacterMainImage(selectedCharacterInfo)} 
+                    alt={characterInfo[selectedCharacterInfo].name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-bold text-gray-800 mb-2 font-sans">{characterInfo[selectedCharacterInfo].name}</h3>
               </div>
 
               <div className="prose prose-lg max-w-none">
-                <p className="text-gray-700 leading-relaxed text-lg font-medium">
+                <p className="text-gray-700 leading-relaxed text-lg font-normal font-sans tracking-wide text-justify">
                   {characterInfo[selectedCharacterInfo].description}
                 </p>
               </div>
@@ -618,9 +637,15 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   className="bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 text-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                   data-testid={`character-${key}`}
                 >
-                  <div className="text-6xl mb-4">{character.emoji}</div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{character.name}</h3>
-                  <p className="text-sm text-gray-600">Click to learn more!</p>
+                  <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-3 border-purple-200 shadow-md">
+                    <img 
+                      src={getCharacterMainImage(key)} 
+                      alt={character.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2 font-sans">{character.name}</h3>
+                  <p className="text-gray-600 text-sm font-normal font-sans leading-relaxed">{character.description.substring(0, 100)}...</p>
                 </button>
               ))}
             </div>
@@ -754,7 +779,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   </div>
                 </div>
               </div>
-              
+
               <a 
                 href="https://www.youtube.com/@Bemora-site"
                 target="_blank"
