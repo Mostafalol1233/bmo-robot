@@ -116,28 +116,32 @@ export default function VideoPlayerModalComponent({
             <div className="relative bg-black aspect-video">
               {currentVideo ? (
                 <ReactPlayer
-                  url={currentVideo.youtubeUrl || currentVideo.url}
+                  url={currentVideo.url}
                   width="100%"
                   height="100%"
-                  playing={isPlaying}
-                  volume={volume}
-                  controls
+                  controls={true}
+                  playing={false}
+                  volume={0.8}
+                  onError={(error) => {
+                    console.error('Video player error:', error);
+                  }}
                   config={{
+                    file: {
+                      attributes: {
+                        controlsList: 'nodownload',
+                        disablePictureInPicture: false,
+                        preload: 'metadata'
+                      },
+                      forceVideo: true
+                    },
                     youtube: {
                       playerVars: {
-                        showinfo: 1,
-                        rel: 0,
-                        modestbranding: 1
+                        showinfo: 1
                       }
                     }
                   }}
-                  onError={(error: any) => {
-                    console.error('Video error:', error);
-                    // Show fallback message or try alternative URL
-                  }}
-                  onReady={() => {
-                    console.log('Video ready:', currentVideo.title);
-                  }}
+                  onReady={() => console.log('Video ready to play')}
+                  onStart={() => console.log('Video started playing')}
                   fallback={
                     <div className="w-full h-full flex items-center justify-center bg-gray-900">
                       <div className="text-center text-white">
@@ -221,7 +225,7 @@ export default function VideoPlayerModalComponent({
               <h3 className="pixel-text text-sm text-foreground mb-2">Playlist</h3>
               <p className="text-xs text-muted-foreground">{videos.length} videos</p>
             </div>
-            
+
             <div className="overflow-y-auto max-h-96 custom-scrollbar">
               {videos.map((video, index) => (
                 <button

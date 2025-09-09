@@ -100,46 +100,46 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [youtubeQuery, setYoutubeQuery] = useState('');
   const [selectedCharacterInfo, setSelectedCharacterInfo] = useState<keyof typeof characterInfo | null>(null);
 
-  // Video list with both local and YouTube URLs for better compatibility
+  // Video list using local video files
   const videoList = [
     {
       id: '1',
       title: 'BMO Adventure Short #1',
-      url: 'https://youtube.com/shorts/A1eUITFLvrA', 
+      url: '/bmo_adventure_1.mp4',
       youtubeUrl: 'https://youtube.com/shorts/A1eUITFLvrA',
-      thumbnail: 'https://img.youtube.com/vi/A1eUITFLvrA/mqdefault.jpg',
+      thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzE8L3RleHQ+PC9zdmc+',
       duration: '0:15'
     },
     {
       id: '2', 
       title: 'BMO Adventure Short #2',
-      url: 'https://youtube.com/shorts/920D9DjKgCo',
+      url: '/bmo_adventure_2.mp4',
       youtubeUrl: 'https://youtube.com/shorts/920D9DjKgCo',
-      thumbnail: 'https://img.youtube.com/vi/920D9DjKgCo/mqdefault.jpg',
+      thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzI8L3RleHQ+PC9zdmc+',
       duration: '0:20'
     },
     {
       id: '3',
       title: 'BMO Adventure Short #3', 
-      url: 'https://youtube.com/shorts/Ql7tURnDdzk',
+      url: '/bmo_adventure_3.mp4',
       youtubeUrl: 'https://youtube.com/shorts/Ql7tURnDdzk',
-      thumbnail: 'https://img.youtube.com/vi/Ql7tURnDdzk/mqdefault.jpg',
+      thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzM8L3RleHQ+PC9zdmc+',
       duration: '0:18'
     },
     {
       id: '4',
       title: 'Adventure Time Tutorial',
-      url: 'https://www.youtube.com/watch?v=puFy652XCl8',
+      url: '/adventure_tutorial.mp4',
       youtubeUrl: 'https://www.youtube.com/watch?v=puFy652XCl8',
-      thumbnail: 'https://img.youtube.com/vi/puFy652XCl8/mqdefault.jpg',
+      thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkdmVudHVyZSBUdXRvcmlhbDwvdGV4dD48L3N2Zz4=',
       duration: '2:45'
     },
     {
       id: '5',
       title: 'BMO Coding Session',
-      url: 'https://www.youtube.com/watch?v=wjwNBUB_iXk',
+      url: '/bmo_coding.mp4',
       youtubeUrl: 'https://www.youtube.com/watch?v=wjwNBUB_iXk', 
-      thumbnail: 'https://img.youtube.com/vi/wjwNBUB_iXk/mqdefault.jpg',
+      thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBDb2Rpbmc8L3RleHQ+PC9zdmc+',
       duration: '1:30'
     }
   ];
@@ -741,8 +741,20 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               ))}
             </div>
 
-            {/* Main Channel Link */}
+            {/* Local Video Info */}
             <div className="mt-6 text-center">
+              <div className="bg-teal-50 border-2 border-teal-300 rounded-lg p-4 mb-4">
+                <div className="text-teal-800 font-medium text-sm">
+                  <div className="flex items-center justify-center space-x-2 mb-2">
+                    <span className="text-xl">🎬</span>
+                    <span>محتوى الفيديو محلي</span>
+                  </div>
+                  <div className="text-xs text-teal-600">
+                    الفيديوهات محفوظة على الموقع مباشرة • تشغيل سريع وموثوق
+                  </div>
+                </div>
+              </div>
+              
               <a 
                 href="https://www.youtube.com/@Bemora-site"
                 target="_blank"
