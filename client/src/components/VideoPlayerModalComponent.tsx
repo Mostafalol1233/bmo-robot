@@ -122,12 +122,31 @@ export default function VideoPlayerModalComponent({
                   playing={isPlaying}
                   volume={volume}
                   controls
+                  config={{
+                    youtube: {
+                      playerVars: {
+                        showinfo: 1,
+                        rel: 0,
+                        modestbranding: 1
+                      }
+                    }
+                  }}
                   onError={(error: any) => {
                     console.error('Video error:', error);
+                    // Show fallback message or try alternative URL
                   }}
                   onReady={() => {
-                    console.log('Video ready');
+                    console.log('Video ready:', currentVideo.title);
                   }}
+                  fallback={
+                    <div className="w-full h-full flex items-center justify-center bg-gray-900">
+                      <div className="text-center text-white">
+                        <i className="fas fa-video text-4xl mb-4"></i>
+                        <p className="mb-2">Loading video...</p>
+                        <p className="text-sm opacity-75">{currentVideo.title}</p>
+                      </div>
+                    </div>
+                  }
                   data-testid="react-player"
                 />
               ) : (
