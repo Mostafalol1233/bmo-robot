@@ -106,7 +106,9 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     switch (characterKey.toLowerCase()) {
       case 'finn': return finnMainImg;
       case 'jake': return jakeMainImg;
-      case 'princess bubblegum': return princessBubblegumMainImg;
+      case 'princess bubblegum': 
+      case 'princess-bubblegum': 
+      case 'princessbubblegum': return princessBubblegumMainImg;
       case 'marceline': return marcelineMainImg;
       case 'bmo': return bmoMainImg;
       default: return '';
@@ -633,7 +635,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               {Object.entries(characterInfo).map(([key, character]) => (
                 <button
                   key={key}
-                  onClick={() => setSelectedCharacterInfo(key)}
+                  onClick={() => setSelectedCharacterInfo(key as keyof typeof characterInfo)}
                   className="bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 text-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                   data-testid={`character-${key}`}
                 >
@@ -642,6 +644,16 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       src={getCharacterMainImage(key)} 
                       alt={character.name}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        console.log(`Failed to load image for ${key}:`, getCharacterMainImage(key));
+                        // Fallback to emoji if image fails
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.innerHTML = `<div class="w-full h-full flex items-center justify-center text-4xl">${character.emoji}</div>`;
+                        }
+                      }}
                     />
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2 font-sans">{character.name}</h3>

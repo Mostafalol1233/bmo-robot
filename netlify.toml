@@ -1,6 +1,6 @@
 [build]
-  publish = "dist/public"
-  command = "npm run build && cp client/public/background.jfif dist/public/"
+  publish = "dist"
+  command = "npm run build && mkdir -p dist/client/public && cp client/public/background.jfif dist/client/public/ && cp client/public/background.jfif dist/"
 
 [[redirects]]
   from = "/api/*"
