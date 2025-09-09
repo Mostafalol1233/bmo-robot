@@ -95,6 +95,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   
+  // States for new sections
+  const [searchQuery, setSearchQuery] = useState('');
+  const [youtubeQuery, setYoutubeQuery] = useState('');
+  const [selectedCharacterInfo, setSelectedCharacterInfo] = useState<keyof typeof characterInfo | null>(null);
+  
   // Video list with both local and YouTube URLs for better compatibility
   const videoList = [
     {
@@ -395,8 +400,6 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
 
   const renderGoogleSearchView = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-    
     const handleSearch = () => {
       if (searchQuery.trim()) {
         window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
@@ -470,8 +473,6 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
   
   const renderYouTubeView = () => {
-    const [youtubeQuery, setYoutubeQuery] = useState('');
-    
     const handleYouTubeSearch = () => {
       if (youtubeQuery.trim()) {
         window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(youtubeQuery)}`, '_blank');
@@ -568,7 +569,6 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
   
   const renderInformationView = () => {
-    const [selectedCharacter, setSelectedCharacterInfo] = useState<keyof typeof characterInfo | null>(null);
     
     return (
       <div className="h-full bg-gradient-to-br from-purple-50 to-blue-100 p-6">
@@ -586,7 +586,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </p>
           </div>
           
-          {selectedCharacter ? (
+          {selectedCharacterInfo ? (
             /* Character Detail View */
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-200">
               <button
@@ -598,13 +598,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               </button>
               
               <div className="text-center mb-6">
-                <div className="text-8xl mb-4">{characterInfo[selectedCharacter].emoji}</div>
-                <h3 className="text-3xl font-bold text-gray-800 mb-2">{characterInfo[selectedCharacter].name}</h3>
+                <div className="text-8xl mb-4">{characterInfo[selectedCharacterInfo].emoji}</div>
+                <h3 className="text-3xl font-bold text-gray-800 mb-2">{characterInfo[selectedCharacterInfo].name}</h3>
               </div>
               
               <div className="prose prose-lg max-w-none">
                 <p className="text-gray-700 leading-relaxed text-lg font-medium">
-                  {characterInfo[selectedCharacter].description}
+                  {characterInfo[selectedCharacterInfo].description}
                 </p>
               </div>
             </div>
