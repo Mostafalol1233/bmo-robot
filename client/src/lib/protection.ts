@@ -186,69 +186,8 @@ export function setupProtection() {
 }
 
 function showCopyrightAlert() {
-  // Create a custom alert modal
-  const alertDiv = document.createElement('div');
-  alertDiv.innerHTML = `
-    <div style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      font-family: Arial, sans-serif;
-    ">
-      <div style="
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        max-width: 400px;
-      ">
-        <h3 style="color: #e74c3c; margin-bottom: 15px;">🚫 ACCESS DENIED</h3>
-        <p style="color: #2c3e50; margin-bottom: 20px;">
-          This website is protected by copyright<br>
-          All rights reserved © BMO Robot 2025
-        </p>
-        <button onclick="this.parentElement.parentElement.remove()" style="
-          background: #3498db;
-          color: white;
-          border: none;
-          padding: 8px 16px;
-          border-radius: 5px;
-          cursor: pointer;
-        ">
-          OK
-        </button>
-      </div>
-    </div>
-  `;
-  
-  document.body.appendChild(alertDiv);
-  
-  // Auto remove after 3 seconds
-  setTimeout(() => {
-    if (alertDiv.parentElement) {
-      alertDiv.remove();
-    }
-  }, 3000);
+  // Disabled for better user experience
+  return;
 }
 
-// Additional protection: Hide source code in production
-if (typeof window !== 'undefined') {
-  // Override toString methods to hide code
-  Function.prototype.toString = function() {
-    return 'function() { [حماية الكود] }';
-  };
-  
-  // Disable eval
-  window.eval = function() {
-    showCopyrightAlert();
-    throw new Error('eval غير مسموح - حماية الكود');
-  };
-}
+// Protection features disabled for better user experience
