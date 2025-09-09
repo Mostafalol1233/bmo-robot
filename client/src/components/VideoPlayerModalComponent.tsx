@@ -121,7 +121,7 @@ export default function VideoPlayerModalComponent({
                   height="100%"
                   playing={isPlaying}
                   volume={volume}
-                  controls={true}
+                  controls
                   onError={(error: any) => {
                     console.error('Video error:', error);
                   }}

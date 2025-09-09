@@ -4,13 +4,13 @@
  */
 
 export function setupProtection() {
-  // Disable right-click context menu
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    showConsoleWarning();
-    showCopyrightAlert();
-    return false;
-  });
+  // Disabled right-click protection for better user experience
+  // document.addEventListener('contextmenu', function(e) {
+  //   e.preventDefault();
+  //   showConsoleWarning();
+  //   showCopyrightAlert();
+  //   return false;
+  // });
 
   // Disable specific key combinations
   document.addEventListener('keydown', function(e) {
@@ -153,23 +153,12 @@ export function setupProtection() {
     }
   }, 500);
 
-  // Show console warning only when needed
+  // Disabled console warnings for better user experience
   let consoleWarningShown = false;
   
   function showConsoleWarning() {
-    if (!consoleWarningShown) {
-      console.clear();
-      console.log('%c⚠️ COPYRIGHT PROTECTED', 'color: red; font-size: 30px; font-weight: bold;');
-      console.log('%cThis website is protected by copyright', 'color: red; font-size: 16px;');
-      console.log('%cAny attempt to steal code or content is illegal', 'color: red; font-size: 16px;');
-      console.log('%cAll rights reserved © BMO Robot Portfolio', 'color: red; font-size: 16px;');
-      consoleWarningShown = true;
-      
-      // Reset flag after some time
-      setTimeout(() => {
-        consoleWarningShown = false;
-      }, 10000);
-    }
+    // Disabled to prevent annoying users
+    return;
   }
 
   // Disable printing

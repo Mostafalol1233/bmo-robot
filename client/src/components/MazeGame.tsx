@@ -467,7 +467,7 @@ export default function MazeGame({ onBack }: MazeGameProps) {
       <div 
         className="p-4 min-h-screen overflow-y-auto bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `linear-gradient(rgba(147, 51, 234, 0.85), rgba(168, 85, 247, 0.85)), url(${mazeBackground})`,
+          backgroundImage: `url(${mazeBackground})`,
         }}
       >
         <div className="max-w-4xl mx-auto pb-20">

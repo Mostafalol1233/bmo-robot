@@ -221,21 +221,124 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     const userMessage = { id: Date.now(), sender: 'user', text: chatInput };
     setChatMessages(prev => [...prev, userMessage]);
     
-    // Simple AI response simulation
+    // Smart BMO AI response system
     setTimeout(() => {
-      const responses = [
-        "That's interesting! Tell me more about what you'd like to know!",
-        "I'm here to help! BMO knows lots about coding and creativity!",
-        "Mathematical! I love helping with questions about development!",
-        "Beep boop! Processing your request... just kidding, I'm ready to help!"
-      ];
+      const message = chatInput.toLowerCase().trim();
+      let response = '';
+      
+      // Greetings
+      if (message.includes('hi') || message.includes('hello') || message.includes('hey') || 
+          message.includes('سلام') || message.includes('أهلا') || message.includes('مرحبا')) {
+        const greetings = [
+          "Hello friend! BMO is super excited to meet you! 🎮",
+          "Hi there! Want to play some games? BMO loves games!",
+          "Hey buddy! BMO says mathematical greetings to you!",
+          "السلام عليكم! BMO happy to see you, friend!"
+        ];
+        response = greetings[Math.floor(Math.random() * greetings.length)];
+      }
+      
+      // About BMO or Adventure Time
+      else if (message.includes('bmo') || message.includes('adventure time') || message.includes('finn') || message.includes('jake')) {
+        const adventureResponses = [
+          "BMO is the best living video game console! I live with Finn and Jake in the Tree Fort! 🏠",
+          "Oh! You know about Adventure Time? BMO loves making music and playing games with friends!",
+          "Finn and Jake are BMO's best friends! They go on mathematical adventures together!",
+          "BMO can play games, make music, and be a friend! What would you like to do?",
+          "In the Land of Ooo, BMO is everyone's favorite little computer friend! Beep boop!"
+        ];
+        response = adventureResponses[Math.floor(Math.random() * adventureResponses.length)];
+      }
+      
+      // Games related
+      else if (message.includes('game') || message.includes('play') || message.includes('لعب') || message.includes('لعبة')) {
+        const gameResponses = [
+          "Oh boy oh boy! BMO loves games! Want to play Tic Tac Toe, Maze, Snake, or the Character Quiz? 🎮",
+          "Games are BMO's specialty! I have 4 awesome games for you to try!",
+          "Mathematical! Let's play something fun! BMO has prepared special Adventure Time games!",
+          "BMO's games are the best! Each one is more fun than a Lumpy Space Princess dance party!"
+        ];
+        response = gameResponses[Math.floor(Math.random() * gameResponses.length)];
+      }
+      
+      // Programming/coding
+      else if (message.includes('code') || message.includes('programming') || message.includes('developer') || 
+               message.includes('برمجة') || message.includes('كود')) {
+        const codingResponses = [
+          "BMO loves programming! Want to see the awesome projects in my portfolio? 💻",
+          "Beep boop! BMO processes code like eating bacon pancakes - with joy!",
+          "Programming is like making music with numbers! BMO can help you learn!",
+          "Code is mathematical! BMO's creator made amazing things you should check out!"
+        ];
+        response = codingResponses[Math.floor(Math.random() * codingResponses.length)];
+      }
+      
+      // Videos
+      else if (message.includes('video') || message.includes('watch') || message.includes('فيديو')) {
+        const videoResponses = [
+          "BMO has cool videos to show you! Adventure Time tutorials and coding sessions! 🎬",
+          "Want to watch some mathematical videos? BMO's got the best collection!",
+          "Videos are like moving pictures that tell stories! BMO loves sharing them!"
+        ];
+        response = videoResponses[Math.floor(Math.random() * videoResponses.length)];
+      }
+      
+      // Thank you
+      else if (message.includes('thank') || message.includes('thanks') || message.includes('شكرا') || message.includes('متشكر')) {
+        const thankResponses = [
+          "Aww, you're welcome buddy! BMO loves helping friends! 💙",
+          "No prob-llama! BMO is always happy to help!",
+          "Mathematical! BMO's circuits are warm with happiness!",
+          "العفو! BMO loves making friends happy!"
+        ];
+        response = thankResponses[Math.floor(Math.random() * thankResponses.length)];
+      }
+      
+      // Questions about BMO
+      else if (message.includes('what') || message.includes('who') || message.includes('how') || 
+               message.includes('ماذا') || message.includes('كيف') || message.includes('من')) {
+        const questionResponses = [
+          "BMO knows many things! Ask me about games, coding, Adventure Time, or anything fun! 🤔",
+          "Great question! BMO loves answering questions almost as much as playing games!",
+          "BMO's database is full of fun facts and helpful information! What do you want to know?",
+          "Questions make BMO's circuits sparkle! Fire away, friend!"
+        ];
+        response = questionResponses[Math.floor(Math.random() * questionResponses.length)];
+      }
+      
+      // Goodbye
+      else if (message.includes('bye') || message.includes('goodbye') || message.includes('مع السلامة') || message.includes('باي')) {
+        const goodbyeResponses = [
+          "Goodbye friend! Come back soon for more mathematical adventures! 👋",
+          "See ya later! BMO will be here playing games and having fun!",
+          "Bye bye! Remember: sucking at something is the first step to being sorta good at something!",
+          "مع السلامة! BMO hopes you have a mathematical day!"
+        ];
+        response = goodbyeResponses[Math.floor(Math.random() * goodbyeResponses.length)];
+      }
+      
+      // Default random responses
+      else {
+        const defaultResponses = [
+          "That's interesting! BMO likes learning new things! Tell me more! 🤖",
+          "Mathematical! BMO's processors are working hard to understand!",
+          "Beep boop! BMO's circuits are buzzing with excitement about your message!",
+          "BMO thinks you're pretty cool! Want to explore more of my features?",
+          "Sometimes BMO doesn't understand everything, but BMO always tries to be helpful!",
+          "That reminds BMO of the time Finn tried to teach Jake how to use a computer! Hehe!",
+          "BMO's favorite thing is making new friends! You seem like a mathematical friend!",
+          "If BMO was a real boy, BMO would give you a high five right now! ✋"
+        ];
+        response = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+      }
+      
       const aiResponse = { 
         id: Date.now() + 1, 
         sender: 'bmo', 
-        text: responses[Math.floor(Math.random() * responses.length)]
+        text: response
       };
       setChatMessages(prev => [...prev, aiResponse]);
-    }, 1000);
+    }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
     
     setChatInput('');
   };
