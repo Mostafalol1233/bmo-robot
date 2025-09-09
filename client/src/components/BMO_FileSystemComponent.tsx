@@ -568,7 +568,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
   
   const renderInformationView = () => {
-    const [selectedCharacter, setSelectedCharacterInfo] = useState<string | null>(null);
+    const [selectedCharacter, setSelectedCharacterInfo] = useState<keyof typeof characterInfo | null>(null);
     
     return (
       <div className="h-full bg-gradient-to-br from-purple-50 to-blue-100 p-6">
