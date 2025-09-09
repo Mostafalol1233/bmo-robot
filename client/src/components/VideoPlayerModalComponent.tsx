@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/youtube';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 
 interface VideoItem {

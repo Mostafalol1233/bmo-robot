@@ -94,12 +94,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   
-  // Video list with YouTube URLs (removed local video files to reduce bundle size)
+  // Video list with both local and YouTube URLs for better compatibility
   const videoList = [
     {
       id: '1',
       title: 'BMO Adventure Short #1',
-      url: 'https://youtube.com/shorts/A1eUITFLvrA', // Use YouTube directly
+      url: 'https://youtube.com/shorts/A1eUITFLvrA', 
       youtubeUrl: 'https://youtube.com/shorts/A1eUITFLvrA',
       thumbnail: 'https://img.youtube.com/vi/A1eUITFLvrA/mqdefault.jpg',
       duration: '0:15'
@@ -107,7 +107,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '2', 
       title: 'BMO Adventure Short #2',
-      url: 'https://youtube.com/shorts/920D9DjKgCo', // Use YouTube directly
+      url: 'https://youtube.com/shorts/920D9DjKgCo',
       youtubeUrl: 'https://youtube.com/shorts/920D9DjKgCo',
       thumbnail: 'https://img.youtube.com/vi/920D9DjKgCo/mqdefault.jpg',
       duration: '0:20'
@@ -115,7 +115,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '3',
       title: 'BMO Adventure Short #3', 
-      url: 'https://youtube.com/shorts/Ql7tURnDdzk', // Use YouTube directly
+      url: 'https://youtube.com/shorts/Ql7tURnDdzk',
       youtubeUrl: 'https://youtube.com/shorts/Ql7tURnDdzk',
       thumbnail: 'https://img.youtube.com/vi/Ql7tURnDdzk/mqdefault.jpg',
       duration: '0:18'
@@ -123,7 +123,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '4',
       title: 'Adventure Time Tutorial',
-      url: 'https://www.youtube.com/watch?v=puFy652XCl8', // Use YouTube directly
+      url: 'https://www.youtube.com/watch?v=puFy652XCl8',
       youtubeUrl: 'https://www.youtube.com/watch?v=puFy652XCl8',
       thumbnail: 'https://img.youtube.com/vi/puFy652XCl8/mqdefault.jpg',
       duration: '2:45'
@@ -131,7 +131,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     {
       id: '5',
       title: 'BMO Coding Session',
-      url: 'https://www.youtube.com/watch?v=wjwNBUB_iXk', // Use YouTube directly
+      url: 'https://www.youtube.com/watch?v=wjwNBUB_iXk',
       youtubeUrl: 'https://www.youtube.com/watch?v=wjwNBUB_iXk', 
       thumbnail: 'https://img.youtube.com/vi/wjwNBUB_iXk/mqdefault.jpg',
       duration: '1:30'
