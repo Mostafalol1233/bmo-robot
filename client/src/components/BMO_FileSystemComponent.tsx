@@ -94,12 +94,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [chatInput, setChatInput] = useState('');
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
-  
+
   // States for new sections
   const [searchQuery, setSearchQuery] = useState('');
   const [youtubeQuery, setYoutubeQuery] = useState('');
   const [selectedCharacterInfo, setSelectedCharacterInfo] = useState<keyof typeof characterInfo | null>(null);
-  
+
   // Video list with both local and YouTube URLs for better compatibility
   const videoList = [
     {
@@ -240,15 +240,15 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
   const handleSendMessage = () => {
     if (!chatInput.trim()) return;
-    
+
     const userMessage = { id: Date.now(), sender: 'user', text: chatInput };
     setChatMessages(prev => [...prev, userMessage]);
-    
+
     // Smart BMO AI response system
     setTimeout(() => {
       const message = chatInput.toLowerCase().trim();
       let response = '';
-      
+
       // Greetings
       if (message.includes('hi') || message.includes('hello') || message.includes('hey') || 
           message.includes('سلام') || message.includes('أهلا') || message.includes('مرحبا')) {
@@ -260,11 +260,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = greetings[Math.floor(Math.random() * greetings.length)];
       }
-      
+
       // About BMO or Adventure Time
       else if (message.includes('bmo') || message.includes('adventure time') || message.includes('finn') || message.includes('jake')) {
         const adventureResponses = [
-          "BMO is the best living video game console! I live with Finn and Jake in the Tree Fort! 🏠",
+          "BMO is the best living video game console! I live to Finn and Jake in the Tree Fort! 🏠",
           "Oh! You know about Adventure Time? BMO loves making music and playing games with friends!",
           "Finn and Jake are BMO's best friends! They go on mathematical adventures together!",
           "BMO can play games, make music, and be a friend! What would you like to do?",
@@ -272,7 +272,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = adventureResponses[Math.floor(Math.random() * adventureResponses.length)];
       }
-      
+
       // Games related
       else if (message.includes('game') || message.includes('play') || message.includes('لعب') || message.includes('لعبة')) {
         const gameResponses = [
@@ -283,7 +283,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = gameResponses[Math.floor(Math.random() * gameResponses.length)];
       }
-      
+
       // Programming/coding
       else if (message.includes('code') || message.includes('programming') || message.includes('developer') || 
                message.includes('برمجة') || message.includes('كود')) {
@@ -295,7 +295,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = codingResponses[Math.floor(Math.random() * codingResponses.length)];
       }
-      
+
       // Videos
       else if (message.includes('video') || message.includes('watch') || message.includes('فيديو')) {
         const videoResponses = [
@@ -305,7 +305,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = videoResponses[Math.floor(Math.random() * videoResponses.length)];
       }
-      
+
       // Thank you
       else if (message.includes('thank') || message.includes('thanks') || message.includes('شكرا') || message.includes('متشكر')) {
         const thankResponses = [
@@ -316,7 +316,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = thankResponses[Math.floor(Math.random() * thankResponses.length)];
       }
-      
+
       // Questions about BMO
       else if (message.includes('what') || message.includes('who') || message.includes('how') || 
                message.includes('ماذا') || message.includes('كيف') || message.includes('من')) {
@@ -328,7 +328,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = questionResponses[Math.floor(Math.random() * questionResponses.length)];
       }
-      
+
       // Goodbye
       else if (message.includes('bye') || message.includes('goodbye') || message.includes('مع السلامة') || message.includes('باي')) {
         const goodbyeResponses = [
@@ -339,7 +339,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = goodbyeResponses[Math.floor(Math.random() * goodbyeResponses.length)];
       }
-      
+
       // Default random responses
       else {
         const defaultResponses = [
@@ -354,7 +354,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         ];
         response = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
       }
-      
+
       const aiResponse = { 
         id: Date.now() + 1, 
         sender: 'bmo', 
@@ -362,7 +362,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       };
       setChatMessages(prev => [...prev, aiResponse]);
     }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
-    
+
     setChatInput('');
   };
 
@@ -405,7 +405,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
       }
     };
-    
+
     return (
       <div className="h-full bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
         <div className="max-w-2xl mx-auto">
@@ -421,7 +421,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               Mathematical! Let BMO help you search the web! 🌐
             </p>
           </div>
-          
+
           {/* Search Box */}
           <div className="bg-white rounded-2xl shadow-xl p-8 border border-blue-200">
             <div className="flex space-x-4">
@@ -442,7 +442,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 🔍 Search
               </button>
             </div>
-            
+
             {/* Quick Search Suggestions */}
             <div className="mt-6">
               <p className="text-sm text-gray-600 mb-3 font-medium">Popular searches:</p>
@@ -460,7 +460,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               </div>
             </div>
           </div>
-          
+
           {/* BMO Message */}
           <div className="mt-6 text-center">
             <div className="inline-block bg-teal-100 border-2 border-teal-300 rounded-xl px-6 py-3">
@@ -471,14 +471,14 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       </div>
     );
   };
-  
+
   const renderYouTubeView = () => {
     const handleYouTubeSearch = () => {
       if (youtubeQuery.trim()) {
         window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(youtubeQuery)}`, '_blank');
       }
     };
-    
+
     const quickLinks = [
       { name: 'Adventure Time Episodes', query: 'Adventure Time full episodes' },
       { name: 'BMO Moments', query: 'BMO best moments Adventure Time' },
@@ -486,7 +486,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       { name: 'Relaxing Music', query: 'lofi hip hop study music' },
       { name: 'Gaming Videos', query: 'indie games gameplay' }
     ];
-    
+
     return (
       <div className="h-full bg-gradient-to-br from-red-50 to-pink-100 p-6">
         <div className="max-w-3xl mx-auto">
@@ -502,7 +502,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               Time to watch some mathematical videos! 🎬
             </p>
           </div>
-          
+
           {/* YouTube Search */}
           <div className="bg-white rounded-2xl shadow-xl p-8 border border-red-200 mb-6">
             <div className="flex space-x-4">
@@ -524,7 +524,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               </button>
             </div>
           </div>
-          
+
           {/* Quick Access Buttons */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {quickLinks.map((link, index) => (
@@ -544,7 +544,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               </button>
             ))}
           </div>
-          
+
           {/* Direct YouTube Link */}
           <div className="mt-6 text-center">
             <button
@@ -556,7 +556,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               <span>Go to YouTube Home</span>
             </button>
           </div>
-          
+
           {/* BMO Message */}
           <div className="mt-6 text-center">
             <div className="inline-block bg-pink-100 border-2 border-pink-300 rounded-xl px-6 py-3">
@@ -567,9 +567,9 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       </div>
     );
   };
-  
+
   const renderInformationView = () => {
-    
+
     return (
       <div className="h-full bg-gradient-to-br from-purple-50 to-blue-100 p-6">
         <div className="max-w-4xl mx-auto">
@@ -585,7 +585,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               Mathematical! Learn about all the amazing characters from the Land of Ooo! 🏰
             </p>
           </div>
-          
+
           {selectedCharacterInfo ? (
             /* Character Detail View */
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-200">
@@ -596,12 +596,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               >
                 <span>← Back to Characters</span>
               </button>
-              
+
               <div className="text-center mb-6">
                 <div className="text-8xl mb-4">{characterInfo[selectedCharacterInfo].emoji}</div>
                 <h3 className="text-3xl font-bold text-gray-800 mb-2">{characterInfo[selectedCharacterInfo].name}</h3>
               </div>
-              
+
               <div className="prose prose-lg max-w-none">
                 <p className="text-gray-700 leading-relaxed text-lg font-medium">
                   {characterInfo[selectedCharacterInfo].description}
@@ -625,7 +625,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               ))}
             </div>
           )}
-          
+
           {/* BMO Message */}
           <div className="mt-8 text-center">
             <div className="inline-block bg-teal-100 border-2 border-teal-300 rounded-xl px-6 py-3">
@@ -678,7 +678,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         return (
           <div className="p-4 h-full bg-white overflow-y-auto custom-scrollbar">
             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b-2 border-gray-300 pb-2">📹 Videos</h3>
-            
+
             {/* Video Grid with Thumbnails */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-80 overflow-y-auto custom-scrollbar">
               {videoList.map((video) => (
@@ -705,7 +705,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                     <div className="absolute inset-0 bg-gray-600 hidden items-center justify-center">
                       <span className="text-white text-xl">🎥</span>
                     </div>
-                    
+
                     {/* Play Button */}
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center transition-all">
                       <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
@@ -713,7 +713,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Video Info */}
                   <div className="p-3">
                     <div className="text-sm font-medium text-gray-800 line-clamp-2 mb-2">
@@ -740,7 +740,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 </div>
               ))}
             </div>
-            
+
             {/* Main Channel Link */}
             <div className="mt-6 text-center">
               <a 
@@ -761,7 +761,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         return (
           <div className="p-4 h-full bg-white overflow-y-auto custom-scrollbar">
             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Character Gallery</h3>
-            
+
             {/* Files Grid - Adventure Time Characters using real cropped images */}
             <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
               <div className="grid grid-cols-5 gap-3">
@@ -873,7 +873,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 ← Back to Gallery
               </button>
             </div>
-            
+
             {/* Character Images Gallery */}
             <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
               <div className="grid grid-cols-3 gap-3">
@@ -887,7 +887,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   />
                 </div>
               ))}
-              
+
               {/* Show placeholder if no images */}
               {(!characterImages[selectedCharacter] || characterImages[selectedCharacter].length === 0) && (
                 <div className="col-span-3 text-center py-8 text-gray-500">
@@ -968,7 +968,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">Find me on Discord as bem0ra</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://api.whatsapp.com/send/?phone=201500302461&text&type=phone_number&app_absent=0" 
                 target="_blank" 
@@ -982,7 +982,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">Contact me directly on WhatsApp</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://x.com/Bemora_BEMO" 
                 target="_blank" 
@@ -996,7 +996,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">Follow for updates and tips</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://www.youtube.com/@Bemora-site" 
                 target="_blank" 
@@ -1010,7 +1010,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">Watch tutorials and project demos</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://www.facebook.com/people/Bemora/61576053958575/?rdid=Z6xyqvNRgakQpzHM&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F12LQYx45ZEV%2F" 
                 target="_blank" 
@@ -1043,7 +1043,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">developer@bmo-portfolio.com</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://www.linkedin.com/in/mostafa-mohamed-409540336/" 
                 target="_blank" 
@@ -1056,7 +1056,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">Connect for professional opportunities</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://discord.gg/bem0ra" 
                 target="_blank" 
@@ -1098,7 +1098,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">mustaf.vercel.app - View my complete portfolio</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://calendly.com/bmo-developer" 
                 target="_blank" 
@@ -1133,7 +1133,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">React component library with Material Design</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://best-of-web.builder.io/cat/typescript/components" 
                 target="_blank" 
@@ -1147,7 +1147,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">Best TypeScript component libraries collection</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://www.flaticon.com/free-icons/design-system" 
                 target="_blank" 
@@ -1161,7 +1161,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="text-sm text-gray-600 mt-1">Free icons and design system resources</div>
                 </div>
               </a>
-              
+
               <a 
                 href="https://www.npmjs.com/package/npm" 
                 target="_blank" 
@@ -1195,7 +1195,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <div className="absolute top-10 left-10 w-8 h-8 bg-cyan-400 rotate-45 animate-spin opacity-30"></div>
             <div className="absolute top-20 right-16 w-6 h-6 bg-pink-400 rounded-full animate-bounce opacity-40"></div>
             <div className="absolute bottom-20 left-20 w-4 h-16 bg-yellow-400 animate-pulse opacity-30"></div>
-            
+
             <div className="relative z-10">
               {/* Retro header with neon effect */}
               <div className="text-center mb-8">
@@ -1222,23 +1222,23 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                     <div className="absolute top-2 right-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                     <div className="absolute bottom-2 left-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
                     <div className="absolute bottom-2 right-2 w-2 h-2 bg-green-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-                    
+
                     <div className="text-center">
                       <div className="text-4xl mb-3 text-cyan-400 group-hover:text-pink-400 transition-colors font-mono">X◯</div>
                       <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide">TIC TAC TOE</h3>
                       <p className="text-cyan-300 mb-3 font-mono text-xs">FINN vs JAKE</p>
-                      
+
                       {/* Difficulty indicators */}
                       <div className="flex justify-center space-x-1 mb-3">
                         <div className="px-1 py-0.5 bg-green-500 text-black text-xs font-bold font-mono">EASY</div>
                         <div className="px-1 py-0.5 bg-yellow-500 text-black text-xs font-bold font-mono">MED</div>
                         <div className="px-1 py-0.5 bg-red-500 text-black text-xs font-bold font-mono">HARD</div>
                       </div>
-                      
+
                       <div className="text-xs text-gray-400 font-mono">VS BOT • 2 PLAYER</div>
                     </div>
                   </div>
-                  
+
                   {/* Retro glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-pink-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
                 </button>
@@ -1254,23 +1254,23 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                     <div className="absolute top-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                     <div className="absolute bottom-2 left-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
                     <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-                    
+
                     <div className="text-center">
                       <div className="text-4xl mb-3 text-purple-400 group-hover:text-yellow-400 transition-colors font-mono">⬜</div>
                       <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide">MAZE RUNNER</h3>
                       <p className="text-purple-300 mb-3 font-mono text-xs">10 EPIC LEVELS</p>
-                      
+
                       {/* Level grid visualization */}
                       <div className="grid grid-cols-5 gap-0.5 justify-center mb-3 max-w-16 mx-auto">
                         {[...Array(10)].map((_, i) => (
                           <div key={i} className="w-1.5 h-1.5 bg-purple-400 border border-purple-300 animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}></div>
                         ))}
                       </div>
-                      
+
                       <div className="text-xs text-gray-400 font-mono">JOYSTICK • KEYBOARD</div>
                     </div>
                   </div>
-                  
+
                   {/* Retro glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-yellow-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
                 </button>
@@ -1286,12 +1286,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                     <div className="absolute top-2 right-2 w-2 h-2 bg-orange-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                     <div className="absolute bottom-2 left-2 w-2 h-2 bg-red-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
                     <div className="absolute bottom-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-                    
+
                     <div className="text-center">
                       <div className="text-4xl mb-3 text-pink-400 group-hover:text-orange-400 transition-colors font-mono">🐍</div>
                       <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide">CANDY SNAKE</h3>
                       <p className="text-pink-300 mb-3 font-mono text-xs">COLLECT CANDY</p>
-                      
+
                       {/* Snake movement visualization */}
                       <div className="flex justify-center space-x-1 mb-3">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -1299,11 +1299,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                         <div className="w-2 h-2 bg-green-200 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                         <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse" style={{ animationDelay: '0.6s' }}>🍭</div>
                       </div>
-                      
+
                       <div className="text-xs text-gray-400 font-mono">ARROWS • WASD</div>
                     </div>
                   </div>
-                  
+
                   {/* Retro glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-orange-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
                 </button>
@@ -1319,12 +1319,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                     <div className="absolute top-2 right-2 w-2 h-2 bg-teal-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                     <div className="absolute bottom-2 left-2 w-2 h-2 bg-blue-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
                     <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-                    
+
                     <div className="text-center">
                       <div className="text-4xl mb-3 text-green-400 group-hover:text-teal-400 transition-colors font-mono">🎮</div>
                       <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide">BMO QUIZ</h3>
                       <p className="text-green-300 mb-3 font-mono text-xs">CHARACTER QUIZ</p>
-                      
+
                       {/* Character icons */}
                       <div className="flex justify-center space-x-1 mb-3">
                         <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs">👑</div>
@@ -1333,11 +1333,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                         <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center text-xs">🧛</div>
                         <div className="w-6 h-6 bg-teal-400 rounded-full flex items-center justify-center text-xs">🤖</div>
                       </div>
-                      
+
                       <div className="text-xs text-gray-400 font-mono">5 QUESTIONS • RANDOM</div>
                     </div>
                   </div>
-                  
+
                   {/* Retro glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-teal-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
                 </button>
@@ -1350,7 +1350,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-pink-400"></div>
                   <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-yellow-400"></div>
                   <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400"></div>
-                  
+
                   <p className="text-white font-mono text-sm tracking-wider">
                     ► CHOOSE YOUR ADVENTURE ◄
                   </p>
@@ -1506,7 +1506,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               ))}
             </div>
           </div>
-          
+
           {/* Main Content */}
           <div className="flex-1 overflow-hidden">
             <div className="h-full animate-fadeInUp">
@@ -1515,7 +1515,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
         </div>
       </div>
-      
+
       {/* Video Player Modal */}
       <VideoPlayerModalComponent
         isOpen={isVideoModalOpen}
