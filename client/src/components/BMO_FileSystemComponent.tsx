@@ -87,6 +87,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const { t } = useTranslation();
   const [showFace, setShowFace] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('explorer');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
   const [selectedCharacter, setSelectedCharacter] = useState<string>('');
 
@@ -1632,23 +1633,23 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
         </div>
 
-        {/* Ribbon Menu */}
-        <div className="bg-gray-50 border-b border-gray-300 px-3 py-1">
+        {/* Ribbon Menu - Hidden on mobile for space */}
+        <div className="hidden md:block bg-gray-50 border-b border-gray-300 px-3 py-1">
           <div className="flex items-center space-x-4 text-xs text-gray-600">
-            <button className="hover:bg-gray-200 px-2 py-1 rounded">File</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded">Home</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded">Share</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded">View</button>
+            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">File</button>
+            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">Home</button>
+            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">Share</button>
+            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">View</button>
           </div>
         </div>
 
-        {/* Navigation Bar - Modern Windows Style */}
-        <div className="bg-white border-b border-gray-300 px-3 py-2 flex items-center space-x-3">
+        {/* Navigation Bar - Mobile-Friendly Windows Style */}
+        <div className="bg-white border-b border-gray-300 px-3 py-2 flex items-center space-x-2 md:space-x-3">
           <div className="flex items-center space-x-1">
             <button
               onClick={handleBackClick}
               disabled={currentView === 'explorer'}
-              className={`p-1 rounded hover:bg-gray-100 transition-colors ${
+              className={`p-2 md:p-1 text-lg md:text-base rounded hover:bg-gray-100 transition-colors touch-manipulation ${
                 currentView === 'explorer' 
                   ? 'text-gray-400 cursor-not-allowed' 
                   : 'text-gray-600 hover:text-gray-800'
@@ -1660,47 +1661,65 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </button>
             <button
               disabled
-              className="p-1 rounded text-gray-400 cursor-not-allowed"
+              className="p-2 md:p-1 text-lg md:text-base rounded text-gray-400 cursor-not-allowed"
               title="Forward (not available)"
             >
               →
             </button>
             <button
-              className="p-1 rounded hover:bg-gray-100 text-gray-600 hover:text-gray-800"
+              className="p-2 md:p-1 text-lg md:text-base rounded hover:bg-gray-100 text-gray-600 hover:text-gray-800 touch-manipulation"
               title="Up"
             >
               ↑
             </button>
           </div>
-          <div className="flex-1 bg-gray-50 border border-gray-300 px-3 py-1 text-sm rounded" style={{ fontFamily: 'system-ui' }}>
-            <span className="flex items-center space-x-1">
-              <span className="text-blue-600">📁</span>
-              <span>{currentPath}</span>
+          <div className="flex-1 bg-gray-50 border border-gray-300 px-2 md:px-3 py-1 text-xs md:text-sm rounded overflow-hidden min-h-[32px] md:min-h-auto" style={{ fontFamily: 'system-ui' }}>
+            <span className="flex items-center space-x-1 w-full">
+              <span className="text-blue-600 text-sm md:text-base flex-shrink-0">📁</span>
+              <span className="truncate whitespace-nowrap text-ellipsis overflow-hidden">{currentPath}</span>
             </span>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className="hidden md:block text-xs text-gray-500">
             {currentView === 'explorer' ? `${folders.length} items` : '1 item'}
           </div>
         </div>
 
-        {/* Main Content Area with Sidebar */}
-        <div className="flex-1 h-full overflow-hidden flex">
-          {/* Left Sidebar */}
-          <div className="w-48 bg-gray-50 border-r border-gray-300 p-2">
+        {/* Main Content Area with Responsive Sidebar */}
+        <div className="flex-1 h-full overflow-hidden flex flex-col md:flex-row">
+          {/* Mobile Menu Button */}
+          <div className="md:hidden bg-gray-100 border-b border-gray-300 px-3 py-2">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors p-2 rounded touch-none"
+              data-testid="button-mobile-menu"
+            >
+              <span className="text-lg">☰</span>
+              <span className="text-sm font-medium">Menu</span>
+            </button>
+          </div>
+
+          {/* Sidebar - Hidden on mobile by default, visible on desktop */}
+          <div className={`${mobileMenuOpen ? 'block' : 'hidden'} md:block w-full md:w-48 bg-gray-50 ${mobileMenuOpen ? 'border-b' : 'md:border-r'} border-gray-300 p-2`}>
             <div className="space-y-1">
               <div className="text-xs font-medium text-gray-600 mb-2">BMO Portfolio</div>
-              {folders.map((folder) => (
-                <button
-                  key={folder.name}
-                  onClick={() => handleFolderClick(folder)}
-                  className={`flex items-center space-x-2 w-full text-left px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors ${
-                    currentView === folder.type ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
-                  }`}
-                >
-                  <span>{folder.emoji}</span>
-                  <span>{folder.name}</span>
-                </button>
-              ))}
+              <div className="grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-1">
+                {folders.map((folder) => (
+                  <button
+                    key={folder.name}
+                    onClick={() => {
+                      handleFolderClick(folder);
+                      setMobileMenuOpen(false); // Close mobile menu after selection
+                    }}
+                    className={`flex items-center space-x-2 w-full text-left px-3 py-3 md:px-2 md:py-1 text-sm rounded hover:bg-gray-200 transition-colors min-h-[44px] md:min-h-auto ${
+                      currentView === folder.type ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+                    }`}
+                    data-testid={`folder-${folder.type}`}
+                  >
+                    <span className="text-xl md:text-base flex-shrink-0">{folder.emoji}</span>
+                    <span className="font-medium md:font-normal text-left">{folder.name}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
