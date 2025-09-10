@@ -1,12 +1,8 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface TranslationData {
-  // Navigation & UI
+  // Information Section Navigation
   'nav.information': string;
-  'nav.videos': string;
-  'nav.games': string;
-  'nav.chat': string;
-  'nav.contact': string;
   
   // Character Information
   'characters.title': string;
@@ -14,45 +10,29 @@ export interface TranslationData {
   'characters.backToGallery': string;
   'characters.epicGallery': string;
   'characters.bmoMessage': string;
+  'characters.finn.name': string;
+  'characters.finn.description': string;
+  'characters.jake.name': string;
+  'characters.jake.description': string;
+  'characters.princessBubblegum.name': string;
+  'characters.princessBubblegum.description': string;
+  'characters.marceline.name': string;
+  'characters.marceline.description': string;
+  'characters.bmo.name': string;
+  'characters.bmo.description': string;
   
-  // Games
-  'games.title': string;
-  'games.ticTacToe': string;
-  'games.maze': string;
-  'games.snake': string;
-  'games.bmoQuiz': string;
-  'games.backToGames': string;
-  
-  // Chat
-  'chat.title': string;
-  'chat.placeholder': string;
-  'chat.send': string;
-  'chat.initialMessage': string;
-  
-  // Videos
-  'videos.title': string;
-  'videos.adventure1': string;
-  'videos.adventure2': string;
-  'videos.adventure3': string;
-  'videos.coding': string;
-  
-  // Common
-  'common.mathematical': string;
-  'common.algebraic': string;
-  'common.loading': string;
-  'common.error': string;
+  // Information Common
+  'info.mathematical': string;
+  'info.algebraic': string;
+  'info.loading': string;
 }
 
-export type SupportedLanguage = 'en' | 'es' | 'fr' | 'de' | 'ja';
+export type SupportedLanguage = 'en' | 'es' | 'fr' | 'de' | 'ja' | 'ar';
 
 export const translations: Record<SupportedLanguage, TranslationData> = {
   en: {
-    // Navigation & UI
+    // Information Section Navigation
     'nav.information': 'Information',
-    'nav.videos': 'Videos',
-    'nav.games': 'Games',
-    'nav.chat': 'Chat',
-    'nav.contact': 'Contact',
     
     // Character Information
     'characters.title': 'Adventure Time Information Archive',
@@ -60,41 +40,25 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     'characters.backToGallery': '← Return to Heroes Gallery',
     'characters.epicGallery': '⭐ Epic Gallery ⭐',
     'characters.bmoMessage': '🤖 BMO says: "These are all my amazing friends from the Land of Ooo! Mathematical!"',
+    'characters.finn.name': 'Finn the Human',
+    'characters.finn.description': 'A brave and adventurous human boy with a strong moral compass and unwavering optimism.',
+    'characters.jake.name': 'Jake the Dog',
+    'characters.jake.description': 'Finn\'s best friend, a magical yellow dog with stretching powers and a laid-back attitude.',
+    'characters.princessBubblegum.name': 'Princess Bubblegum',
+    'characters.princessBubblegum.description': 'The intelligent ruler of the Candy Kingdom, skilled in science and magic.',
+    'characters.marceline.name': 'Marceline the Vampire Queen',
+    'characters.marceline.description': 'A half-demon vampire who plays bass guitar and has a complex past with other characters.',
+    'characters.bmo.name': 'BMO',
+    'characters.bmo.description': 'A living video game console, computer, and music player who lives with Finn and Jake.',
     
-    // Games
-    'games.title': 'Epic Adventure Games',
-    'games.ticTacToe': 'TIC TAC TOE',
-    'games.maze': 'MAZE RUNNER',
-    'games.snake': 'SNAKE ADVENTURE',
-    'games.bmoQuiz': 'BMO QUIZ',
-    'games.backToGames': '← Back to Games',
-    
-    // Chat
-    'chat.title': 'Chat with BMO',
-    'chat.placeholder': 'Ask BMO anything mathematical!',
-    'chat.send': 'Send',
-    'chat.initialMessage': "Hi! I'm BMO! Ask me anything about my creator's work!",
-    
-    // Videos
-    'videos.title': 'Adventure Videos',
-    'videos.adventure1': 'BMO Adventure Short #1',
-    'videos.adventure2': 'BMO Adventure Short #2',
-    'videos.adventure3': 'BMO Adventure Short #3',
-    'videos.coding': 'Adventure Time Tutorial',
-    
-    // Common
-    'common.mathematical': 'Mathematical!',
-    'common.algebraic': 'Algebraic!',
-    'common.loading': 'Loading...',
-    'common.error': 'Oh no! Something went wrong!'
+    // Information Common
+    'info.mathematical': 'Mathematical!',
+    'info.algebraic': 'Algebraic!',
+    'info.loading': 'Loading...'
   },
   es: {
-    // Navigation & UI
+    // Information Section Navigation
     'nav.information': 'Información',
-    'nav.videos': 'Videos',
-    'nav.games': 'Juegos',
-    'nav.chat': 'Chat',
-    'nav.contact': 'Contacto',
     
     // Character Information
     'characters.title': 'Archivo de Información de Hora de Aventuras',
@@ -102,41 +66,25 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     'characters.backToGallery': '← Volver a la Galería de Héroes',
     'characters.epicGallery': '⭐ Galería Épica ⭐',
     'characters.bmoMessage': '🤖 BMO dice: "¡Estos son todos mis increíbles amigos de la Tierra de Ooo! ¡Matemático!"',
+    'characters.finn.name': 'Finn el Humano',
+    'characters.finn.description': 'Un valiente y aventurero niño humano con una fuerte brújula moral y optimismo inquebrantable.',
+    'characters.jake.name': 'Jake el Perro',
+    'characters.jake.description': 'El mejor amigo de Finn, un perro mágico amarillo con poderes de estiramiento y una actitud relajada.',
+    'characters.princessBubblegum.name': 'Princesa Dulce',
+    'characters.princessBubblegum.description': 'La inteligente gobernante del Reino Dulce, experta en ciencia y magia.',
+    'characters.marceline.name': 'Marceline la Reina Vampiro',
+    'characters.marceline.description': 'Una vampira medio-demonio que toca el bajo y tiene un pasado complejo con otros personajes.',
+    'characters.bmo.name': 'BMO',
+    'characters.bmo.description': 'Una consola de videojuegos viviente, computadora y reproductor de música que vive con Finn y Jake.',
     
-    // Games
-    'games.title': 'Juegos de Aventura Épicos',
-    'games.ticTacToe': 'TRES EN RAYA',
-    'games.maze': 'CORREDOR DEL LABERINTO',
-    'games.snake': 'AVENTURA SERPIENTE',
-    'games.bmoQuiz': 'QUIZ DE BMO',
-    'games.backToGames': '← Volver a Juegos',
-    
-    // Chat
-    'chat.title': 'Chatea con BMO',
-    'chat.placeholder': '¡Pregúntale a BMO algo matemático!',
-    'chat.send': 'Enviar',
-    'chat.initialMessage': '¡Hola! ¡Soy BMO! ¡Pregúntame cualquier cosa sobre el trabajo de mi creador!',
-    
-    // Videos
-    'videos.title': 'Videos de Aventuras',
-    'videos.adventure1': 'Corto de Aventura BMO #1',
-    'videos.adventure2': 'Corto de Aventura BMO #2',
-    'videos.adventure3': 'Corto de Aventura BMO #3',
-    'videos.coding': 'Tutorial de Programación BMO',
-    
-    // Common
-    'common.mathematical': '¡Matemático!',
-    'common.algebraic': '¡Algebraico!',
-    'common.loading': 'Cargando...',
-    'common.error': '¡Oh no! ¡Algo salió mal!'
+    // Information Common
+    'info.mathematical': '¡Matemático!',
+    'info.algebraic': '¡Algebraico!',
+    'info.loading': 'Cargando...'
   },
   fr: {
-    // Navigation & UI
+    // Information Section Navigation
     'nav.information': 'Information',
-    'nav.videos': 'Vidéos',
-    'nav.games': 'Jeux',
-    'nav.chat': 'Chat',
-    'nav.contact': 'Contact',
     
     // Character Information
     'characters.title': 'Archive d\'Information Adventure Time',
@@ -144,41 +92,25 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     'characters.backToGallery': '← Retour à la Galerie des Héros',
     'characters.epicGallery': '⭐ Galerie Épique ⭐',
     'characters.bmoMessage': '🤖 BMO dit : "Ce sont tous mes amis incroyables du Pays d\'Ooo ! Mathématique !"',
+    'characters.finn.name': 'Finn l\'Humain',
+    'characters.finn.description': 'Un garçon humain courageux et aventureux avec une boussole morale forte et un optimisme inébranlable.',
+    'characters.jake.name': 'Jake le Chien',
+    'characters.jake.description': 'Le meilleur ami de Finn, un chien magique jaune avec des pouvoirs d\'extension et une attitude décontractée.',
+    'characters.princessBubblegum.name': 'Princesse Chewing-gum',
+    'characters.princessBubblegum.description': 'La dirigeante intelligente du Royaume des Bonbons, compétente en science et en magie.',
+    'characters.marceline.name': 'Marceline la Reine Vampire',
+    'characters.marceline.description': 'Une vampire demi-démon qui joue de la basse et a un passé complexe avec d\'autres personnages.',
+    'characters.bmo.name': 'BMO',
+    'characters.bmo.description': 'Une console de jeux vidéo vivante, ordinateur et lecteur de musique qui vit avec Finn et Jake.',
     
-    // Games
-    'games.title': 'Jeux d\'Aventure Épiques',
-    'games.ticTacToe': 'TIC TAC TOE',
-    'games.maze': 'COUREUR DE LABYRINTHE',
-    'games.snake': 'AVENTURE SERPENT',
-    'games.bmoQuiz': 'QUIZ BMO',
-    'games.backToGames': '← Retour aux Jeux',
-    
-    // Chat
-    'chat.title': 'Chattez avec BMO',
-    'chat.placeholder': 'Demandez à BMO quelque chose de mathématique !',
-    'chat.send': 'Envoyer',
-    'chat.initialMessage': 'Salut ! Je suis BMO ! Demandez-moi n\'importe quoi sur le travail de mon créateur !',
-    
-    // Videos
-    'videos.title': 'Vidéos d\'Aventure',
-    'videos.adventure1': 'Court-métrage d\'Aventure BMO #1',
-    'videos.adventure2': 'Court-métrage d\'Aventure BMO #2',
-    'videos.adventure3': 'Court-métrage d\'Aventure BMO #3',
-    'videos.coding': 'Tutoriel de Codage BMO',
-    
-    // Common
-    'common.mathematical': 'Mathématique !',
-    'common.algebraic': 'Algébrique !',
-    'common.loading': 'Chargement...',
-    'common.error': 'Oh non ! Quelque chose s\'est mal passé !'
+    // Information Common
+    'info.mathematical': 'Mathématique !',
+    'info.algebraic': 'Algébrique !',
+    'info.loading': 'Chargement...'
   },
   de: {
-    // Navigation & UI
+    // Information Section Navigation
     'nav.information': 'Information',
-    'nav.videos': 'Videos',
-    'nav.games': 'Spiele',
-    'nav.chat': 'Chat',
-    'nav.contact': 'Kontakt',
     
     // Character Information
     'characters.title': 'Adventure Time Informationsarchiv',
@@ -186,41 +118,25 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     'characters.backToGallery': '← Zurück zur Helden-Galerie',
     'characters.epicGallery': '⭐ Epische Galerie ⭐',
     'characters.bmoMessage': '🤖 BMO sagt: "Das sind alle meine erstaunlichen Freunde aus dem Land Ooo! Mathematisch!"',
+    'characters.finn.name': 'Finn der Mensch',
+    'characters.finn.description': 'Ein mutiger und abenteuerlustiger Menschenjunge mit einem starken moralischen Kompass und unerschütterlichem Optimismus.',
+    'characters.jake.name': 'Jake der Hund',
+    'characters.jake.description': 'Finns bester Freund, ein magischer gelber Hund mit Dehnungskräften und einer entspannten Einstellung.',
+    'characters.princessBubblegum.name': 'Prinzessin Bubblegum',
+    'characters.princessBubblegum.description': 'Die intelligente Herrscherin des Candy Kingdoms, geschickt in Wissenschaft und Magie.',
+    'characters.marceline.name': 'Marceline die Vampirkönigin',
+    'characters.marceline.description': 'Ein halb-dämonischer Vampir, der Bassgitarre spielt und eine komplexe Vergangenheit mit anderen Charakteren hat.',
+    'characters.bmo.name': 'BMO',
+    'characters.bmo.description': 'Eine lebende Videospielkonsole, Computer und Musikplayer, der mit Finn und Jake lebt.',
     
-    // Games
-    'games.title': 'Epische Abenteuer-Spiele',
-    'games.ticTacToe': 'TIC TAC TOE',
-    'games.maze': 'LABYRINTH-LÄUFER',
-    'games.snake': 'SCHLANGEN-ABENTEUER',
-    'games.bmoQuiz': 'BMO QUIZ',
-    'games.backToGames': '← Zurück zu Spielen',
-    
-    // Chat
-    'chat.title': 'Chat mit BMO',
-    'chat.placeholder': 'Frage BMO etwas Mathematisches!',
-    'chat.send': 'Senden',
-    'chat.initialMessage': 'Hallo! Ich bin BMO! Frag mich alles über die Arbeit meines Schöpfers!',
-    
-    // Videos
-    'videos.title': 'Abenteuer-Videos',
-    'videos.adventure1': 'BMO Abenteuer-Kurz #1',
-    'videos.adventure2': 'BMO Abenteuer-Kurz #2',
-    'videos.adventure3': 'BMO Abenteuer-Kurz #3',
-    'videos.coding': 'BMO Programmier-Tutorial',
-    
-    // Common
-    'common.mathematical': 'Mathematisch!',
-    'common.algebraic': 'Algebraisch!',
-    'common.loading': 'Laden...',
-    'common.error': 'Oh nein! Etwas ist schief gelaufen!'
+    // Information Common
+    'info.mathematical': 'Mathematisch!',
+    'info.algebraic': 'Algebraisch!',
+    'info.loading': 'Laden...'
   },
   ja: {
-    // Navigation & UI
+    // Information Section Navigation
     'nav.information': '情報',
-    'nav.videos': 'ビデオ',
-    'nav.games': 'ゲーム',
-    'nav.chat': 'チャット',
-    'nav.contact': 'お問い合わせ',
     
     // Character Information
     'characters.title': 'アドベンチャータイム情報アーカイブ',
@@ -228,33 +144,47 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     'characters.backToGallery': '← ヒーローギャラリーに戻る',
     'characters.epicGallery': '⭐ エピックギャラリー ⭐',
     'characters.bmoMessage': '🤖 BMOが言います：「これらは皆、ウーの国の私の素晴らしい友達です！数学的！」',
+    'characters.finn.name': 'フィンザヒューマン',
+    'characters.finn.description': '強い道徳的羅針盤と揺るぎない楽観主義を持つ勇敢で冒険好きな人間の少年。',
+    'characters.jake.name': 'ジェイクザドッグ',
+    'characters.jake.description': 'フィンの親友、伸縮力を持つ魔法の黄色い犬で、のんびりした性格。',
+    'characters.princessBubblegum.name': 'プリンセスバブルガム',
+    'characters.princessBubblegum.description': 'キャンディ王国の知的な統治者で、科学と魔法に長けている。',
+    'characters.marceline.name': 'マーセリンザバンパイアクイーン',
+    'characters.marceline.description': 'ベースギターを演奏する半悪魔のバンパイアで、他のキャラクターと複雑な過去を持つ。',
+    'characters.bmo.name': 'BMO',
+    'characters.bmo.description': 'フィンとジェイクと一緒に住んでいる生きたビデオゲーム機、コンピューター、音楽プレーヤー。',
     
-    // Games
-    'games.title': 'エピックアドベンチャーゲーム',
-    'games.ticTacToe': '三目並べ',
-    'games.maze': '迷路ランナー',
-    'games.snake': 'スネークアドベンチャー',
-    'games.bmoQuiz': 'BMOクイズ',
-    'games.backToGames': '← ゲームに戻る',
+    // Information Common
+    'info.mathematical': '数学的！',
+    'info.algebraic': '代数的！',
+    'info.loading': '読み込み中...'
+  },
+  ar: {
+    // Information Section Navigation
+    'nav.information': 'المعلومات',
     
-    // Chat
-    'chat.title': 'BMOとチャット',
-    'chat.placeholder': 'BMOに数学的なことを聞いてみて！',
-    'chat.send': '送信',
-    'chat.initialMessage': 'こんにちは！BMOです！私の作成者の作品について何でも聞いてください！',
+    // Character Information
+    'characters.title': 'أرشيف معلومات مغامرات وقت المرح',
+    'characters.subtitle': 'رياضي! تعلم عن جميع الشخصيات المذهلة من أرض أوو! 🏰',
+    'characters.backToGallery': '← العودة إلى معرض الأبطال',
+    'characters.epicGallery': '⭐ المعرض الملحمي ⭐',
+    'characters.bmoMessage': '🤖 BMO يقول: "هؤلاء جميع أصدقائي المذهلين من أرض أوو! رياضي!"',
+    'characters.finn.name': 'فين الإنسان',
+    'characters.finn.description': 'فتى إنسان شجاع ومغامر لديه بوصلة أخلاقية قوية وتفاؤل لا يتزعزع.',
+    'characters.jake.name': 'جيك الكلب',
+    'characters.jake.description': 'أفضل صديق لفين، كلب سحري أصفر بقوى التمدد وموقف مسترخي.',
+    'characters.princessBubblegum.name': 'الأميرة باببلغم',
+    'characters.princessBubblegum.description': 'الحاكمة الذكية لمملكة الحلوى، ماهرة في العلوم والسحر.',
+    'characters.marceline.name': 'مارسيلين ملكة مصاصي الدماء',
+    'characters.marceline.description': 'مصاصة دماء نصف شيطان تعزف على الجيتار وتملك ماضٍ معقد مع الشخصيات الأخرى.',
+    'characters.bmo.name': 'BMO',
+    'characters.bmo.description': 'وحدة تحكم ألعاب حية وكمبيوتر ومشغل موسيقى يعيش مع فين وجيك.',
     
-    // Videos
-    'videos.title': 'アドベンチャービデオ',
-    'videos.adventure1': 'BMOアドベンチャーショート#1',
-    'videos.adventure2': 'BMOアドベンチャーショート#2',
-    'videos.adventure3': 'BMOアドベンチャーショート#3',
-    'videos.coding': 'BMOコーディングチュートリアル',
-    
-    // Common
-    'common.mathematical': '数学的！',
-    'common.algebraic': '代数的！',
-    'common.loading': '読み込み中...',
-    'common.error': 'あーっ！何かが間違いました！'
+    // Information Common
+    'info.mathematical': 'رياضي!',
+    'info.algebraic': 'جبري!',
+    'info.loading': 'جاري التحميل...'
   }
 };
 
@@ -312,5 +242,6 @@ export const languageNames: Record<SupportedLanguage, string> = {
   es: 'Español',
   fr: 'Français', 
   de: 'Deutsch',
-  ja: '日本語'
+  ja: '日本語',
+  ar: 'العربية'
 };

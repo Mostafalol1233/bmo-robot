@@ -129,7 +129,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const videoList = [
     {
       id: '1',
-      title: t('videos.adventure1'),
+      title: 'BMO Adventure Short #1',
       url: '/bmo_adventure_1.mp4',
       youtubeUrl: 'https://youtube.com/shorts/A1eUITFLvrA',
       thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzE8L3RleHQ+PC9zdmc+',
@@ -137,7 +137,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     },
     {
       id: '2', 
-      title: t('videos.adventure2'),
+      title: 'BMO Adventure Short #2',
       url: '/bmo_adventure_2.mp4',
       youtubeUrl: 'https://youtube.com/shorts/920D9DjKgCo',
       thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzI8L3RleHQ+PC9zdmc+',
@@ -145,7 +145,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     },
     {
       id: '3',
-      title: t('videos.adventure3'), 
+      title: 'BMO Adventure Short #3', 
       url: '/bmo_adventure_3.mp4',
       youtubeUrl: 'https://youtube.com/shorts/Ql7tURnDdzk',
       thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzM8L3RleHQ+PC9zdmc+',
@@ -153,7 +153,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     },
     {
       id: '4',
-      title: t('videos.coding'),
+      title: 'Adventure Time Tutorial',
       url: '/adventure_tutorial.mp4',
       youtubeUrl: 'https://www.youtube.com/watch?v=puFy652XCl8',
       thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkdmVudHVyZSBUdXRvcmlhbDwvdGV4dD48L3N2Zz4=',
@@ -183,13 +183,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Social links and communities'
     },
     {
-      name: t('nav.videos'),
+      name: 'Videos',
       emoji: '🎬',
       type: 'videos',
       description: 'Project videos and tutorials'
     },
     {
-      name: t('nav.games'),
+      name: 'Games',
       emoji: '🎮',
       type: 'games',
       description: 'Adventure Time games'
@@ -201,7 +201,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Personal photos and gallery'
     },
     {
-      name: t('nav.contact'),
+      name: 'Contact',
       emoji: '📒',
       type: 'contact',
       description: 'Get in touch'

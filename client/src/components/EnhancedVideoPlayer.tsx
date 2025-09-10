@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import { Play, Pause, Volume2, VolumeX, Maximize, X, SkipBack, SkipForward, AlertTriangle, ExternalLink } from 'lucide-react';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
-import { useTranslation } from '@/contexts/TranslationContext';
 
 interface VideoItem {
   id: string;
@@ -24,7 +23,6 @@ export default function EnhancedVideoPlayer({
   onClose, 
   video
 }: EnhancedVideoPlayerProps) {
-  const { t } = useTranslation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.8);
   const [isMuted, setIsMuted] = useState(false);
