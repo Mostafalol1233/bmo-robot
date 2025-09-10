@@ -94,22 +94,62 @@
   }
 }
 
-/* BMO-specific styles */
+/* BMO-specific styles with Epic Enhancement */
 .bmo-container {
-  background: linear-gradient(145deg, hsl(174, 64%, 55%), hsl(174, 64%, 45%));
+  background: linear-gradient(145deg, 
+    hsl(174, 64%, 55%), 
+    hsl(174, 64%, 45%), 
+    hsl(174, 70%, 50%));
   border: 4px solid hsl(174, 64%, 35%);
   box-shadow: 
-    inset 0 2px 4px rgba(255,255,255,0.2),
-    inset 0 -2px 4px rgba(0,0,0,0.2),
-    0 8px 32px rgba(78, 205, 196, 0.3);
+    inset 0 2px 4px rgba(255,255,255,0.3),
+    inset 0 -2px 4px rgba(0,0,0,0.3),
+    0 8px 32px rgba(78, 205, 196, 0.4),
+    0 0 60px rgba(78, 205, 196, 0.2);
+  position: relative;
+}
+
+.bmo-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    rgba(78, 205, 196, 0.5), 
+    rgba(139, 195, 74, 0.3), 
+    rgba(255, 193, 7, 0.4), 
+    rgba(78, 205, 196, 0.5));
+  border-radius: inherit;
+  z-index: -1;
+  animation: epic-glow 3s ease-in-out infinite alternate;
 }
 
 .bmo-screen {
-  background: linear-gradient(145deg, hsl(210, 25%, 8%), hsl(210, 25%, 12%));
+  background: linear-gradient(145deg, 
+    hsl(210, 25%, 8%), 
+    hsl(210, 25%, 12%), 
+    hsl(210, 30%, 10%));
   border: 3px solid hsl(174, 64%, 35%);
   box-shadow: 
-    inset 0 2px 8px rgba(0,0,0,0.5),
-    0 0 20px rgba(78, 205, 196, 0.3);
+    inset 0 2px 8px rgba(0,0,0,0.6),
+    0 0 20px rgba(78, 205, 196, 0.4),
+    0 0 40px rgba(78, 205, 196, 0.2);
+  position: relative;
+}
+
+.bmo-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, 
+    rgba(78, 205, 196, 0.1) 0%, 
+    transparent 70%);
+  animation: screen-pulse 2s ease-in-out infinite alternate;
 }
 
 .bmo-button {
@@ -232,6 +272,45 @@
 
 .animate-windowsExplorer {
   animation: windowsExplorerOpen 0.3s ease-out;
+}
+
+/* Epic Enhancement Animations for Heroic Experience */
+@keyframes epic-glow {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes screen-pulse {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes heroic-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes power-surge {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(78, 205, 196, 0.8), 0 0 60px rgba(139, 195, 74, 0.4);
+  }
 }
 
 /* Windows Explorer specific styles */

@@ -1493,6 +1493,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   {/* Retro glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-teal-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
                 </button>
+                </div>
               </div>
 
               {/* Bottom retro message */}
