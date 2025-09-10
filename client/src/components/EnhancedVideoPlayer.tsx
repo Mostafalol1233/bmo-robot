@@ -269,7 +269,7 @@ export default function EnhancedVideoPlayer({
               }}
               onBuffer={() => setIsLoading(true)}
               onBufferEnd={() => setIsLoading(false)}
-              config={({
+              config={{
                 youtube: {
                   playerVars: {
                     modestbranding: 1,
@@ -286,7 +286,7 @@ export default function EnhancedVideoPlayer({
                     disablePictureInPicture: true
                   }
                 }
-              } as any)}
+              }}
             />
           </>
         )}
