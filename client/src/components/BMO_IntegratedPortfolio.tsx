@@ -3,6 +3,7 @@ import BMO_LandingPageComponent from './BMO_LandingPageComponent';
 import BMO_FileSystemComponent from './BMO_FileSystemComponent';
 import ChatInterface from './ChatInterface';
 import VideoPlayerModalComponent from './VideoPlayerModalComponent';
+import LanguageSwitcher from './LanguageSwitcher';
 
 type AppSection = 'landing' | 'filesystem' | 'chat' | 'videos';
 

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import BMOFace from './BMOFace';
-import VideoPlayerModalComponent from './VideoPlayerModalComponent';
-import ReactPlayer from 'react-player';
+import EnhancedVideoPlayer from './EnhancedVideoPlayer';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX, SiLinkedin } from 'react-icons/si';
@@ -61,6 +60,10 @@ import bmoImg5 from '@assets/characters/BMO/bmo6.jpg';
 import bmoImg6 from '@assets/characters/BMO/OIP.jpg';
 import bmoImg7 from '@assets/characters/BMO/Untitled.jpg';
 
+// Import translation hook and language switcher
+import { useTranslation } from '@/contexts/TranslationContext';
+import LanguageSwitcher from './LanguageSwitcher';
+
 interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
@@ -75,6 +78,7 @@ interface FolderItem {
 }
 
 export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemComponentProps) {
+  const { t } = useTranslation();
   const [showFace, setShowFace] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('explorer');
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
@@ -93,7 +97,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState<{id: string, title: string, url: string, thumbnail: string, youtubeUrl?: string} | null>(null);
 
   // States for new sections
   const [searchQuery, setSearchQuery] = useState('');
@@ -119,7 +123,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const videoList = [
     {
       id: '1',
-      title: 'BMO Adventure Short #1',
+      title: t('videos.adventure1'),
       url: '/bmo_adventure_1.mp4',
       youtubeUrl: 'https://youtube.com/shorts/A1eUITFLvrA',
       thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzE8L3RleHQ+PC9zdmc+',
@@ -127,7 +131,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     },
     {
       id: '2', 
-      title: 'BMO Adventure Short #2',
+      title: t('videos.adventure2'),
       url: '/bmo_adventure_2.mp4',
       youtubeUrl: 'https://youtube.com/shorts/920D9DjKgCo',
       thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzI8L3RleHQ+PC9zdmc+',
@@ -135,7 +139,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     },
     {
       id: '3',
-      title: 'BMO Adventure Short #3', 
+      title: t('videos.adventure3'), 
       url: '/bmo_adventure_3.mp4',
       youtubeUrl: 'https://youtube.com/shorts/Ql7tURnDdzk',
       thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJNTyBBZHZlbnR1cmUgIzM8L3RleHQ+PC9zdmc+',
@@ -143,7 +147,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     },
     {
       id: '4',
-      title: 'Adventure Time Tutorial',
+      title: t('videos.coding'),
       url: '/adventure_tutorial.mp4',
       youtubeUrl: 'https://www.youtube.com/watch?v=puFy652XCl8',
       thumbnail: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNGVjZGM0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkdmVudHVyZSBUdXRvcmlhbDwvdGV4dD48L3N2Zz4=',
@@ -161,8 +165,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
   // Handle video click
   const handleVideoClick = (video: {id: string, title: string, url: string, thumbnail: string, youtubeUrl?: string}) => {
-    const videoIndex = videoList.findIndex(v => v.id === video.id);
-    setSelectedVideoIndex(videoIndex);
+    setSelectedVideo(video);
     setIsVideoModalOpen(true);
   };
 
@@ -174,13 +177,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Social links and communities'
     },
     {
-      name: 'Videos',
+      name: t('nav.videos'),
       emoji: '🎬',
       type: 'videos',
       description: 'Project videos and tutorials'
     },
     {
-      name: 'Games',
+      name: t('nav.games'),
       emoji: '🎮',
       type: 'games',
       description: 'Adventure Time games'
@@ -192,7 +195,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Personal photos and gallery'
     },
     {
-      name: 'Contact Me',
+      name: t('nav.contact'),
       emoji: '📒',
       type: 'contact',
       description: 'Get in touch'
@@ -216,7 +219,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Watch YouTube videos'
     },
     {
-      name: 'Information',
+      name: t('nav.information'),
       emoji: '📚',
       type: 'information',
       description: 'Learn about Adventure Time characters'
@@ -593,11 +596,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <div className="inline-flex items-center space-x-2 bg-white rounded-full px-6 py-3 shadow-lg border border-purple-200">
               <span className="text-3xl">📚</span>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                Adventure Time Information Archive
+                {t('characters.title')}
               </h2>
             </div>
             <p className="mt-4 text-gray-600 font-medium text-lg">
-              Mathematical! Learn about all the amazing characters from the Land of Ooo! 🏰
+              {t('characters.subtitle')}
             </p>
           </div>
 
@@ -620,7 +623,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   data-testid="back-to-characters"
                 >
                   <span className="text-xl">⚔️</span>
-                  <span>← Return to Heroes Gallery</span>
+                  <span>{t('characters.backToGallery')}</span>
                 </button>
 
                 {/* Hero Header */}
@@ -657,7 +660,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
                 {/* Character Image Gallery with Scroll */}
                 <div className="mt-8">
-                  <h4 className="text-2xl font-bold text-yellow-400 mb-4 text-center">⭐ Epic Gallery ⭐</h4>
+                  <h4 className="text-2xl font-bold text-yellow-400 mb-4 text-center">{t('characters.epicGallery')}</h4>
                   <div className="flex space-x-4 overflow-x-auto custom-scrollbar pb-4" data-testid="character-gallery">
                     {characterImages[characterInfo[selectedCharacterInfo].name]?.map((image, index) => (
                       <div key={index} className="flex-shrink-0 group">
@@ -721,7 +724,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           {/* BMO Message */}
           <div className="mt-8 text-center">
             <div className="inline-block bg-teal-100 border-2 border-teal-300 rounded-xl px-6 py-3">
-              <p className="text-teal-800 font-medium text-lg">🤖 BMO says: "These are all my amazing friends from the Land of Ooo! Mathematical!"</p>
+              <p className="text-teal-800 font-medium text-lg">{t('characters.bmoMessage')}</p>
             </div>
           </div>
         </div>
@@ -1519,24 +1522,27 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </div>
             <span className="text-sm font-medium text-gray-700">File Explorer</span>
           </div>
-          {onBack && (
-            <button 
-              onClick={() => {
-                // Play BMO close sound when going back
-                const audio = new Audio(bmoCloseSound);
-                audio.volume = 0.3;
-                audio.play().catch(() => {
-                  // Handle audio play failure silently
-                });
-                onBack();
-              }}
-              className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 p-1 rounded"
-              data-testid="button-back-to-face"
-              title="Close File Explorer"
-            >
-              ✕
-            </button>
-          )}
+          <div className="flex items-center space-x-3">
+            <LanguageSwitcher />
+            {onBack && (
+              <button 
+                onClick={() => {
+                  // Play BMO close sound when going back
+                  const audio = new Audio(bmoCloseSound);
+                  audio.volume = 0.3;
+                  audio.play().catch(() => {
+                    // Handle audio play failure silently
+                  });
+                  onBack();
+                }}
+                className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 p-1 rounded"
+                data-testid="button-back-to-face"
+                title="Close File Explorer"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Ribbon Menu */}
@@ -1620,13 +1626,14 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         </div>
       </div>
 
-      {/* Video Player Modal */}
-      <VideoPlayerModalComponent
-        isOpen={isVideoModalOpen}
-        onClose={() => setIsVideoModalOpen(false)}
-        videos={videoList}
-        initialVideoIndex={selectedVideoIndex}
-      />
+      {/* Enhanced Video Player */}
+      {isVideoModalOpen && selectedVideo && (
+        <EnhancedVideoPlayer
+          isOpen={isVideoModalOpen}
+          onClose={() => setIsVideoModalOpen(false)}
+          video={selectedVideo}
+        />
+      )}
     </>
   );
 }
