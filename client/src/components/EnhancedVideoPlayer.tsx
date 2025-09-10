@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
-import { Play, Pause, Volume2, VolumeX, Maximize, X, SkipBack, SkipForward } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize, X, SkipBack, SkipForward, AlertTriangle, ExternalLink } from 'lucide-react';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 import { useTranslation } from '@/contexts/TranslationContext';
 
@@ -32,9 +32,14 @@ export default function EnhancedVideoPlayer({
   const [currentTime, setCurrentTime] = useState(0);
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const playerRef = useRef<ReactPlayer | null>(null);
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [playbackReady, setPlaybackReady] = useState(false);
+  const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout>();
+  const playPromiseRef = useRef<Promise<any> | null>(null);
 
   // Reset state when modal opens
   useEffect(() => {
@@ -42,6 +47,10 @@ export default function EnhancedVideoPlayer({
       setIsPlaying(false);
       setCurrentTime(0);
       setShowControls(true);
+      setHasError(false);
+      setErrorMessage('');
+      setIsLoading(true);
+      setPlaybackReady(false);
     }
   }, [isOpen]);
 
@@ -106,14 +115,25 @@ export default function EnhancedVideoPlayer({
     };
   }, [showControls, isPlaying]);
 
-  const handlePlayPause = () => {
-    setIsPlaying(!isPlaying);
+  const handlePlayPause = async () => {
+    if (!playbackReady || hasError) return;
+    
+    try {
+      // Wait for any existing play promise to resolve
+      if (playPromiseRef.current) {
+        await playPromiseRef.current.catch(() => {});
+      }
+      
+      setIsPlaying(!isPlaying);
+    } catch (error) {
+      console.error('Error during play/pause:', error);
+    }
   };
 
   const handleSeek = (seconds: number) => {
     const newTime = Math.max(0, Math.min(duration, currentTime + seconds));
     setCurrentTime(newTime);
-    if (playerRef.current) {
+    if (playerRef.current && playerRef.current.seekTo) {
       playerRef.current.seekTo(newTime, 'seconds');
     }
   };
@@ -154,34 +174,120 @@ export default function EnhancedVideoPlayer({
     >
       {/* Enhanced Video Player */}
       <div className="relative w-full h-full">
-        <ReactPlayer
-          ref={playerRef}
-          url={video.youtubeUrl ?? video.url}
-          width="100%"
-          height="100%"
-          playing={isPlaying}
-          volume={isMuted ? 0 : volume}
-          onDuration={setDuration}
-          onProgress={(progress) => setCurrentTime(progress.playedSeconds)}
-          onError={(error) => {
-            console.error('Video playback error:', error);
-          }}
-          config={{
-            youtube: {
-              playerVars: {
-                modestbranding: 1,
-                rel: 0,
-                iv_load_policy: 3,
-                fs: 1,
-                controls: 0,
-                disablekb: 1,
-                autohide: 1
-              }
-            }
-          }}
-        />
+        {/* Error Fallback */}
+        {hasError ? (
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black flex flex-col items-center justify-center p-8 text-center">
+            {/* Thumbnail if available */}
+            {video.thumbnail && (
+              <div className="mb-6 relative">
+                <img 
+                  src={video.thumbnail} 
+                  alt={video.title}
+                  className="w-80 h-48 object-cover rounded-lg border-2 border-teal-400/30"
+                  data-testid="img-video-thumbnail"
+                />
+                <div className="absolute inset-0 bg-black/20 rounded-lg flex items-center justify-center">
+                  <div className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    Playback Error
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            <AlertTriangle size={48} className="text-yellow-400 mb-4" />
+            <h3 className="text-white text-2xl font-bold mb-2">{video.title}</h3>
+            <p className="text-white/70 mb-6 max-w-md">{errorMessage}</p>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              {video.youtubeUrl && (
+                <a
+                  href={video.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg transition-colors"
+                  data-testid="link-youtube-fallback"
+                >
+                  <ExternalLink size={20} />
+                  Watch on YouTube
+                </a>
+              )}
+              
+              <button
+                onClick={() => {
+                  setHasError(false);
+                  setErrorMessage('');
+                  setIsLoading(true);
+                }}
+                className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg transition-colors"
+                data-testid="button-retry-video"
+              >
+                <Play size={20} />
+                Retry Video
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Loading Spinner */}
+            {isLoading && (
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="w-12 h-12 border-4 border-teal-400 border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-white text-lg">Loading video...</p>
+                </div>
+              </div>
+            )}
+
+            <ReactPlayer
+              ref={playerRef}
+              url={video.youtubeUrl ?? video.url}
+              width="100%"
+              height="100%"
+              playing={isPlaying}
+              volume={isMuted ? 0 : volume}
+              onDuration={setDuration}
+              onProgress={(progress: any) => {
+                if (progress && progress.playedSeconds !== undefined) {
+                  setCurrentTime(progress.playedSeconds);
+                }
+              }}
+              onReady={() => {
+                setIsLoading(false);
+                setPlaybackReady(true);
+              }}
+              onError={(error) => {
+                console.error('Video playback error:', error);
+                setHasError(true);
+                setIsLoading(false);
+                setPlaybackReady(false);
+                setErrorMessage('Failed to load video. Please try again or use the YouTube link below.');
+              }}
+              onBuffer={() => setIsLoading(true)}
+              onBufferEnd={() => setIsLoading(false)}
+              config={({
+                youtube: {
+                  playerVars: {
+                    modestbranding: 1,
+                    rel: 0,
+                    iv_load_policy: 3,
+                    fs: 1,
+                    controls: 0,
+                    disablekb: 1
+                  }
+                },
+                file: {
+                  attributes: {
+                    controlsList: 'nodownload',
+                    disablePictureInPicture: true
+                  }
+                }
+              } as any)}
+            />
+          </>
+        )}
 
         {/* Enhanced Controls Overlay */}
+        {!hasError && playbackReady && (
         <div className={`absolute inset-0 transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
           {/* Top Bar */}
           <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-6">
@@ -229,7 +335,7 @@ export default function EnhancedVideoPlayer({
                     const seekRatio = (e.clientX - rect.left) / rect.width;
                     const seekTime = duration * seekRatio;
                     setCurrentTime(seekTime);
-                    if (playerRef.current) {
+                    if (playerRef.current && playerRef.current.seekTo) {
                       playerRef.current.seekTo(seekTime, 'seconds');
                     }
                   }}
@@ -321,6 +427,7 @@ export default function EnhancedVideoPlayer({
             </div>
           </div>
         </div>
+        )}
       </div>
     </div>
   );
