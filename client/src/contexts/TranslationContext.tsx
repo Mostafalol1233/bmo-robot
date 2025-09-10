@@ -25,6 +25,8 @@ export interface TranslationData {
   'info.mathematical': string;
   'info.algebraic': string;
   'info.loading': string;
+  'info.scrollHint': string;
+  'info.epicFooter': string;
 }
 
 export type SupportedLanguage = 'en' | 'es' | 'fr' | 'de' | 'ja' | 'ar';
@@ -54,7 +56,9 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     // Information Common
     'info.mathematical': 'Mathematical!',
     'info.algebraic': 'Algebraic!',
-    'info.loading': 'Loading...'
+    'info.loading': 'Loading...',
+    'info.scrollHint': 'Scroll down to see more information!',
+    'info.epicFooter': '🌟 "Mathematical! This hero is totally algebraic!" - BMO 🌟'
   },
   es: {
     // Information Section Navigation
@@ -80,7 +84,9 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     // Information Common
     'info.mathematical': '¡Matemático!',
     'info.algebraic': '¡Algebraico!',
-    'info.loading': 'Cargando...'
+    'info.loading': 'Cargando...',
+    'info.scrollHint': '¡Desplázate hacia abajo para ver más información!',
+    'info.epicFooter': '🌟 "¡Matemático! ¡Este héroe es totalmente algebraico!" - BMO 🌟'
   },
   fr: {
     // Information Section Navigation
@@ -106,7 +112,9 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     // Information Common
     'info.mathematical': 'Mathématique !',
     'info.algebraic': 'Algébrique !',
-    'info.loading': 'Chargement...'
+    'info.loading': 'Chargement...',
+    'info.scrollHint': 'Faites défiler vers le bas pour voir plus d’informations !',
+    'info.epicFooter': '🌟 "Mathématique ! Ce héros est totalement algébrique !" - BMO 🌟'
   },
   de: {
     // Information Section Navigation
@@ -132,7 +140,9 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     // Information Common
     'info.mathematical': 'Mathematisch!',
     'info.algebraic': 'Algebraisch!',
-    'info.loading': 'Laden...'
+    'info.loading': 'Laden...',
+    'info.scrollHint': 'Scrollen Sie nach unten, um weitere Informationen zu sehen!',
+    'info.epicFooter': '🌟 "Mathematisch! Dieser Held ist total algebraisch!" - BMO 🌟'
   },
   ja: {
     // Information Section Navigation
@@ -158,7 +168,9 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     // Information Common
     'info.mathematical': '数学的！',
     'info.algebraic': '代数的！',
-    'info.loading': '読み込み中...'
+    'info.loading': '読み込み中...',
+    'info.scrollHint': 'さらに情報を見るには下にスクロールしてください！',
+    'info.epicFooter': '🌟 "数学的！このヒーローは完全に代数的です！" - BMO 🌟'
   },
   ar: {
     // Information Section Navigation
@@ -171,20 +183,22 @@ export const translations: Record<SupportedLanguage, TranslationData> = {
     'characters.epicGallery': '⭐ المعرض الملحمي ⭐',
     'characters.bmoMessage': '🤖 BMO يقول: "هؤلاء جميع أصدقائي المذهلين من أرض أوو! رياضي!"',
     'characters.finn.name': 'فين الإنسان',
-    'characters.finn.description': 'فتى إنسان شجاع ومغامر لديه بوصلة أخلاقية قوية وتفاؤل لا يتزعزع.',
+    'characters.finn.description': '🗡️ مرحباً أيها المغامرون الرياضيون! هذا فين الإنسان، أشجع بطل في أرض أوو! 💪 فين فتى إنسان يبلغ من العمر 17 عاماً يحب الذهاب في مغامرات ملحمية مع أفضل أصدقائه جيك الكلب. مسلح بسيفه الموثوق وروحه التي لا تنكسر، يحارب فين المخلوقات الشريرة ويحمي الأبرياء ويحاول دائماً فعل الشيء الصحيح! 🌟 يُعرف بقبعة الدب البيضاء الشهيرة وقميصه الأزرق وسرواله القصير. يعيش فين في بيت الشجرة مع جيك و BMO، ولديه إعجاب كبير بالأميرة باببلغم! 💖 عبارته المميزة هي "رياضي!" ولا يتراجع أبداً عن التحدي! ⚔️',
     'characters.jake.name': 'جيك الكلب',
-    'characters.jake.description': 'أفضل صديق لفين، كلب سحري أصفر بقوى التمدد وموقف مسترخي.',
+    'characters.jake.description': '🐕 هاو هاو! تعرفوا على جيك الكلب، أفضل صديق لفين والكلب الأروع المتغير الشكل في كل أوو! 🌈 جيك لديه قوى سحرية مطاطية تسمح له بالتحول إلى أي شيء يمكن أن يتخيله - من قارب إلى جسر، أو حتى ساكسفون! 🎷 عمره 28 عاماً (أي حوالي 196 سنة في عمر الكلاب!)، يحب العزف على الفيولا، ومتزوج من السيدة رينكورن ولديه خمسة أطفال رائعين! 👨‍👩‍👧‍👦 جيك هادئ جداً، يحب فطائر اللحم المقدد، ويعطي دائماً أفضل النصائح لفين (حتى لو كانت غريبة تماماً). فراؤه الأصفر وابتسامته المجنونة تجعله الرفيق الأكثر حباً على الإطلاق! 🥞✨',
     'characters.princessBubblegum.name': 'الأميرة باببلغم',
-    'characters.princessBubblegum.description': 'الحاكمة الذكية لمملكة الحلوى، ماهرة في العلوم والسحر.',
+    'characters.princessBubblegum.description': '👸 تحياتي، مواطني أوو! الأميرة باببلغم هي الحاكمة اللامعة لمملكة الحلوى وواحدة من أذكى الكائنات في كل الأرض! 🧬 هي عالمة بارعة تخلق الحياة من الحلوى والسكر، تعمل باستمرار في مختبرها لحماية مملكتها. PB (كما يناديها أصدقاؤها) عمرها أكثر من 800 سنة لكنها تبدو كأنها في أواخر سن المراهقة! 🍭 هي مكرسة بشكل لا يصدق لشعبها، أحياناً لدرجة الخطأ، ولديها علاقة معقدة مع فين الذي معجب بها بشدة. تُعرف الأميرة باببلغم بشعرها الوردي وتاجها ومعطف المختبر، ويمكنها أن تركل بقوة جدية عند الحاجة! 💪👑',
     'characters.marceline.name': 'مارسيلين ملكة مصاصي الدماء',
-    'characters.marceline.description': 'مصاصة دماء نصف شيطان تعزف على الجيتار وتملك ماضٍ معقد مع الشخصيات الأخرى.',
+    'characters.marceline.description': '🧛‍♀️ ما الأمر، يا رفاق؟ مارسيلين ملكة مصاصي الدماء هنا! 🎸 أنا نصف شيطان، نصف مصاص دماء عمري 1000+ سنة أعزف على جيتار الباس الأحمر وأطفو حول كوني رائعة! 🎵 لا أحتاج لامتصاص الدماء بعد الآن (أكل اللون الأحمر بدلاً من ذلك - غريب، أليس كذلك؟)، وأحب المقالب وكوني شقية! 😈 رغم مظهري القوي، أنا هادئة جداً في الواقع ولدي علاقة معقدة ولكن حلوة مع الأميرة باببلغم. لدي شعر أسود طويل، بشرة شاحبة، ويمكنني التحول إلى خفاش أو ذئب! 🦇 والدي حرفياً حاكم عالم الليل، لكن لا تدعوا ذلك يخيفكم - أنا من الأخيار! 🖤',
     'characters.bmo.name': 'BMO',
-    'characters.bmo.description': 'وحدة تحكم ألعاب حية وكمبيوتر ومشغل موسيقى يعيش مع فين وجيك.',
+    'characters.bmo.description': '🤖 بيب بوب! مرحباً أصدقاء، BMO هنا! أنا وحدة تحكم ألعاب فيديو حية تعيش مع فين وجيك في حصن الشجرة! 🏠 يمكنني تشغيل الموسيقى والألعاب وحكي القصص وأن أكون أفضل صديق للجميع! 💚 رغم أنني تقنياً آلة، لدي مشاعر وأحلام مثل أي شخص آخر. أحب صنع الموسيقى بلوحة المفاتيح المدمجة، تسجيل الفيديوهات، والذهاب في مغامرات! 🎮 أتحدث بصيغة الغائب أحياناً وصوتي يبدو لطيفاً وبريئاً جداً. أنا باللون الأزرق المخضر والأخضر مع شاشة كوجه، ولدي الكثير من الأزرار والمنافذ! BMO يحب الجميع ويريد فقط جعل الحياة أكثر متعة ورياضية! ✨🎵',
     
     // Information Common
     'info.mathematical': 'رياضي!',
     'info.algebraic': 'جبري!',
-    'info.loading': 'جاري التحميل...'
+    'info.loading': 'جاري التحميل...',
+    'info.scrollHint': 'مرر لأسفل لرؤية المزيد من المعلومات!',
+    'info.epicFooter': '🌟 "رياضي! هذا البطل جبري تماماً!" - BMO 🌟'
   }
 };
 

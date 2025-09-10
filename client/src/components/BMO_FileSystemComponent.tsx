@@ -649,6 +649,9 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                           src={getCharacterMainImage(selectedCharacterInfo)} 
                           alt={name}
                           className="w-full h-full object-cover"
+                          loading="eager"
+                          width="192"
+                          height="192"
                         />
                         {/* Epic overlay effect */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
@@ -665,11 +668,15 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   </div>
 
                   {/* Epic Description with Scroll */}
-                  <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 max-h-64 overflow-y-auto custom-scrollbar" data-testid="character-description">
+                  <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 max-h-80 overflow-y-auto" style={{scrollBehavior: 'smooth'}} data-testid="character-description">
                     <div className="prose prose-xl max-w-none prose-invert">
-                      <p className="text-gray-100 leading-relaxed text-xl font-medium tracking-wide text-justify">
+                      <p className="text-gray-100 leading-relaxed text-lg font-medium tracking-wide text-justify whitespace-pre-line">
                         {description}
                       </p>
+                    </div>
+                    {/* Scroll hint */}
+                    <div className="text-center mt-4 text-yellow-400/70 text-sm">
+                      <p>{t('info.scrollHint')}</p>
                     </div>
                   </div>
 
@@ -682,8 +689,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                           <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-yellow-400/50 shadow-lg group-hover:border-yellow-400 transition-all duration-300 group-hover:scale-110">
                             <img
                               src={image}
-                              alt={`${name} ${index + 1}`}
+                              alt={`${name} gallery image ${index + 1}`}
                               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              loading="lazy"
+                              width="96"
+                              height="96"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.style.display = 'none';
@@ -697,7 +707,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
                   {/* Epic Footer */}
                   <div className="text-center mt-8 p-4 bg-gradient-to-r from-yellow-400/10 to-orange-400/10 rounded-xl border border-yellow-400/20">
-                    <p className="text-yellow-300 font-bold text-lg">🌟 "Mathematical! This hero is totally algebraic!" - BMO 🌟</p>
+                    <p className="text-yellow-300 font-bold text-lg">{t('info.epicFooter')}</p>
                   </div>
                 </div>
               </div>
@@ -903,8 +913,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="w-12 h-12 rounded-lg relative overflow-hidden shadow-sm border border-gray-300">
                     <img 
                       src={finnMainImg} 
-                      alt="Finn" 
+                      alt="Finn Character"
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      width="48"
+                      height="48"
                     />
                   </div>
                 </div>
@@ -1350,8 +1363,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
                     <img 
                       src={ticTacToeLogo} 
-                      alt="Tic Tac Toe Game"
-                      className="w-40 h-40 object-contain filter brightness-150"
+                      alt="Tic Tac Toe Game Logo"
+                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
+                      loading="lazy"
+                      width="208"
+                      height="208"
                     />
                   </div>
                   
@@ -1392,8 +1408,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
                     <img 
                       src={mazeGameLogo} 
-                      alt="Maze Game"
-                      className="w-40 h-40 object-contain filter brightness-150"
+                      alt="Maze Game Logo"
+                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
+                      loading="lazy"
+                      width="208"
+                      height="208"
                     />
                   </div>
                   
@@ -1434,8 +1453,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
                     <img 
                       src={snakeGameLogo} 
-                      alt="Snake Game"
-                      className="w-40 h-40 object-contain filter brightness-150"
+                      alt="Snake Game Logo"
+                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
+                      loading="lazy"
+                      width="208"
+                      height="208"
                     />
                   </div>
                   
@@ -1477,8 +1499,11 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
                     <img 
                       src={bmoQuizLogo} 
-                      alt="BMO Quiz Game"
-                      className="w-40 h-40 object-contain filter brightness-150"
+                      alt="BMO Quiz Game Logo"
+                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
+                      loading="lazy"
+                      width="208"
+                      height="208"
                     />
                   </div>
                   

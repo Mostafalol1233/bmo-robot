@@ -180,8 +180,15 @@ export default function EnhancedVideoPlayer({
               <div className="mb-6 relative">
                 <img 
                   src={video.thumbnail} 
-                  alt={video.title}
+                  alt={`${video.title} thumbnail`}
                   className="w-80 h-48 object-cover rounded-lg border-2 border-teal-400/30"
+                  loading="lazy"
+                  width="320"
+                  height="192"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.opacity = '0.5';
+                  }}
                   data-testid="img-video-thumbnail"
                 />
                 <div className="absolute inset-0 bg-black/20 rounded-lg flex items-center justify-center">
