@@ -60,6 +60,12 @@ import bmoImg5 from '@assets/characters/BMO/bmo6.jpg';
 import bmoImg6 from '@assets/characters/BMO/OIP.jpg';
 import bmoImg7 from '@assets/characters/BMO/Untitled.jpg';
 
+// Game Logos
+import ticTacToeLogo from '@assets/generated_images/Tic_Tac_Toe_Game_Logo_582dd2ee.png';
+import mazeGameLogo from '@assets/generated_images/Maze_Game_Logo_7c8b686a.png';
+import snakeGameLogo from '@assets/generated_images/Snake_Game_Logo_5fc798ed.png';
+import bmoQuizLogo from '@assets/generated_images/BMO_Quiz_Game_Logo_61b7d79d.png';
+
 // Import translation hook and language switcher
 import { useTranslation } from '@/contexts/TranslationContext';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -1319,19 +1325,28 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               {/* Game selection cards with retro styling */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {/* Tic Tac Toe Card */}
-                <button
-                  onClick={() => handleGameClick('tictactoe')}
-                  className="relative group"
-                  data-testid="game-tictactoe"
-                >
-                  <div className="bg-black border-4 border-cyan-400 rounded-none p-6 hover:border-pink-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transform group-hover:scale-105">
-                    <div className="absolute top-2 left-2 w-2 h-2 bg-cyan-400 animate-pulse"></div>
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-green-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                <div className="relative">
+                  {/* Decorative Logo - Outside clickable area */}
+                  <img 
+                    src={ticTacToeLogo} 
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute -top-4 -left-4 w-12 h-12 object-contain z-10 pointer-events-none opacity-80 group-hover:opacity-100 transition-all"
+                  />
+                  
+                  <button
+                    onClick={() => handleGameClick('tictactoe')}
+                    className="relative group w-full"
+                    data-testid="game-tictactoe"
+                  >
+                    <div className="bg-black border-4 border-cyan-400 rounded-none p-6 hover:border-pink-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transform group-hover:scale-105">
+                      <div className="absolute top-2 left-2 w-2 h-2 bg-cyan-400 animate-pulse"></div>
+                      <div className="absolute top-2 right-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                      <div className="absolute bottom-2 left-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                      <div className="absolute bottom-2 right-2 w-2 h-2 bg-green-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
 
-                    <div className="text-center">
-                      <div className="text-4xl mb-3 text-cyan-400 group-hover:text-pink-400 transition-colors font-mono">X◯</div>
+                      <div className="text-center">
+                        <div className="text-4xl mb-3 text-cyan-400 group-hover:text-pink-400 transition-colors font-mono">X◯</div>
                       <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide">TIC TAC TOE</h3>
                       <p className="text-cyan-300 mb-3 font-mono text-xs">FINN vs JAKE</p>
 
@@ -1346,24 +1361,34 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                     </div>
                   </div>
 
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-pink-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
-                </button>
+                    {/* Retro glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-pink-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+                  </button>
+                </div>
 
                 {/* Maze Game Card */}
-                <button
-                  onClick={() => handleGameClick('maze')}
-                  className="relative group"
-                  data-testid="game-maze"
-                >
-                  <div className="bg-black border-4 border-purple-400 rounded-none p-6 hover:border-yellow-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50 transform group-hover:scale-105">
-                    <div className="absolute top-2 left-2 w-2 h-2 bg-purple-400 animate-pulse"></div>
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                <div className="relative">
+                  {/* Decorative Logo - Outside clickable area */}
+                  <img 
+                    src={mazeGameLogo} 
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute -top-4 -right-4 w-12 h-12 object-contain z-10 pointer-events-none opacity-80 group-hover:opacity-100 transition-all"
+                  />
+                  
+                  <button
+                    onClick={() => handleGameClick('maze')}
+                    className="relative group w-full"
+                    data-testid="game-maze"
+                  >
+                    <div className="bg-black border-4 border-purple-400 rounded-none p-6 hover:border-yellow-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50 transform group-hover:scale-105">
+                      <div className="absolute top-2 left-2 w-2 h-2 bg-purple-400 animate-pulse"></div>
+                      <div className="absolute top-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                      <div className="absolute bottom-2 left-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                      <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
 
-                    <div className="text-center">
-                      <div className="text-4xl mb-3 text-purple-400 group-hover:text-yellow-400 transition-colors font-mono">⬜</div>
+                      <div className="text-center">
+                        <div className="text-4xl mb-3 text-purple-400 group-hover:text-yellow-400 transition-colors font-mono">⬜</div>
                       <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide">MAZE RUNNER</h3>
                       <p className="text-purple-300 mb-3 font-mono text-xs">10 EPIC LEVELS</p>
 
@@ -1381,21 +1406,31 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   {/* Retro glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-yellow-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
                 </button>
+                </div>
 
                 {/* Snake Game Card */}
-                <button
-                  onClick={() => handleGameClick('snake')}
-                  className="relative group"
-                  data-testid="game-snake"
-                >
-                  <div className="bg-black border-4 border-pink-400 rounded-none p-6 hover:border-orange-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-pink-400/50 transform group-hover:scale-105">
-                    <div className="absolute top-2 left-2 w-2 h-2 bg-pink-400 animate-pulse"></div>
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-orange-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-red-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                <div className="relative">
+                  {/* Decorative Logo - Outside clickable area */}
+                  <img 
+                    src={snakeGameLogo} 
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute -bottom-4 -left-4 w-12 h-12 object-contain z-10 pointer-events-none opacity-80 group-hover:opacity-100 transition-all"
+                  />
+                  
+                  <button
+                    onClick={() => handleGameClick('snake')}
+                    className="relative group w-full"
+                    data-testid="game-snake"
+                  >
+                    <div className="bg-black border-4 border-pink-400 rounded-none p-6 hover:border-orange-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-pink-400/50 transform group-hover:scale-105">
+                      <div className="absolute top-2 left-2 w-2 h-2 bg-pink-400 animate-pulse"></div>
+                      <div className="absolute top-2 right-2 w-2 h-2 bg-orange-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                      <div className="absolute bottom-2 left-2 w-2 h-2 bg-red-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                      <div className="absolute bottom-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
 
-                    <div className="text-center">
-                      <div className="text-4xl mb-3 text-pink-400 group-hover:text-orange-400 transition-colors font-mono">🐍</div>
+                      <div className="text-center">
+                        <div className="text-4xl mb-3 text-pink-400 group-hover:text-orange-400 transition-colors font-mono">🐍</div>
                       <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide">CANDY SNAKE</h3>
                       <p className="text-pink-300 mb-3 font-mono text-xs">COLLECT CANDY</p>
 
@@ -1414,21 +1449,31 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   {/* Retro glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-orange-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
                 </button>
+                </div>
 
                 {/* BMO Quiz Game Card */}
-                <button
-                  onClick={() => handleGameClick('bmoquiz')}
-                  className="relative group"
-                  data-testid="game-bmoquiz"
-                >
-                  <div className="bg-black border-4 border-green-400 rounded-none p-6 hover:border-teal-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-400/50 transform group-hover:scale-105">
-                    <div className="absolute top-2 left-2 w-2 h-2 bg-green-400 animate-pulse"></div>
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-teal-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-blue-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                <div className="relative">
+                  {/* Decorative Logo - Outside clickable area */}
+                  <img 
+                    src={bmoQuizLogo} 
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute -bottom-4 -right-4 w-12 h-12 object-contain z-10 pointer-events-none opacity-80 group-hover:opacity-100 transition-all"
+                  />
+                  
+                  <button
+                    onClick={() => handleGameClick('bmoquiz')}
+                    className="relative group w-full"
+                    data-testid="game-bmoquiz"
+                  >
+                    <div className="bg-black border-4 border-green-400 rounded-none p-6 hover:border-teal-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-400/50 transform group-hover:scale-105">
+                      <div className="absolute top-2 left-2 w-2 h-2 bg-green-400 animate-pulse"></div>
+                      <div className="absolute top-2 right-2 w-2 h-2 bg-teal-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                      <div className="absolute bottom-2 left-2 w-2 h-2 bg-blue-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                      <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
 
-                    <div className="text-center">
-                      <div className="text-4xl mb-3 text-green-400 group-hover:text-teal-400 transition-colors font-mono">🎮</div>
+                      <div className="text-center">
+                        <div className="text-4xl mb-3 text-green-400 group-hover:text-teal-400 transition-colors font-mono">🎮</div>
                       <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide">BMO QUIZ</h3>
                       <p className="text-green-300 mb-3 font-mono text-xs">CHARACTER QUIZ</p>
 
