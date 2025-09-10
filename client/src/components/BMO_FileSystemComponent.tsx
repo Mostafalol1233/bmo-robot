@@ -602,33 +602,88 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
 
           {selectedCharacterInfo ? (
-            /* Character Detail View */
-            <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-200">
-              <button
-                onClick={() => setSelectedCharacterInfo(null)}
-                className="mb-6 flex items-center space-x-2 text-purple-600 hover:text-purple-800 transition-colors font-semibold"
-                data-testid="back-to-characters"
-              >
-                <span>← Back to Characters</span>
-              </button>
-
-              <div className="text-center mb-6">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-purple-300 shadow-lg">
-                  <img 
-                    src={getCharacterMainImage(selectedCharacterInfo)} 
-                    alt={characterInfo[selectedCharacterInfo].name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h3 className="text-3xl font-bold text-gray-800 mb-2 font-sans">{characterInfo[selectedCharacterInfo].name}</h3>
+            /* Enhanced Character Detail View with Epic Styling and Scroll Gallery */
+            <>
+            <div className="bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 rounded-3xl shadow-2xl border-2 border-yellow-400 relative overflow-hidden">
+              {/* Epic Background Pattern */}
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.3) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(251, 191, 36, 0.3) 0%, transparent 50%)',
+                  backgroundSize: '60px 60px'
+                }}></div>
               </div>
+              
+              <div className="relative p-8">
+                <button
+                  onClick={() => setSelectedCharacterInfo(null)}
+                  className="mb-6 flex items-center space-x-2 text-yellow-400 hover:text-yellow-200 transition-all duration-300 font-bold text-lg bg-black/20 rounded-full px-4 py-2 border border-yellow-400/50 hover:bg-yellow-400/10"
+                  data-testid="back-to-characters"
+                >
+                  <span className="text-xl">⚔️</span>
+                  <span>← Return to Heroes Gallery</span>
+                </button>
 
-              <div className="prose prose-lg max-w-none">
-                <p className="text-gray-700 leading-relaxed text-lg font-normal font-sans tracking-wide text-justify">
-                  {characterInfo[selectedCharacterInfo].description}
-                </p>
+                {/* Hero Header */}
+                <div className="text-center mb-8">
+                  <div className="relative">
+                    <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl ring-4 ring-yellow-400/30 relative">
+                      <img 
+                        src={getCharacterMainImage(selectedCharacterInfo)} 
+                        alt={characterInfo[selectedCharacterInfo].name}
+                        className="w-full h-full object-cover"
+                      />
+                      {/* Epic overlay effect */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                    </div>
+                    {/* Epic glow effect */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-48 h-48 rounded-full bg-yellow-400/10 blur-xl"></div>
+                    </div>
+                  </div>
+                  <h3 className="text-5xl font-black text-transparent bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text mb-4 drop-shadow-2xl font-serif">
+                    {characterInfo[selectedCharacterInfo].name}
+                  </h3>
+                  <div className="text-2xl mb-6">{characterInfo[selectedCharacterInfo].emoji}</div>
+                </div>
+
+                {/* Epic Description with Scroll */}
+                <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 max-h-64 overflow-y-auto custom-scrollbar" data-testid="character-description">
+                  <div className="prose prose-xl max-w-none prose-invert">
+                    <p className="text-gray-100 leading-relaxed text-xl font-medium tracking-wide text-justify">
+                      {characterInfo[selectedCharacterInfo].description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Character Image Gallery with Scroll */}
+                <div className="mt-8">
+                  <h4 className="text-2xl font-bold text-yellow-400 mb-4 text-center">⭐ Epic Gallery ⭐</h4>
+                  <div className="flex space-x-4 overflow-x-auto custom-scrollbar pb-4" data-testid="character-gallery">
+                    {characterImages[characterInfo[selectedCharacterInfo].name]?.map((image, index) => (
+                      <div key={index} className="flex-shrink-0 group">
+                        <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-yellow-400/50 shadow-lg group-hover:border-yellow-400 transition-all duration-300 group-hover:scale-110">
+                          <img
+                            src={image}
+                            alt={`${characterInfo[selectedCharacterInfo].name} ${index + 1}`}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Epic Footer */}
+                <div className="text-center mt-8 p-4 bg-gradient-to-r from-yellow-400/10 to-orange-400/10 rounded-xl border border-yellow-400/20">
+                  <p className="text-yellow-300 font-bold text-lg">🌟 "Mathematical! This hero is totally algebraic!" - BMO 🌟</p>
+                </div>
               </div>
             </div>
+            </>
           ) : (
             /* Character Grid View */
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
