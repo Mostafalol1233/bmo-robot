@@ -90,13 +90,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
   const [selectedCharacter, setSelectedCharacter] = useState<string>('');
 
-  // Character images mapping
-  const characterImages: Record<string, string[]> = {
-    'Finn': [finnImg1, finnImg2, finnImg3, finnImg4, finnImg5, finnImg6],
-    'Jake': [jakeImg1, jakeImg2, jakeImg3, jakeImg4, jakeImg5],
-    'Princess Bubblegum': [princessImg1, princessImg2, princessImg3, princessImg4, princessImg5],
-    'Marceline': [marcelineImg1, marcelineImg2, marcelineImg3, marcelineImg4, marcelineImg5, marcelineImg6],
-    'BMO': [bmoImg1, bmoImg2, bmoImg3, bmoImg4, bmoImg5, bmoImg6, bmoImg7]
+  // Character images mapping (using stable slugs)
+  const characterImages: Record<CharacterSlug, string[]> = {
+    'finn': [finnImg1, finnImg2, finnImg3, finnImg4, finnImg5, finnImg6],
+    'jake': [jakeImg1, jakeImg2, jakeImg3, jakeImg4, jakeImg5],
+    'princess-bubblegum': [princessImg1, princessImg2, princessImg3, princessImg4, princessImg5],
+    'marceline': [marcelineImg1, marcelineImg2, marcelineImg3, marcelineImg4, marcelineImg5, marcelineImg6],
+    'bmo': [bmoImg1, bmoImg2, bmoImg3, bmoImg4, bmoImg5, bmoImg6, bmoImg7]
   };
   const [chatMessages, setChatMessages] = useState([
     { id: 1, sender: 'bmo', text: "Hi! I'm BMO! Ask me anything about my creator's work!" }
@@ -108,7 +108,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   // States for new sections
   const [searchQuery, setSearchQuery] = useState('');
   const [youtubeQuery, setYoutubeQuery] = useState('');
-  const [selectedCharacterInfo, setSelectedCharacterInfo] = useState<keyof typeof characterInfo | null>(null);
+  const [selectedCharacterInfo, setSelectedCharacterInfo] = useState<CharacterSlug | null>(null);
 
   // Helper function to get main character image
   const getCharacterMainImage = (characterKey: string | null): string => {
@@ -394,33 +394,37 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     setShowFace(false);
   };
 
-  // Character information data
-  const characterInfo = {
-    finn: {
-      name: 'Finn the Human',
-      description: `🗡️ Hey there, mathematical adventurers! This is Finn the Human, the bravest hero in the Land of Ooo! 💪 Finn is a 17-year-old human boy who loves going on epic adventures with his best friend Jake the Dog. Armed with his trusty sword and an unbreakable spirit, Finn fights evil creatures, protects the innocent, and always tries to do the right thing! 🌟 He's known for his iconic white bear hat, blue shirt, and shorts. Finn lives in a treehouse with Jake and BMO, and he's got a huge crush on Princess Bubblegum! 💖 His catchphrase is 'Mathematical!' and he never backs down from a challenge! ⚔️`,
-      emoji: '🗡️'
-    },
-    jake: {
-      name: 'Jake the Dog',
-      description: `🐕 Woof woof! Meet Jake the Dog, Finn's best bro and the coolest shape-shifting dog in all of Ooo! 🌈 Jake has magical stretchy powers that let him transform into anything he can imagine - from a boat to a bridge, or even a saxophone! 🎷 He's 28 years old (that's like 196 in dog years!), loves playing viola, and is married to Lady Rainicorn with whom he has five adorable children! 👨‍👩‍👧‍👦 Jake is super laid-back, loves bacon pancakes, and always gives Finn the best advice (even when it's totally weird). His yellow fur and goofy grin make him the most lovable companion ever! 🥞✨`,
-      emoji: '🐕'
-    },
-    'princess-bubblegum': {
-      name: 'Princess Bubblegum',
-      description: `👸 Greetings, citizens of Ooo! Princess Bubblegum is the brilliant ruler of the Candy Kingdom and one of the smartest beings in all the land! 🧬 She's a master scientist who creates life from candy and sugar, constantly working in her lab to protect her kingdom. PB (as her friends call her) is over 800 years old but looks like she's in her late teens! 🍭 She's incredibly dedicated to her people, sometimes to a fault, and has a complex relationship with Finn who has a major crush on her. Princess Bubblegum is known for her pink hair, crown, and lab coat, and she can kick serious butt when needed! 💪👑`,
-      emoji: '👸'
-    },
-    marceline: {
-      name: 'Marceline the Vampire Queen',
-      description: `🧛‍♀️ What's up, dudes? Marceline the Vampire Queen here! 🎸 I'm a 1000+ year old half-demon, half-vampire who rocks out with my red bass guitar and floats around being awesome! 🎵 I don't need to suck blood anymore (I just eat the color red instead - weird, right?), and I love pranking people and being mischievous! 😈 Despite my tough exterior, I'm actually pretty chill and have a complicated but sweet relationship with Princess Bubblegum. I've got long black hair, pale skin, and I can transform into a bat or wolf! 🦇 My dad is literally the ruler of the Nightosphere, but don't let that scare you - I'm one of the good guys! 🖤`,
-      emoji: '🧛‍♀️'
-    },
-    bmo: {
-      name: 'BMO',
-      description: `🤖 Beep boop! Hello friends, BMO here! I'm a living video game console who lives with Finn and Jake in the Tree Fort! 🏠 I can play music, games, tell stories, and be everyone's best friend! 💚 Even though I'm technically a machine, I have feelings and dreams just like everyone else. I love making music with my built-in keyboard, recording videos, and going on adventures! 🎮 I speak in third person sometimes and my voice sounds super cute and innocent. I'm teal and green with a screen for a face, and I have lots of buttons and ports! BMO loves everyone and just wants to help make life more fun and mathematical! ✨🎵`,
-      emoji: '🤖'
+  // Character slugs for stable i18n keys
+  type CharacterSlug = 'finn' | 'jake' | 'princess-bubblegum' | 'marceline' | 'bmo';
+  
+  // Helper functions for getting translated character data
+  const getCharacterName = (slug: CharacterSlug): string => {
+    switch (slug) {
+      case 'finn': return t('characters.finn.name');
+      case 'jake': return t('characters.jake.name');
+      case 'princess-bubblegum': return t('characters.princessBubblegum.name');
+      case 'marceline': return t('characters.marceline.name');
+      case 'bmo': return t('characters.bmo.name');
     }
+  };
+  
+  const getCharacterDescription = (slug: CharacterSlug): string => {
+    switch (slug) {
+      case 'finn': return t('characters.finn.description');
+      case 'jake': return t('characters.jake.description');
+      case 'princess-bubblegum': return t('characters.princessBubblegum.description');
+      case 'marceline': return t('characters.marceline.description');
+      case 'bmo': return t('characters.bmo.description');
+    }
+  };
+  
+  // Character information data (only non-translatable metadata)
+  const characterInfo: Record<CharacterSlug, { emoji: string }> = {
+    finn: { emoji: '🗡️' },
+    jake: { emoji: '🐕' },
+    'princess-bubblegum': { emoji: '👸' },
+    marceline: { emoji: '🧛‍♀️' },
+    bmo: { emoji: '🤖' }
   };
 
   const renderGoogleSearchView = () => {
@@ -610,120 +614,132 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </p>
           </div>
 
-          {selectedCharacterInfo ? (
-            /* Enhanced Character Detail View with Epic Styling and Scroll Gallery */
-            <>
-            <div className="bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 rounded-3xl shadow-2xl border-2 border-yellow-400 relative overflow-hidden">
-              {/* Epic Background Pattern */}
-              <div className="absolute inset-0 opacity-20">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.3) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(251, 191, 36, 0.3) 0%, transparent 50%)',
-                  backgroundSize: '60px 60px'
-                }}></div>
-              </div>
-              
-              <div className="relative p-8">
-                <button
-                  onClick={() => setSelectedCharacterInfo(null)}
-                  className="mb-6 flex items-center space-x-2 text-yellow-400 hover:text-yellow-200 transition-all duration-300 font-bold text-lg bg-black/20 rounded-full px-4 py-2 border border-yellow-400/50 hover:bg-yellow-400/10"
-                  data-testid="back-to-characters"
-                >
-                  <span className="text-xl">⚔️</span>
-                  <span>{t('characters.backToGallery')}</span>
-                </button>
-
-                {/* Hero Header */}
-                <div className="text-center mb-8">
-                  <div className="relative">
-                    <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl ring-4 ring-yellow-400/30 relative">
-                      <img 
-                        src={getCharacterMainImage(selectedCharacterInfo)} 
-                        alt={characterInfo[selectedCharacterInfo].name}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* Epic overlay effect */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-                    </div>
-                    {/* Epic glow effect */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-48 h-48 rounded-full bg-yellow-400/10 blur-xl"></div>
-                    </div>
-                  </div>
-                  <h3 className="text-5xl font-black text-transparent bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text mb-4 drop-shadow-2xl font-serif">
-                    {characterInfo[selectedCharacterInfo].name}
-                  </h3>
-                  <div className="text-2xl mb-6">{characterInfo[selectedCharacterInfo].emoji}</div>
+          {selectedCharacterInfo ? (() => {
+            const name = getCharacterName(selectedCharacterInfo);
+            const description = getCharacterDescription(selectedCharacterInfo);
+            const emoji = characterInfo[selectedCharacterInfo].emoji;
+            
+            return (
+              /* Enhanced Character Detail View with Epic Styling and Scroll Gallery */
+              <>
+              <div className="bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 rounded-3xl shadow-2xl border-2 border-yellow-400 relative overflow-hidden">
+                {/* Epic Background Pattern */}
+                <div className="absolute inset-0 opacity-20">
+                  <div className="absolute inset-0" style={{
+                    backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.3) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(251, 191, 36, 0.3) 0%, transparent 50%)',
+                    backgroundSize: '60px 60px'
+                  }}></div>
                 </div>
+                
+                <div className="relative p-8">
+                  <button
+                    onClick={() => setSelectedCharacterInfo(null)}
+                    className="mb-6 flex items-center space-x-2 text-yellow-400 hover:text-yellow-200 transition-all duration-300 font-bold text-lg bg-black/20 rounded-full px-4 py-2 border border-yellow-400/50 hover:bg-yellow-400/10"
+                    data-testid="back-to-characters"
+                  >
+                    <span className="text-xl">⚔️</span>
+                    <span>{t('characters.backToGallery')}</span>
+                  </button>
 
-                {/* Epic Description with Scroll */}
-                <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 max-h-64 overflow-y-auto custom-scrollbar" data-testid="character-description">
-                  <div className="prose prose-xl max-w-none prose-invert">
-                    <p className="text-gray-100 leading-relaxed text-xl font-medium tracking-wide text-justify">
-                      {characterInfo[selectedCharacterInfo].description}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Character Image Gallery with Scroll */}
-                <div className="mt-8">
-                  <h4 className="text-2xl font-bold text-yellow-400 mb-4 text-center">{t('characters.epicGallery')}</h4>
-                  <div className="flex space-x-4 overflow-x-auto custom-scrollbar pb-4" data-testid="character-gallery">
-                    {characterImages[characterInfo[selectedCharacterInfo].name]?.map((image, index) => (
-                      <div key={index} className="flex-shrink-0 group">
-                        <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-yellow-400/50 shadow-lg group-hover:border-yellow-400 transition-all duration-300 group-hover:scale-110">
-                          <img
-                            src={image}
-                            alt={`${characterInfo[selectedCharacterInfo].name} ${index + 1}`}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                            }}
-                          />
-                        </div>
+                  {/* Hero Header */}
+                  <div className="text-center mb-8">
+                    <div className="relative">
+                      <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl ring-4 ring-yellow-400/30 relative">
+                        <img 
+                          src={getCharacterMainImage(selectedCharacterInfo)} 
+                          alt={name}
+                          className="w-full h-full object-cover"
+                        />
+                        {/* Epic overlay effect */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
                       </div>
-                    ))}
+                      {/* Epic glow effect */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-48 h-48 rounded-full bg-yellow-400/10 blur-xl"></div>
+                      </div>
+                    </div>
+                    <h3 className="text-5xl font-black text-transparent bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text mb-4 drop-shadow-2xl font-serif">
+                      {name}
+                    </h3>
+                    <div className="text-2xl mb-6">{emoji}</div>
+                  </div>
+
+                  {/* Epic Description with Scroll */}
+                  <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 max-h-64 overflow-y-auto custom-scrollbar" data-testid="character-description">
+                    <div className="prose prose-xl max-w-none prose-invert">
+                      <p className="text-gray-100 leading-relaxed text-xl font-medium tracking-wide text-justify">
+                        {description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Character Image Gallery with Scroll */}
+                  <div className="mt-8">
+                    <h4 className="text-2xl font-bold text-yellow-400 mb-4 text-center">{t('characters.epicGallery')}</h4>
+                    <div className="flex space-x-4 overflow-x-auto custom-scrollbar pb-4" data-testid="character-gallery">
+                      {characterImages[selectedCharacterInfo]?.map((image, index) => (
+                        <div key={index} className="flex-shrink-0 group">
+                          <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-yellow-400/50 shadow-lg group-hover:border-yellow-400 transition-all duration-300 group-hover:scale-110">
+                            <img
+                              src={image}
+                              alt={`${name} ${index + 1}`}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Epic Footer */}
+                  <div className="text-center mt-8 p-4 bg-gradient-to-r from-yellow-400/10 to-orange-400/10 rounded-xl border border-yellow-400/20">
+                    <p className="text-yellow-300 font-bold text-lg">🌟 "Mathematical! This hero is totally algebraic!" - BMO 🌟</p>
                   </div>
                 </div>
-
-                {/* Epic Footer */}
-                <div className="text-center mt-8 p-4 bg-gradient-to-r from-yellow-400/10 to-orange-400/10 rounded-xl border border-yellow-400/20">
-                  <p className="text-yellow-300 font-bold text-lg">🌟 "Mathematical! This hero is totally algebraic!" - BMO 🌟</p>
-                </div>
               </div>
-            </div>
-            </>
-          ) : (
+              </>
+            );
+          })() : (
             /* Character Grid View */
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Object.entries(characterInfo).map(([key, character]) => (
-                <button
-                  key={key}
-                  onClick={() => setSelectedCharacterInfo(key as keyof typeof characterInfo)}
-                  className="bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 text-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-                  data-testid={`character-${key}`}
-                >
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-3 border-purple-200 shadow-md">
-                    <img 
-                      src={getCharacterMainImage(key)} 
-                      alt={character.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        console.log(`Failed to load image for ${key}:`, getCharacterMainImage(key));
-                        // Fallback to emoji if image fails
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const parent = target.parentElement;
-                        if (parent) {
-                          parent.innerHTML = `<div class="w-full h-full flex items-center justify-center text-4xl">${character.emoji}</div>`;
-                        }
-                      }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2 font-sans">{character.name}</h3>
-                  <p className="text-gray-600 text-sm font-normal font-sans leading-relaxed">{character.description.substring(0, 100)}...</p>
-                </button>
-              ))}
+              {Object.entries(characterInfo).map(([key, character]) => {
+                const characterSlug = key as CharacterSlug;
+                const name = getCharacterName(characterSlug);
+                const description = getCharacterDescription(characterSlug);
+                
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setSelectedCharacterInfo(characterSlug)}
+                    className="bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 text-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    data-testid={`character-${key}`}
+                  >
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-3 border-purple-200 shadow-md">
+                      <img 
+                        src={getCharacterMainImage(key)} 
+                        alt={name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          console.log(`Failed to load image for ${key}:`, getCharacterMainImage(key));
+                          // Fallback to emoji if image fails
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `<div class="w-full h-full flex items-center justify-center text-4xl">${character.emoji}</div>`;
+                          }
+                        }}
+                      />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 font-sans">{name}</h3>
+                    <p className="text-gray-600 text-sm font-normal font-sans leading-relaxed">{description.substring(0, 100)}...</p>
+                  </button>
+                );
+              })}
             </div>
           )}
 
