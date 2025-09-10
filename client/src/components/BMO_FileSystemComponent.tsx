@@ -76,6 +76,8 @@ interface BMO_FileSystemComponentProps {
 
 type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character' | 'games' | 'tictactoe' | 'maze' | 'bmoquiz' | 'snake' | 'google-search' | 'youtube' | 'information';
 
+type CharacterSlug = 'finn' | 'jake' | 'princess-bubblegum' | 'marceline' | 'bmo';
+
 interface FolderItem {
   name: string;
   emoji: string;
@@ -1020,7 +1022,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             {/* Character Images Gallery */}
             <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
               <div className="grid grid-cols-3 gap-3">
-              {(characterImages[selectedCharacter] || []).map((imageUrl, index) => (
+              {(selectedCharacter && characterImages[selectedCharacter as CharacterSlug] || []).map((imageUrl: string, index: number) => (
                 <div key={index} className="aspect-square bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden group hover:shadow-md transition-all duration-200">
                   <img 
                     src={imageUrl} 
@@ -1032,7 +1034,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               ))}
 
               {/* Show placeholder if no images */}
-              {(!characterImages[selectedCharacter] || characterImages[selectedCharacter].length === 0) && (
+              {(!selectedCharacter || !characterImages[selectedCharacter as CharacterSlug] || characterImages[selectedCharacter as CharacterSlug].length === 0) && (
                 <div className="col-span-3 text-center py-8 text-gray-500">
                   <div className="text-4xl mb-2">📷</div>
                   <div className="text-sm">No images found for {selectedCharacter}</div>
@@ -1045,7 +1047,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               <div className="text-sm text-teal-800">
                 <div className="font-medium mb-1">🎨 {selectedCharacter} Gallery</div>
                 <div className="text-xs text-teal-600">
-                  {characterImages[selectedCharacter]?.length || 0} images available from Adventure Time collection
+                  {selectedCharacter ? (characterImages[selectedCharacter as CharacterSlug]?.length || 0) : 0} images available from Adventure Time collection
                 </div>
               </div>
             </div>
