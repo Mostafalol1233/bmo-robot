@@ -1,10 +1,10 @@
 [build]
-  publish = "dist"
-  command = "npm run build && mkdir -p dist/client/public && cp client/public/background.jfif dist/client/public/ && cp client/public/background.jfif dist/"
+  publish = "dist/public"
+  command = "npm run build"
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/server/:splat"
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
   status = 200
 
 [[redirects]]
@@ -13,7 +13,7 @@
   status = 200
 
 [functions]
-  directory = "dist"
+  directory = "netlify/functions"
   node_bundler = "esbuild"
 
 [build.environment]
