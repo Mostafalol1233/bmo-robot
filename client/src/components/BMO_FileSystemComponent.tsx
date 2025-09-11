@@ -180,22 +180,22 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
   const folders: FolderItem[] = [
     {
-      name: 'Communities',
+      name: 'المجتمعات',
       emoji: '👥',
       type: 'communities',
-      description: 'Social links and communities'
+      description: 'روابط التواصل الاجتماعي والمجتمعات'
     },
     {
-      name: 'Videos',
+      name: 'فيديوهات',
       emoji: '🎬',
       type: 'videos',
-      description: 'Project videos and tutorials'
+      description: 'فيديوهات المشروع والدروس التعليمية'
     },
     {
-      name: 'Games',
+      name: 'ألعاب',
       emoji: '🎮',
       type: 'games',
-      description: 'Adventure Time games'
+      description: 'ألعاب مغامرات وقت المرح'
     },
     {
       name: 'صور',
@@ -204,28 +204,28 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'صور شخصيات مغامرات وقت المرح'
     },
     {
-      name: 'Contact',
+      name: 'تواصل',
       emoji: '📒',
       type: 'contact',
-      description: 'Get in touch'
+      description: 'تواصل معنا'
     },
     {
-      name: 'My Tools',
+      name: 'أدواتي',
       emoji: '🛠',
       type: 'tools',
-      description: 'Development tools and resources'
+      description: 'أدوات التطوير والموارد'
     },
     {
-      name: 'Google Search',
+      name: 'بحث جوجل',
       emoji: '🔍',
       type: 'google-search',
-      description: 'Search the web with BMO'
+      description: 'ابحث في الإنترنت مع BMO'
     },
     {
-      name: 'YouTube',
+      name: 'يوتيوب',
       emoji: '📺',
       type: 'youtube',
-      description: 'Watch YouTube videos'
+      description: 'شاهد فيديوهات يوتيوب'
     },
     {
       name: t('nav.information'),
@@ -234,10 +234,10 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Learn about Adventure Time characters'
     },
     {
-      name: 'AI Talk',
+      name: 'حديث ذكي',
       emoji: '💬',
       type: 'chat',
-      description: 'Chat with BMO AI'
+      description: 'تحدث مع BMO الذكي'
     }
   ];
 
@@ -1008,7 +1008,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </div>
 
             <div className="mt-6 text-center text-sm text-gray-500">
-              🎭 Adventure Time Characters from your images
+              🎭 شخصيات مغامرات وقت المرح من صورك
             </div>
           </div>
         );
@@ -1017,7 +1017,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         return (
           <div className="p-4 h-full bg-white">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2">📁 {selectedCharacter} Files</h3>
+              <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2">📁 ملفات {selectedCharacter}</h3>
               <button 
                 onClick={() => {
                   setCurrentView('images');
@@ -1025,7 +1025,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 }}
                 className="text-blue-500 hover:text-blue-700 text-sm font-medium"
               >
-                ← Back to Gallery
+← عودة للمعرض
               </button>
             </div>
 
@@ -1047,7 +1047,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               {(!selectedCharacter || !characterImages[selectedCharacter as CharacterSlug] || characterImages[selectedCharacter as CharacterSlug].length === 0) && (
                 <div className="col-span-3 text-center py-8 text-gray-500">
                   <div className="text-4xl mb-2">📷</div>
-                  <div className="text-sm">No images found for {selectedCharacter}</div>
+                  <div className="text-sm">لم يتم العثور على صور لـ {selectedCharacter}</div>
                 </div>
               )}
               </div>
@@ -1055,9 +1055,9 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
             <div className="mt-4 p-3 bg-teal-50 rounded-lg border border-teal-200">
               <div className="text-sm text-teal-800">
-                <div className="font-medium mb-1">🎨 {selectedCharacter} Gallery</div>
+                <div className="font-medium mb-1">🎨 معرض {selectedCharacter}</div>
                 <div className="text-xs text-teal-600">
-                  {selectedCharacter ? (characterImages[selectedCharacter as CharacterSlug]?.length || 0) : 0} images available from Adventure Time collection
+                  {selectedCharacter ? (characterImages[selectedCharacter as CharacterSlug]?.length || 0) : 0} صورة متاحة من مجموعة مغامرات وقت المرح
                 </div>
               </div>
             </div>
