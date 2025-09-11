@@ -247,7 +247,17 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
 
   const handleCharacterClick = (characterName: string) => {
-    setSelectedCharacter(characterName);
+    // Convert display name to slug format
+    const characterSlugMap: Record<string, string> = {
+      'Finn': 'finn',
+      'Jake': 'jake', 
+      'Princess Bubblegum': 'princess-bubblegum',
+      'Marceline': 'marceline',
+      'BMO': 'bmo'
+    };
+    
+    const characterSlug = characterSlugMap[characterName] || characterName.toLowerCase().replace(/\s+/g, '-');
+    setSelectedCharacter(characterSlug);
     setCurrentView('character');
     setCurrentPath(`C:\\Portfolio\\Images\\${characterName}\\`);
   };
