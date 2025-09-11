@@ -198,10 +198,10 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       description: 'Adventure Time games'
     },
     {
-      name: 'Images',
-      emoji: '🖼️',
-      type: 'images',
-      description: 'Personal photos and gallery'
+      name: 'صور',
+      emoji: '📸',
+      type: 'images', 
+      description: 'صور شخصيات مغامرات وقت المرح'
     },
     {
       name: 'Contact',
