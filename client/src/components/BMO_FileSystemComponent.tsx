@@ -817,23 +817,22 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       case 'videos':
         return (
           <div className="p-4 h-full bg-white overflow-y-auto custom-scrollbar">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b-2 border-gray-300 pb-2">📹 Videos</h3>
+            <h3 className="text-lg font-semibold mb-6 text-gray-800 border-b-2 border-gray-300 pb-2">📹 فيديوهات</h3>
 
-            {/* Video Grid with Thumbnails */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-80 overflow-y-auto custom-scrollbar">
+            {/* Video Grid - 3 columns like in the image */}
+            <div className="grid grid-cols-3 gap-6">
               {videoList.map((video) => (
                 <div
                   key={video.id}
-                  className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-all hover:scale-105"
-                  onClick={() => handleVideoClick(video)}
+                  className="bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300"
                   data-testid={`video-item-${video.id}`}
                 >
                   {/* Video Thumbnail */}
-                  <div className="aspect-video bg-black relative group">
+                  <div className="aspect-video bg-black relative group cursor-pointer" onClick={() => handleVideoClick(video)}>
                     <img 
                       src={video.thumbnail} 
                       alt={video.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-t-lg"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -842,33 +841,33 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       }}
                     />
                     {/* Fallback for failed images */}
-                    <div className="absolute inset-0 bg-gray-600 hidden items-center justify-center">
-                      <span className="text-white text-xl">🎥</span>
+                    <div className="absolute inset-0 bg-gray-600 hidden items-center justify-center rounded-t-lg">
+                      <span className="text-white text-2xl">🎥</span>
                     </div>
 
                     {/* Play Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center transition-all">
-                      <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
-                        <span className="text-white text-lg ml-1">▶</span>
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all rounded-t-lg">
+                      <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
+                        <span className="text-white text-2xl ml-1">▶</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Video Info */}
-                  <div className="p-3">
-                    <div className="text-sm font-medium text-gray-800 line-clamp-2 mb-2">
+                  <div className="p-4">
+                    <div className="text-base font-semibold text-gray-800 mb-2 line-clamp-2">
                       {video.title}
                     </div>
-                    <div className="text-xs text-gray-500 mb-2">
+                    <div className="text-sm text-gray-600 mb-3">
                       Duration: {video.duration}
                     </div>
-                    {/* YouTube Link */}
+                    {/* YouTube Button - Red like in the image */}
                     {video.youtubeUrl && (
                       <a 
                         href={video.youtubeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-1 text-xs text-red-600 hover:text-red-700 transition-colors"
+                        className="inline-flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors duration-200 w-full justify-center"
                         onClick={(e) => e.stopPropagation()}
                         data-testid={`youtube-link-${video.id}`}
                       >
@@ -895,16 +894,14 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 </div>
               </div>
 
-              <a 
-                href="https://www.youtube.com/@Bemora-site"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
-                data-testid="youtube-channel-link"
+              <button
+                onClick={() => window.open('https://www.youtube.com/@Bemora-site', '_blank')}
+                className="inline-flex items-center space-x-3 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                data-testid="visit-bemora-channel"
               >
-                <span>🔴</span>
+                <span className="text-2xl">🎬</span>
                 <span>Visit Bemora Channel</span>
-              </a>
+              </button>
             </div>
           </div>
         );
