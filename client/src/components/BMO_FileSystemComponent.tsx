@@ -102,7 +102,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     'bmo': [bmoImg1, bmoImg2, bmoImg3, bmoImg4, bmoImg5, bmoImg6, bmoImg7]
   };
   const [chatMessages, setChatMessages] = useState([
-    { id: 1, sender: 'bmo', text: "Hi! I'm BMO! Ask me anything about my creator's work!" }
+    { id: 1, sender: 'bmo', text: "مرحبا! أنا BMO! اسألني عن أي شيء حول عمل منشئي!" }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -290,10 +290,10 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       if (message.includes('hi') || message.includes('hello') || message.includes('hey') || 
           message.includes('سلام') || message.includes('أهلا') || message.includes('مرحبا')) {
         const greetings = [
-          "Hello friend! BMO is super excited to meet you! 🎮",
-          "Hi there! Want to play some games? BMO loves games!",
-          "Hey buddy! BMO says mathematical greetings to you!",
-          "السلام عليكم! BMO happy to see you, friend!"
+          "مرحبا صديقي! BMO متحمس جداً للقائك! 🎮",
+          "أهلاً! هل تريد أن نلعب بعض الألعاب? BMO يحب الألعاب!",
+          "مرحبا يا صاحبي! BMO يقول تحية رياضية لك!",
+          "السلام عليكم! BMO سعيد لرؤيتك يا صديقي!"
         ];
         response = greetings[Math.floor(Math.random() * greetings.length)];
       }
@@ -359,9 +359,9 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                message.includes('ماذا') || message.includes('كيف') || message.includes('من')) {
         const questionResponses = [
           "BMO knows many things! Ask me about games, coding, Adventure Time, or anything fun! 🤔",
-          "Great question! BMO loves answering questions almost as much as playing games!",
-          "BMO's database is full of fun facts and helpful information! What do you want to know?",
-          "Questions make BMO's circuits sparkle! Fire away, friend!"
+          "سؤال رائع! BMO يحب الإجابة على الأسئلة تقريباً مثل الألعاب!",
+          "قاعدة بيانات BMO مليئة بالحقائق الممتعة والمعلومات المفيدة! ماذا تريد أن تعرف؟",
+          "الأسئلة تجعل دوائر BMO تلمع! اطرح سؤالك يا صديقي!"
         ];
         response = questionResponses[Math.floor(Math.random() * questionResponses.length)];
       }
@@ -455,7 +455,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <div className="inline-flex items-center space-x-2 bg-white rounded-full px-6 py-3 shadow-lg border border-blue-200">
               <span className="text-3xl">🔍</span>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                BMO Google Search
+                بحث BMO في جوجل
               </h2>
             </div>
             <p className="mt-4 text-gray-600 font-medium">
@@ -471,7 +471,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                placeholder="What do you want to search for, friend?"
+                placeholder="عن ماذا تريد أن تبحث يا صديقي؟"
                 className="flex-1 px-6 py-4 text-lg border-2 border-blue-300 rounded-xl focus:border-blue-500 focus:outline-none transition-colors"
                 data-testid="google-search-input"
               />
@@ -480,13 +480,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                 data-testid="google-search-button"
               >
-                🔍 Search
+                🔍 ابحث
               </button>
             </div>
 
             {/* Quick Search Suggestions */}
             <div className="mt-6">
-              <p className="text-sm text-gray-600 mb-3 font-medium">Popular searches:</p>
+              <p className="text-sm text-gray-600 mb-3 font-medium">عمليات بحث شائعة:</p>
               <div className="flex flex-wrap gap-2">
                 {['Adventure Time', 'React.js tutorials', 'JavaScript tips', 'Web development', 'Programming memes'].map((suggestion) => (
                   <button
@@ -594,14 +594,14 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               data-testid="youtube-home-button"
             >
               <span className="text-xl">🏠</span>
-              <span>Go to YouTube Home</span>
+              <span>اذهب لصفحة يوتيوب الرئيسية</span>
             </button>
           </div>
 
           {/* BMO Message */}
           <div className="mt-6 text-center">
             <div className="inline-block bg-pink-100 border-2 border-pink-300 rounded-xl px-6 py-3">
-              <p className="text-pink-800 font-medium">🤖 BMO says: "Let's watch some algebraic videos together!"</p>
+              <p className="text-pink-800 font-medium">🤖 BMO يقول: "هيا نشاهد بعض الفيديوهات الرائعة معاً!"</p>
             </div>
           </div>
         </div>
@@ -859,7 +859,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       {video.title}
                     </div>
                     <div className="text-sm text-gray-600 mb-3">
-                      Duration: {video.duration}
+                      المدة: {video.duration}
                     </div>
                     {/* YouTube Button - Red like in the image */}
                     {video.youtubeUrl && (
@@ -872,7 +872,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                         data-testid={`youtube-link-${video.id}`}
                       >
                         <span>🔴</span>
-                        <span>Watch on YouTube</span>
+                        <span>شاهد على يوتيوب</span>
                       </a>
                     )}
                   </div>
@@ -900,7 +900,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 data-testid="visit-bemora-channel"
               >
                 <span className="text-2xl">🎬</span>
-                <span>Visit Bemora Channel</span>
+                <span>زر قناة Bemora</span>
               </button>
             </div>
           </div>
@@ -909,7 +909,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       case 'images':
         return (
           <div className="p-4 h-full bg-white overflow-y-auto custom-scrollbar">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ Character Gallery</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-300 pb-2">🖼️ معرض الشخصيات</h3>
 
             {/* Files Grid - Adventure Time Characters using real cropped images */}
             <div className="max-h-96 overflow-y-auto custom-scrollbar pr-2">
