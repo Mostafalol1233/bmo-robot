@@ -3,10 +3,10 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import OpenAI from "openai";
 
-// Initialize OpenAI client
-const openai = new OpenAI({
+// Initialize OpenAI client only if API key is available
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-});
+}) : null;
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Chat endpoint for BMO AI character
@@ -16,6 +16,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (!message || typeof message !== 'string') {
         return res.status(400).json({ error: "Message is required" });
+      }
+
+      // Check if OpenAI is available
+      if (!openai) {
+        return res.status(503).json({ 
+          error: "AI chat not configured",
+          reply: "Beep boop! BMO's AI circuits aren't connected right now, but I can still help you explore the portfolio! Try checking out the games or videos!"
+        });
       }
 
       // Generate BMO response using OpenAI

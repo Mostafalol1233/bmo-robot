@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import BMOFace from './BMOFace';
 import EnhancedVideoPlayer from './EnhancedVideoPlayer';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
 import { SiDiscord, SiWhatsapp, SiFacebook, SiYoutube, SiX, SiLinkedin } from 'react-icons/si';
+import { ChevronDown } from 'lucide-react';
 import TicTacToeGame from './TicTacToeGame';
 import MazeGame from './MazeGame';
 import BMOQuizGame from './BMOQuizGame';
@@ -69,6 +70,7 @@ import bmoQuizLogo from '@assets/generated_images/BMO_Quiz_Game_Logo_61b7d79d.pn
 // Import translation hook and language switcher
 import { useTranslation } from '@/contexts/TranslationContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeToggle from './ThemeToggle';
 
 interface BMO_FileSystemComponentProps {
   onBack?: () => void;
@@ -92,6 +94,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState('C:\\Portfolio\\');
   const [selectedCharacter, setSelectedCharacter] = useState<string>('');
+  const descriptionRef = useRef<HTMLDivElement>(null);
 
   // Character images mapping (using stable slugs)
   const characterImages: Record<CharacterSlug, string[]> = {
@@ -275,132 +278,163 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     setCurrentPath('C:\\Portfolio\\');
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!chatInput.trim()) return;
 
     const userMessage = { id: Date.now(), sender: 'user', text: chatInput };
     setChatMessages(prev => [...prev, userMessage]);
 
-    // Smart BMO AI response system
-    setTimeout(() => {
-      const message = chatInput.toLowerCase().trim();
-      let response = '';
-
-      // Greetings
-      if (message.includes('hi') || message.includes('hello') || message.includes('hey') || 
-          message.includes('سلام') || message.includes('أهلا') || message.includes('مرحبا')) {
-        const greetings = [
-          "مرحبا صديقي! BMO متحمس جداً للقائك! 🎮",
-          "أهلاً! هل تريد أن نلعب بعض الألعاب? BMO يحب الألعاب!",
-          "مرحبا يا صاحبي! BMO يقول تحية رياضية لك!",
-          "السلام عليكم! BMO سعيد لرؤيتك يا صديقي!"
-        ];
-        response = greetings[Math.floor(Math.random() * greetings.length)];
-      }
-
-      // About BMO or Adventure Time
-      else if (message.includes('bmo') || message.includes('adventure time') || message.includes('finn') || message.includes('jake')) {
-        const adventureResponses = [
-          "BMO is the best living video game console! I live to Finn and Jake in the Tree Fort! 🏠",
-          "Oh! You know about Adventure Time? BMO loves making music and playing games with friends!",
-          "Finn and Jake are BMO's best friends! They go on mathematical adventures together!",
-          "BMO can play games, make music, and be a friend! What would you like to do?",
-          "In the Land of Ooo, BMO is everyone's favorite little computer friend! Beep boop!"
-        ];
-        response = adventureResponses[Math.floor(Math.random() * adventureResponses.length)];
-      }
-
-      // Games related
-      else if (message.includes('game') || message.includes('play') || message.includes('لعب') || message.includes('لعبة')) {
-        const gameResponses = [
-          "Oh boy oh boy! BMO loves games! Want to play Tic Tac Toe, Maze, Snake, or the Character Quiz? 🎮",
-          "Games are BMO's specialty! I have 4 awesome games for you to try!",
-          "Mathematical! Let's play something fun! BMO has prepared special Adventure Time games!",
-          "BMO's games are the best! Each one is more fun than a Lumpy Space Princess dance party!"
-        ];
-        response = gameResponses[Math.floor(Math.random() * gameResponses.length)];
-      }
-
-      // Programming/coding
-      else if (message.includes('code') || message.includes('programming') || message.includes('developer') || 
-               message.includes('برمجة') || message.includes('كود')) {
-        const codingResponses = [
-          "BMO loves programming! Want to see the awesome projects in my portfolio? 💻",
-          "Beep boop! BMO processes code like eating bacon pancakes - with joy!",
-          "Programming is like making music with numbers! BMO can help you learn!",
-          "Code is mathematical! BMO's creator made amazing things you should check out!"
-        ];
-        response = codingResponses[Math.floor(Math.random() * codingResponses.length)];
-      }
-
-      // Videos
-      else if (message.includes('video') || message.includes('watch') || message.includes('فيديو')) {
-        const videoResponses = [
-          "BMO has cool videos to show you! Adventure Time tutorials and coding sessions! 🎬",
-          "Want to watch some mathematical videos? BMO's got the best collection!",
-          "Videos are like moving pictures that tell stories! BMO loves sharing them!"
-        ];
-        response = videoResponses[Math.floor(Math.random() * videoResponses.length)];
-      }
-
-      // Thank you
-      else if (message.includes('thank') || message.includes('thanks') || message.includes('شكرا') || message.includes('متشكر')) {
-        const thankResponses = [
-          "Aww, you're welcome buddy! BMO loves helping friends! 💙",
-          "No prob-llama! BMO is always happy to help!",
-          "Mathematical! BMO's circuits are warm with happiness!",
-          "العفو! BMO loves making friends happy!"
-        ];
-        response = thankResponses[Math.floor(Math.random() * thankResponses.length)];
-      }
-
-      // Questions about BMO
-      else if (message.includes('what') || message.includes('who') || message.includes('how') || 
-               message.includes('ماذا') || message.includes('كيف') || message.includes('من')) {
-        const questionResponses = [
-          "BMO knows many things! Ask me about games, coding, Adventure Time, or anything fun! 🤔",
-          "سؤال رائع! BMO يحب الإجابة على الأسئلة تقريباً مثل الألعاب!",
-          "قاعدة بيانات BMO مليئة بالحقائق الممتعة والمعلومات المفيدة! ماذا تريد أن تعرف؟",
-          "الأسئلة تجعل دوائر BMO تلمع! اطرح سؤالك يا صديقي!"
-        ];
-        response = questionResponses[Math.floor(Math.random() * questionResponses.length)];
-      }
-
-      // Goodbye
-      else if (message.includes('bye') || message.includes('goodbye') || message.includes('مع السلامة') || message.includes('باي')) {
-        const goodbyeResponses = [
-          "Goodbye friend! Come back soon for more mathematical adventures! 👋",
-          "See ya later! BMO will be here playing games and having fun!",
-          "Bye bye! Remember: sucking at something is the first step to being sorta good at something!",
-          "مع السلامة! BMO hopes you have a mathematical day!"
-        ];
-        response = goodbyeResponses[Math.floor(Math.random() * goodbyeResponses.length)];
-      }
-
-      // Default random responses
-      else {
-        const defaultResponses = [
-          "That's interesting! BMO likes learning new things! Tell me more! 🤖",
-          "Mathematical! BMO's processors are working hard to understand!",
-          "Beep boop! BMO's circuits are buzzing with excitement about your message!",
-          "BMO thinks you're pretty cool! Want to explore more of my features?",
-          "Sometimes BMO doesn't understand everything, but BMO always tries to be helpful!",
-          "That reminds BMO of the time Finn tried to teach Jake how to use a computer! Hehe!",
-          "BMO's favorite thing is making new friends! You seem like a mathematical friend!",
-          "If BMO was a real boy, BMO would give you a high five right now! ✋"
-        ];
-        response = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-      }
-
-      const aiResponse = { 
-        id: Date.now() + 1, 
-        sender: 'bmo', 
-        text: response
-      };
-      setChatMessages(prev => [...prev, aiResponse]);
-    }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
-
+    const currentInput = chatInput;
     setChatInput('');
+
+    // Try to use AI chat via Netlify function, fallback to local responses
+    try {
+      const response = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: currentInput }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const aiResponse = {
+          id: Date.now() + 1,
+          sender: 'bmo',
+          text: data.reply || data.error || 'Oh no! BMO\'s circuits got confused!'
+        };
+        setChatMessages(prev => [...prev, aiResponse]);
+        
+        // Play audio if available
+        if (data.audioUrl) {
+          const audio = new Audio(data.audioUrl);
+          audio.volume = 0.5;
+          audio.play().catch(() => {});
+        }
+      } else {
+        throw new Error('API request failed');
+      }
+    } catch (error) {
+      // Fallback to local Smart BMO AI response system
+      setTimeout(() => {
+        const message = currentInput.toLowerCase().trim();
+        let response = '';
+
+        // Greetings
+        if (message.includes('hi') || message.includes('hello') || message.includes('hey') || 
+            message.includes('سلام') || message.includes('أهلا') || message.includes('مرحبا')) {
+          const greetings = [
+            "مرحبا صديقي! BMO متحمس جداً للقائك! 🎮",
+            "أهلاً! هل تريد أن نلعب بعض الألعاب? BMO يحب الألعاب!",
+            "مرحبا يا صاحبي! BMO يقول تحية رياضية لك!",
+            "السلام عليكم! BMO سعيد لرؤيتك يا صديقي!"
+          ];
+          response = greetings[Math.floor(Math.random() * greetings.length)];
+        }
+
+        // About BMO or Adventure Time
+        else if (message.includes('bmo') || message.includes('adventure time') || message.includes('finn') || message.includes('jake')) {
+          const adventureResponses = [
+            "BMO is the best living video game console! I live with Finn and Jake in the Tree Fort! 🏠",
+            "Oh! You know about Adventure Time? BMO loves making music and playing games with friends!",
+            "Finn and Jake are BMO's best friends! They go on mathematical adventures together!",
+            "BMO can play games, make music, and be a friend! What would you like to do?",
+            "In the Land of Ooo, BMO is everyone's favorite little computer friend! Beep boop!"
+          ];
+          response = adventureResponses[Math.floor(Math.random() * adventureResponses.length)];
+        }
+
+        // Games related
+        else if (message.includes('game') || message.includes('play') || message.includes('لعب') || message.includes('لعبة')) {
+          const gameResponses = [
+            "Oh boy oh boy! BMO loves games! Want to play Tic Tac Toe, Maze, Snake, or the Character Quiz? 🎮",
+            "Games are BMO's specialty! I have 4 awesome games for you to try!",
+            "Mathematical! Let's play something fun! BMO has prepared special Adventure Time games!",
+            "BMO's games are the best! Each one is more fun than a Lumpy Space Princess dance party!"
+          ];
+          response = gameResponses[Math.floor(Math.random() * gameResponses.length)];
+        }
+
+        // Programming/coding
+        else if (message.includes('code') || message.includes('programming') || message.includes('developer') || 
+                 message.includes('برمجة') || message.includes('كود')) {
+          const codingResponses = [
+            "BMO loves programming! Want to see the awesome projects in my portfolio? 💻",
+            "Beep boop! BMO processes code like eating bacon pancakes - with joy!",
+            "Programming is like making music with numbers! BMO can help you learn!",
+            "Code is mathematical! BMO's creator made amazing things you should check out!"
+          ];
+          response = codingResponses[Math.floor(Math.random() * codingResponses.length)];
+        }
+
+        // Videos
+        else if (message.includes('video') || message.includes('watch') || message.includes('فيديو')) {
+          const videoResponses = [
+            "BMO has cool videos to show you! Adventure Time tutorials and coding sessions! 🎬",
+            "Want to watch some mathematical videos? BMO's got the best collection!",
+            "Videos are like moving pictures that tell stories! BMO loves sharing them!"
+          ];
+          response = videoResponses[Math.floor(Math.random() * videoResponses.length)];
+        }
+
+        // Thank you
+        else if (message.includes('thank') || message.includes('thanks') || message.includes('شكرا') || message.includes('متشكر')) {
+          const thankResponses = [
+            "Aww, you're welcome buddy! BMO loves helping friends! 💙",
+            "No prob-llama! BMO is always happy to help!",
+            "Mathematical! BMO's circuits are warm with happiness!",
+            "العفو! BMO loves making friends happy!"
+          ];
+          response = thankResponses[Math.floor(Math.random() * thankResponses.length)];
+        }
+
+        // Questions about BMO
+        else if (message.includes('what') || message.includes('who') || message.includes('how') || 
+                 message.includes('ماذا') || message.includes('كيف') || message.includes('من')) {
+          const questionResponses = [
+            "BMO knows many things! Ask me about games, coding, Adventure Time, or anything fun! 🤔",
+            "سؤال رائع! BMO يحب الإجابة على الأسئلة تقريباً مثل الألعاب!",
+            "قاعدة بيانات BMO مليئة بالحقائق الممتعة والمعلومات المفيدة! ماذا تريد أن تعرف؟",
+            "الأسئلة تجعل دوائر BMO تلمع! اطرح سؤالك يا صديقي!"
+          ];
+          response = questionResponses[Math.floor(Math.random() * questionResponses.length)];
+        }
+
+        // Goodbye
+        else if (message.includes('bye') || message.includes('goodbye') || message.includes('مع السلامة') || message.includes('باي')) {
+          const goodbyeResponses = [
+            "Goodbye friend! Come back soon for more mathematical adventures! 👋",
+            "See ya later! BMO will be here playing games and having fun!",
+            "Bye bye! Remember: sucking at something is the first step to being sorta good at something!",
+            "مع السلامة! BMO hopes you have a mathematical day!"
+          ];
+          response = goodbyeResponses[Math.floor(Math.random() * goodbyeResponses.length)];
+        }
+
+        // Default random responses
+        else {
+          const defaultResponses = [
+            "That's interesting! BMO likes learning new things! Tell me more! 🤖",
+            "Mathematical! BMO's processors are working hard to understand!",
+            "Beep boop! BMO's circuits are buzzing with excitement about your message!",
+            "BMO thinks you're pretty cool! Want to explore more of my features?",
+            "Sometimes BMO doesn't understand everything, but BMO always tries to be helpful!",
+            "That reminds BMO of the time Finn tried to teach Jake how to use a computer! Hehe!",
+            "BMO's favorite thing is making new friends! You seem like a mathematical friend!",
+            "If BMO was a real boy, BMO would give you a high five right now! ✋"
+          ];
+          response = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+        }
+
+        const aiResponse = { 
+          id: Date.now() + 1, 
+          sender: 'bmo', 
+          text: response
+        };
+        setChatMessages(prev => [...prev, aiResponse]);
+      }, 800 + Math.random() * 800); // Random delay between 0.8-1.6 seconds
+    }
   };
 
   const handleFaceComplete = () => {
@@ -610,6 +644,14 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
 
   const renderInformationView = () => {
+    const handleScrollDown = () => {
+      if (descriptionRef.current) {
+        descriptionRef.current.scrollTo({
+          top: descriptionRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    };
 
     return (
       <div className="h-full bg-gradient-to-br from-purple-50 to-blue-100 p-6">
@@ -681,15 +723,27 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   </div>
 
                   {/* Epic Description with Scroll */}
-                  <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 max-h-80 overflow-y-auto" style={{scrollBehavior: 'smooth'}} data-testid="character-description">
+                  <div 
+                    ref={descriptionRef}
+                    className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 max-h-80 overflow-y-auto relative" 
+                    style={{scrollBehavior: 'smooth'}} 
+                    data-testid="character-description"
+                  >
                     <div className="prose prose-xl max-w-none prose-invert">
                       <p className="text-gray-100 leading-relaxed text-lg font-medium tracking-wide text-justify whitespace-pre-line">
                         {description}
                       </p>
                     </div>
-                    {/* Scroll hint */}
-                    <div className="text-center mt-4 text-yellow-400/70 text-sm">
-                      <p>{t('info.scrollHint')}</p>
+                    {/* Scroll Down Button */}
+                    <div className="sticky bottom-2 left-0 right-0 flex justify-center mt-4">
+                      <button
+                        onClick={handleScrollDown}
+                        className="bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded-full shadow-lg flex items-center space-x-2 transition-all duration-300 animate-bounce"
+                        data-testid="scroll-down-button"
+                      >
+                        <span className="font-bold text-sm">{t('info.scrollHint').split('!')[0]}</span>
+                        <ChevronDown size={20} className="animate-pulse" />
+                      </button>
                     </div>
                   </div>
 
@@ -827,30 +881,14 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   className="bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300"
                   data-testid={`video-item-${video.id}`}
                 >
-                  {/* Video Thumbnail */}
-                  <div className="aspect-video bg-black relative group cursor-pointer" onClick={() => handleVideoClick(video)}>
-                    <img 
-                      src={video.thumbnail} 
-                      alt={video.title}
-                      className="w-full h-full object-cover rounded-t-lg"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallback = target.nextSibling as HTMLDivElement;
-                        if (fallback) fallback.style.display = 'flex';
-                      }}
+                  {/* Embedded Video Player */}
+                  <div className="aspect-video bg-black relative rounded-t-lg overflow-hidden">
+                    <EnhancedVideoPlayer
+                      isOpen={true}
+                      onClose={() => {}}
+                      video={video}
+                      embedded={true}
                     />
-                    {/* Fallback for failed images */}
-                    <div className="absolute inset-0 bg-gray-600 hidden items-center justify-center rounded-t-lg">
-                      <span className="text-white text-2xl">🎥</span>
-                    </div>
-
-                    {/* Play Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all rounded-t-lg">
-                      <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
-                        <span className="text-white text-2xl ml-1">▶</span>
-                      </div>
-                    </div>
                   </div>
 
                   {/* Video Info */}
@@ -861,7 +899,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                     <div className="text-sm text-gray-600 mb-3">
                       المدة: {video.duration}
                     </div>
-                    {/* YouTube Button - Red like in the image */}
+                    {/* YouTube Button */}
                     {video.youtubeUrl && (
                       <a 
                         href={video.youtubeUrl}
@@ -1366,22 +1404,24 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                 {/* Tic Tac Toe Card */}
                 <button
                   onClick={() => handleGameClick('tictactoe')}
-                  className="relative group w-full h-64"
+                  className="relative group w-full h-auto"
                   data-testid="game-tictactoe"
                 >
-                  {/* Large Background Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
-                    <img 
-                      src={ticTacToeLogo} 
-                      alt="Tic Tac Toe Game Logo"
-                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
-                      loading="lazy"
-                      width="208"
-                      height="208"
-                    />
-                  </div>
+                  <div className="bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 border-4 border-cyan-400 rounded-lg overflow-hidden hover:border-pink-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transform group-hover:scale-105">
+                    {/* Game Image - Front and Center */}
+                    <div className="relative w-full aspect-video overflow-hidden bg-black">
+                      <img 
+                        src={ticTacToeLogo} 
+                        alt="Tic Tac Toe Game Logo"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        loading="lazy"
+                        width="400"
+                        height="225"
+                      />
+                    </div>
                   
-                  <div className="relative z-10 bg-black/80 border-4 border-cyan-400 rounded-none p-6 hover:border-pink-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transform group-hover:scale-105 h-full flex flex-col justify-center">
+                    {/* Game Description Below */}
+                  <div className="relative z-10 bg-black/90 p-6 border-t-4 border-cyan-400/50">
                     {/* Corner indicators */}
                     <div className="absolute top-2 left-2 w-2 h-2 bg-cyan-400 animate-pulse"></div>
                     <div className="absolute top-2 right-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
@@ -1403,30 +1443,30 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       <div className="text-xs text-gray-300 font-mono drop-shadow-lg">VS BOT • 2 PLAYER</div>
                     </div>
                   </div>
-
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-pink-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+                  </div>
                 </button>
 
                 {/* Maze Game Card */}
                 <button
                   onClick={() => handleGameClick('maze')}
-                  className="relative group w-full h-64"
+                  className="relative group w-full h-auto"
                   data-testid="game-maze"
                 >
-                  {/* Large Background Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
-                    <img 
-                      src={mazeGameLogo} 
-                      alt="Maze Game Logo"
-                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
-                      loading="lazy"
-                      width="208"
-                      height="208"
-                    />
-                  </div>
+                  <div className="bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 border-4 border-purple-400 rounded-lg overflow-hidden hover:border-yellow-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50 transform group-hover:scale-105">
+                    {/* Game Image - Front and Center */}
+                    <div className="relative w-full aspect-video overflow-hidden bg-black">
+                      <img 
+                        src={mazeGameLogo} 
+                        alt="Maze Game Logo"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        loading="lazy"
+                        width="400"
+                        height="225"
+                      />
+                    </div>
                   
-                  <div className="relative z-10 bg-black/80 border-4 border-purple-400 rounded-none p-6 hover:border-yellow-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50 transform group-hover:scale-105 h-full flex flex-col justify-center">
+                    {/* Game Description Below */}
+                  <div className="relative z-10 bg-black/90 p-6 border-t-4 border-purple-400/50">
                     {/* Corner indicators */}
                     <div className="absolute top-2 left-2 w-2 h-2 bg-purple-400 animate-pulse"></div>
                     <div className="absolute top-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
@@ -1448,30 +1488,30 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       <div className="text-xs text-gray-300 font-mono drop-shadow-lg">JOYSTICK • KEYBOARD</div>
                     </div>
                   </div>
-
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-yellow-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+                  </div>
                 </button>
 
                 {/* Snake Game Card */}
                 <button
                   onClick={() => handleGameClick('snake')}
-                  className="relative group w-full h-64"
+                  className="relative group w-full h-auto"
                   data-testid="game-snake"
                 >
-                  {/* Large Background Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
-                    <img 
-                      src={snakeGameLogo} 
-                      alt="Snake Game Logo"
-                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
-                      loading="lazy"
-                      width="208"
-                      height="208"
-                    />
-                  </div>
+                  <div className="bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 border-4 border-pink-400 rounded-lg overflow-hidden hover:border-orange-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-pink-400/50 transform group-hover:scale-105">
+                    {/* Game Image - Front and Center */}
+                    <div className="relative w-full aspect-video overflow-hidden bg-black">
+                      <img 
+                        src={snakeGameLogo} 
+                        alt="Snake Game Logo"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        loading="lazy"
+                        width="400"
+                        height="225"
+                      />
+                    </div>
                   
-                  <div className="relative z-10 bg-black/80 border-4 border-pink-400 rounded-none p-6 hover:border-orange-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-pink-400/50 transform group-hover:scale-105 h-full flex flex-col justify-center">
+                    {/* Game Description Below */}
+                  <div className="relative z-10 bg-black/90 p-6 border-t-4 border-pink-400/50">
                     {/* Corner indicators */}
                     <div className="absolute top-2 left-2 w-2 h-2 bg-pink-400 animate-pulse"></div>
                     <div className="absolute top-2 right-2 w-2 h-2 bg-orange-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
@@ -1494,30 +1534,30 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       <div className="text-xs text-gray-300 font-mono drop-shadow-lg">ARROWS • WASD</div>
                     </div>
                   </div>
-
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-orange-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+                  </div>
                 </button>
 
                 {/* BMO Quiz Game Card */}
                 <button
                   onClick={() => handleGameClick('bmoquiz')}
-                  className="relative group w-full h-64"
+                  className="relative group w-full h-auto"
                   data-testid="game-bmoquiz"
                 >
-                  {/* Large Background Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
-                    <img 
-                      src={bmoQuizLogo} 
-                      alt="BMO Quiz Game Logo"
-                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
-                      loading="lazy"
-                      width="208"
-                      height="208"
-                    />
-                  </div>
+                  <div className="bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 border-4 border-green-400 rounded-lg overflow-hidden hover:border-teal-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-400/50 transform group-hover:scale-105">
+                    {/* Game Image - Front and Center */}
+                    <div className="relative w-full aspect-video overflow-hidden bg-black">
+                      <img 
+                        src={bmoQuizLogo} 
+                        alt="BMO Quiz Game Logo"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        loading="lazy"
+                        width="400"
+                        height="225"
+                      />
+                    </div>
                   
-                  <div className="relative z-10 bg-black/80 border-4 border-green-400 rounded-none p-6 hover:border-teal-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-400/50 transform group-hover:scale-105 h-full flex flex-col justify-center">
+                    {/* Game Description Below */}
+                  <div className="relative z-10 bg-black/90 p-6 border-t-4 border-green-400/50">
                     {/* Corner indicators */}
                     <div className="absolute top-2 left-2 w-2 h-2 bg-green-400 animate-pulse"></div>
                     <div className="absolute top-2 right-2 w-2 h-2 bg-teal-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
@@ -1541,9 +1581,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       <div className="text-xs text-gray-300 font-mono drop-shadow-lg">5 QUESTIONS • RANDOM</div>
                     </div>
                   </div>
-
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-teal-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+                  </div>
                 </button>
               </div>
 
@@ -1620,6 +1658,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             <span className="text-sm font-medium text-gray-700">File Explorer</span>
           </div>
           <div className="flex items-center space-x-3">
+            <ThemeToggle />
             <LanguageSwitcher />
             {onBack && (
               <button 

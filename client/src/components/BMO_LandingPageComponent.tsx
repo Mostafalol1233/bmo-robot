@@ -145,7 +145,9 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
           
           {/* BMO Screen - White screen with animated face */}
           <div 
-            className="bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-all duration-500"
+            className={`bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-all duration-500 ${
+              isScreenZooming ? 'animate-screenZoom' : ''
+            }`}
             style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)' }}
             onClick={handleStart}
             data-testid="bmo-screen-clickable"

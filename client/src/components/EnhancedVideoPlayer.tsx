@@ -16,12 +16,14 @@ interface EnhancedVideoPlayerProps {
   isOpen: boolean;
   onClose: () => void;
   video: VideoItem;
+  embedded?: boolean;
 }
 
 export default function EnhancedVideoPlayer({ 
   isOpen, 
   onClose, 
-  video
+  video,
+  embedded = false
 }: EnhancedVideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.8);
@@ -50,7 +52,7 @@ export default function EnhancedVideoPlayer({
       setIsLoading(true);
       setPlaybackReady(false);
     }
-  }, [isOpen]);
+  }, [isOpen, video]);
 
   // Handle keyboard shortcuts
   useEffect(() => {
@@ -166,7 +168,7 @@ export default function EnhancedVideoPlayer({
   return (
     <div 
       ref={containerRef}
-      className={`fixed inset-0 bg-black z-50 flex items-center justify-center ${isFullscreen ? 'cursor-none' : ''}`}
+      className={embedded ? 'relative w-full h-full bg-black' : `fixed inset-0 bg-black z-50 flex items-center justify-center ${isFullscreen ? 'cursor-none' : ''}`}
       onMouseMove={handleMouseMove}
       data-testid="enhanced-video-player"
     >
@@ -257,18 +259,25 @@ export default function EnhancedVideoPlayer({
                 }
               }}
               onReady={() => {
+                console.log('Video ready:', video.title);
                 setIsLoading(false);
                 setPlaybackReady(true);
               }}
               onError={(error) => {
-                console.error('Video playback error:', error);
+                console.error('Video playback error:', error, 'Video:', video);
                 setHasError(true);
                 setIsLoading(false);
                 setPlaybackReady(false);
                 setErrorMessage('Failed to load video. Please try again or use the YouTube link below.');
               }}
-              onBuffer={() => setIsLoading(true)}
-              onBufferEnd={() => setIsLoading(false)}
+              onBuffer={() => {
+                console.log('Video buffering...');
+                setIsLoading(true);
+              }}
+              onBufferEnd={() => {
+                console.log('Buffer ended');
+                setIsLoading(false);
+              }}
               config={{
                 youtube: {
                   playerVars: {
@@ -277,13 +286,15 @@ export default function EnhancedVideoPlayer({
                     iv_load_policy: 3,
                     fs: 1,
                     controls: 0,
-                    disablekb: 1
+                    disablekb: 1,
+                    autoplay: 0
                   }
                 },
                 file: {
                   attributes: {
                     controlsList: 'nodownload',
-                    disablePictureInPicture: true
+                    disablePictureInPicture: true,
+                    preload: 'metadata'
                   }
                 }
               }}
@@ -292,7 +303,7 @@ export default function EnhancedVideoPlayer({
         )}
 
         {/* Enhanced Controls Overlay */}
-        {!hasError && playbackReady && (
+        {!hasError && playbackReady && !embedded && (
         <div className={`absolute inset-0 transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
           {/* Top Bar */}
           <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-6">
