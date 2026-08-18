@@ -778,36 +778,36 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
 
   const renderExplorerView = () => (
-    <div className="h-full bg-white p-4">
-      {/* Main Content Area - Modern Grid */}
-      <div className="grid grid-cols-4 gap-4">
+    <div className="bmo-desktop-home" data-testid="bmo-desktop-home">
+      <div className="bmo-desktop-folder-grid">
         {folders.map((folder, index) => (
           <button
             key={folder.name}
             onClick={() => handleFolderClick(folder)}
-            className="flex flex-col items-center p-4 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
+            className="bmo-desktop-folder group"
             style={{ animationDelay: `${index * 0.1}s` }}
             data-testid={`folder-${folder.name.toLowerCase().replace(/\s+/g, '-')}`}
           >
-            {/* Modern folder icon */}
-            <div className="relative mb-3">
-              <div className="w-16 h-12 bg-blue-100 border border-blue-300 rounded-lg relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 left-0 w-6 h-3 bg-blue-200 border-r border-blue-300 rounded-tl-lg"></div>
-                <div className="absolute inset-2 bg-blue-50 rounded flex items-center justify-center">
-                  <span className="text-2xl group-hover:scale-110 transition-transform">
-                    {folder.emoji}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <span className="text-sm text-center text-gray-800 leading-tight max-w-full font-medium">
-              {folder.name}
+            <span className="bmo-folder-icon" aria-hidden="true">
+              <span className="bmo-folder-tab" />
+              <span className="bmo-folder-paper">
+                <span className="bmo-folder-glyph">{folder.emoji}</span>
+              </span>
             </span>
-            <span className="text-xs text-gray-500 mt-1">
-              {folder.description}
+            <span className="bmo-desktop-folder-name">
+              {folder.name}
             </span>
           </button>
         ))}
+      </div>
+      <div className="bmo-desktop-cursor" aria-hidden="true">☝</div>
+      <div className="bmo-desktop-trash" aria-hidden="true">
+        <span className="bmo-trash-lid" />
+        <span className="bmo-trash-can"><i /><i /><i /></span>
+        <span className="bmo-trash-label">TRASH</span>
+      </div>
+      <div className="bmo-desktop-status">
+        <span className="bmo-desktop-status-light" /> BMO DESKTOP · READY
       </div>
     </div>
   );
@@ -1604,22 +1604,25 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
   return (
     <>
-      <div 
-        className="w-full h-full bg-white text-black"
+       <div
+         className="bmo-file-desktop w-full h-full"
         style={{ fontSize: '12px' }}
         data-testid="bmo-filesystem"
       >
-        {/* Modern Windows 10 Style Top Bar */}
-        <div className="bg-white border-b border-gray-300 px-3 py-2 flex items-center justify-between shadow-sm">
-          <div className="flex items-center space-x-2">
-            <div className="flex space-x-1">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            </div>
-            <span className="text-sm font-medium text-gray-700">File Explorer</span>
+         {/* Retro BMO menu strip */}
+         <div className="bmo-desktop-menubar">
+           <div className="bmo-desktop-brand">
+             <span className="bmo-desktop-brand-dot" />
+             <span>BMO</span>
           </div>
-          <div className="flex items-center space-x-3">
+           <div className="bmo-desktop-menu-items" aria-label="Desktop menu">
+             <button type="button">FILE</button>
+             <button type="button">EDIT</button>
+             <button type="button">VIEW</button>
+             <button type="button">WINDOW</button>
+             <button type="button">HELP</button>
+           </div>
+           <div className="bmo-desktop-actions">
             <LanguageSwitcher />
             {onBack && (
               <button 
@@ -1632,28 +1635,27 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   });
                   onBack();
                 }}
-                className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 p-1 rounded"
+                 className="bmo-desktop-close"
                 data-testid="button-back-to-face"
                 title="Close File Explorer"
               >
-                ✕
+                 BACK
               </button>
             )}
           </div>
         </div>
 
-        {/* Ribbon Menu - Hidden on mobile for space */}
-        <div className="hidden md:block bg-gray-50 border-b border-gray-300 px-3 py-1">
-          <div className="flex items-center space-x-4 text-xs text-gray-600">
-            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">File</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">Home</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">Share</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">View</button>
+         {/* Small secondary strip keeps navigation discoverable without becoming Windows chrome */}
+         <div className="bmo-desktop-ribbon hidden md:block">
+           <div className="bmo-desktop-ribbon-items">
+             <span>PORTFOLIO DESKTOP</span>
+             <span className="bmo-desktop-ribbon-line" />
+             <span>{currentView === 'explorer' ? 'SELECT A FOLDER' : 'OPEN WINDOW'}</span>
           </div>
         </div>
 
-        {/* Navigation Bar - Mobile-Friendly Windows Style */}
-        <div className="bg-white border-b border-gray-300 px-3 py-2 flex items-center space-x-2 md:space-x-3">
+         {/* Navigation Bar */}
+         <div className="bmo-desktop-pathbar">
           <div className="flex items-center space-x-1">
             <button
               onClick={handleBackClick}
@@ -1682,21 +1684,21 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
               ↑
             </button>
           </div>
-          <div className="flex-1 bg-gray-50 border border-gray-300 px-2 md:px-3 py-1 text-xs md:text-sm rounded overflow-hidden min-h-[32px] md:min-h-auto" style={{ fontFamily: 'system-ui' }}>
+           <div className="bmo-desktop-path">
             <span className="flex items-center space-x-1 w-full">
-              <span className="text-blue-600 text-sm md:text-base flex-shrink-0">📁</span>
+               <span className="bmo-desktop-path-icon flex-shrink-0">⌂</span>
               <span className="truncate whitespace-nowrap text-ellipsis overflow-hidden">{currentPath}</span>
             </span>
           </div>
-          <div className="hidden md:block text-xs text-gray-500">
+           <div className="bmo-desktop-item-count hidden md:block">
             {currentView === 'explorer' ? `${folders.length} items` : '1 item'}
           </div>
         </div>
 
-        {/* Main Content Area with Responsive Sidebar */}
-        <div className="flex-1 h-full overflow-hidden flex flex-col md:flex-row">
+         {/* Main Content Area */}
+         <div className="bmo-desktop-main flex-1 h-full overflow-hidden flex flex-col md:flex-row">
           {/* Mobile Menu Button */}
-          <div className="md:hidden bg-gray-100 border-b border-gray-300 px-3 py-2">
+           <div className="bmo-mobile-menu md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors p-2 rounded touch-none"
@@ -1708,7 +1710,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
 
           {/* Sidebar - Hidden on mobile by default, visible on desktop */}
-          <div className={`${mobileMenuOpen ? 'block' : 'hidden'} md:block w-full md:w-48 bg-gray-50 ${mobileMenuOpen ? 'border-b' : 'md:border-r'} border-gray-300 p-2`}>
+           <div className={`bmo-desktop-sidebar ${mobileMenuOpen ? 'block' : 'hidden'} md:block w-full md:w-48 p-2`}>
             <div className="space-y-1">
               <div className="text-xs font-medium text-gray-600 mb-2">BMO Portfolio</div>
               <div className="grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-1">
@@ -1733,7 +1735,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 overflow-hidden">
+           <div className="bmo-desktop-content flex-1 overflow-hidden">
             <div className="h-full animate-fadeInUp">
               {renderContentView()}
             </div>

@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type CSSProperties } from 'react';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
+import adventureBackground from '@assets/1_1757441992148.jfif';
 
 interface BMO_LandingPageComponentProps {
   onStart: () => void;
@@ -149,9 +150,13 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
   const isWink = selectedFace === 'wink';
 
   return (
-    <div className="bmo-stage min-h-screen flex items-center justify-center p-4 sm:p-8">
+    <div
+      className="bmo-stage min-h-screen flex items-center justify-center p-4 sm:p-8"
+      style={{ '--bmo-reference-bg': `url(${adventureBackground})` } as CSSProperties}
+    >
       <div className="bmo-layout">
         <div className="bmo-intro">
+          <div className="bmo-reference-mark">BMO <span>PORTFOLIO</span></div>
           <div className="bmo-kicker"><span className="bmo-live-dot" /> BMO // ONLINE</div>
           <h1>HELLO, HUMAN<span>.</span></h1>
           <p>Pick a face for your new best friend, then press start to explore BMO's world.</p>
@@ -164,8 +169,10 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
           className={`bmo-character ${isScreenZooming ? 'bmo-character--zooming' : ''}`}
           data-testid="bmo-landing-component"
         >
-        {/* BMO Body - More rectangular and authentic */}
+        <div className="bmo-shadow" aria-hidden="true" />
+        {/* BMO Body - a CSS-perspective shell inspired by the reference */}
         <div className="bmo-shell relative p-6" style={{ aspectRatio: '0.65', width: '320px' }}>
+          <div className="bmo-shell-side-plane" aria-hidden="true" />
           <div className="bmo-shell-top" />
           <div className="bmo-screw bmo-screw--tl" />
           <div className="bmo-screw bmo-screw--tr" />
