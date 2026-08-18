@@ -245,7 +245,7 @@ export default function EnhancedVideoPlayer({
 
             <ReactPlayer
               ref={playerRef}
-              url={video.youtubeUrl ?? video.url}
+              src={video.youtubeUrl ?? video.url}
               width="100%"
               height="100%"
               playing={isPlaying}
@@ -269,24 +269,6 @@ export default function EnhancedVideoPlayer({
               }}
               onBuffer={() => setIsLoading(true)}
               onBufferEnd={() => setIsLoading(false)}
-              config={{
-                youtube: {
-                  playerVars: {
-                    modestbranding: 1,
-                    rel: 0,
-                    iv_load_policy: 3,
-                    fs: 1,
-                    controls: 0,
-                    disablekb: 1
-                  }
-                },
-                file: {
-                  attributes: {
-                    controlsList: 'nodownload',
-                    disablePictureInPicture: true
-                  }
-                }
-              }}
             />
           </>
         )}

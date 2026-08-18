@@ -116,7 +116,7 @@ export default function VideoPlayerModalComponent({
             <div className="relative bg-black aspect-video">
               {currentVideo ? (
                 <ReactPlayer
-                  url={currentVideo.url}
+                  src={currentVideo.url}
                   width="100%"
                   height="100%"
                   controls={true}
@@ -124,21 +124,6 @@ export default function VideoPlayerModalComponent({
                   volume={0.8}
                   onError={(error) => {
                     console.error('Video player error:', error);
-                  }}
-                  config={{
-                    file: {
-                      attributes: {
-                        controlsList: 'nodownload',
-                        disablePictureInPicture: false,
-                        preload: 'metadata'
-                      },
-                      forceVideo: true
-                    },
-                    youtube: {
-                      playerVars: {
-                        showinfo: 1
-                      }
-                    }
                   }}
                   onReady={() => console.log('Video ready to play')}
                   onStart={() => console.log('Video started playing')}
