@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft, Award, BrainCircuit, Check, CheckCircle2, ChevronLeft, Compass, ExternalLink,
-  Gamepad2, LockKeyhole, MessageCircle, Play, Puzzle, RefreshCcw, Search, Send, ShieldCheck,
+  Gamepad2, LockKeyhole, MessageCircle, Play, RefreshCcw, Search, Send, ShieldCheck,
   Sparkles, Timer, Trophy, Wifi, X, Zap,
 } from "lucide-react";
 import "./index.css";
@@ -10,6 +10,11 @@ import { getPlayerId } from "./lib/supabase";
 type GameId = "adventure" | "cipher" | "reflex";
 type ChatMessage = { role: "user" | "assistant"; content: string };
 type ExternalResult = { title: string; url: string; description: string };
+
+const localExternalFallback: ExternalResult[] = [
+  { title: "Virtual BMO — لعبة متصفح مستقلة", url: "https://gumpyfunction.itch.io/virtual-bmo", description: "تجربة مستقلة مستوحاة من جهاز BMO، وتُفتح في نافذة جديدة." },
+  { title: "BMO: Play Along With Me", url: "https://toongo.io/game/adventure-time-bmo-play-along-with-me", description: "صفحة لعبة خارجية مرتبطة بعالم وقت المغامرة." },
+];
 
 const games: { id: GameId; title: string; description: string; icon: typeof Compass; tone: string }[] = [
   { id: "adventure", title: "مسارات المملكة", description: "مغامرة اختيارية تتغير حسب قراراتك.", icon: Compass, tone: "blue" },
@@ -25,14 +30,41 @@ const adventureScenes = [
 
 function cn(...values: Array<string | false | null | undefined>) { return values.filter(Boolean).join(" "); }
 
+type ToneKind = "tap" | "success" | "error";
+function playTone(kind: ToneKind) {
+  if (typeof window === "undefined" || !window.AudioContext) return;
+  const context = new window.AudioContext();
+  const oscillator = context.createOscillator();
+  const gain = context.createGain();
+  const frequency = kind === "success" ? 660 : kind === "error" ? 180 : 420;
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+  gain.gain.setValueAtTime(0.0001, context.currentTime);
+  gain.gain.exponentialRampToValueAtTime(kind === "tap" ? 0.025 : 0.04, context.currentTime + 0.012);
+  gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + (kind === "success" ? 0.18 : 0.1));
+  oscillator.connect(gain); gain.connect(context.destination);
+  oscillator.start(); oscillator.stop(context.currentTime + (kind === "success" ? 0.2 : 0.12));
+  oscillator.addEventListener("ended", () => void context.close(), { once: true });
+}
+
+function safeHostname(value: string) {
+  try { return new URL(value).hostname; } catch { return "مصدر خارجي"; }
+}
+
 async function postJson<T>(path: string, body: unknown): Promise<T> {
-  const response = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-  const raw = await response.text();
-  let data: any = null;
-  try { data = raw ? JSON.parse(raw) : null; } catch { data = null; }
-  if (!response.ok) throw new Error(data?.error || "الخدمة غير متاحة حالياً. جرّب مرة أخرى بعد لحظات.");
-  if (!data) throw new Error("لم تُرجع الخدمة نتيجة قابلة للقراءة.");
-  return data as T;
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 12_000);
+  try {
+    const response = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal: controller.signal });
+    const raw = await response.text();
+    let data: any = null;
+    try { data = raw ? JSON.parse(raw) : null; } catch { data = null; }
+    if (!response.ok) throw new Error(data?.error || "الخدمة غير متاحة حالياً. جرّب مرة أخرى بعد لحظات.");
+    if (!data) throw new Error("لم تُرجع الخدمة نتيجة قابلة للقراءة.");
+    return data as T;
+  } finally {
+    window.clearTimeout(timeout);
+  }
 }
 
 function BMOAvatar({ speaking = false, mood = "ready" }: { speaking?: boolean; mood?: string }) {
@@ -100,6 +132,7 @@ function AdventureGame({ onScore, onContext }: { onScore: (score: number) => voi
   const scene = adventureScenes[Math.min(step, adventureScenes.length - 1)];
   const choose = (index: number) => {
     const nextScore = score + (index === 0 ? 12 : 9);
+    playTone(index === 0 ? "success" : "tap");
     setScore(nextScore); onScore(nextScore); onContext(`أنهى اللاعب قراراً في مسارات المملكة بمجموع ${nextScore} نقطة.`); setStep(step + 1);
   };
   return <div className="game-stage adventure-stage">
@@ -117,8 +150,8 @@ function CipherGame({ onScore, onContext }: { onScore: (score: number) => void; 
     if (complete) return;
     if (value === sequence[progress.length]) {
       const next = [...progress, value]; setProgress(next); setFailed(false);
-      if (next.length === sequence.length) { onScore(40); onContext("فتح اللاعب شفرة BMO بنجاح وحصل على 40 نقطة."); }
-    } else { setFailed(true); setProgress([]); }
+      if (next.length === sequence.length) { playTone("success"); onScore(40); onContext("فتح اللاعب شفرة BMO بنجاح وحصل على 40 نقطة."); }
+    } else { playTone("error"); setFailed(true); setProgress([]); }
   };
   return <div className="game-stage cipher-stage">
     <div className="stage-header"><div><span className="eyebrow">تحدي الذاكرة</span><h3>أعد ترتيب النبضات</h3></div><div className="sequence-readout">{progress.length} / 4</div></div>
@@ -132,9 +165,9 @@ function CipherGame({ onScore, onContext }: { onScore: (score: number) => void; 
 function ReflexGame({ onScore, onContext }: { onScore: (score: number) => void; onContext: (text: string) => void }) {
   const [running, setRunning] = useState(false); const [round, setRound] = useState(0); const [hits, setHits] = useState(0); const [time, setTime] = useState(8); const [target, setTarget] = useState({ x: 48, y: 48 });
   useEffect(() => { if (!running) return; const timer = window.setInterval(() => setTime((value) => value <= 1 ? 0 : value - 1), 1000); return () => window.clearInterval(timer); }, [running]);
-  useEffect(() => { if (running && time === 0) setRunning(false); }, [running, time]);
-  const start = () => { setRunning(true); setRound(0); setHits(0); setTime(8); setTarget({ x: 18 + Math.random() * 64, y: 22 + Math.random() * 56 }); };
-  const hit = () => { if (!running) return; const nextRound = round + 1; const nextHits = hits + 1; if (nextRound >= 5) { setRunning(false); setRound(nextRound); setHits(nextHits); onScore(nextHits * 10); onContext(`أنهى اللاعب نبضة السرعة بدقة ${nextHits} من 5 وحصل على ${nextHits * 10} نقطة.`); return; } setRound(nextRound); setHits(nextHits); setTarget({ x: 12 + Math.random() * 74, y: 18 + Math.random() * 64 }); };
+  useEffect(() => { if (running && time === 0) { playTone("error"); setRunning(false); onContext("انتهى الوقت قبل التقاط جميع نبضات السرعة. جرّب من جديد."); } }, [running, time, onContext]);
+  const start = () => { playTone("tap"); setRunning(true); setRound(0); setHits(0); setTime(8); setTarget({ x: 18 + Math.random() * 64, y: 22 + Math.random() * 56 }); };
+  const hit = () => { if (!running) return; const nextRound = round + 1; const nextHits = hits + 1; playTone(nextRound >= 5 ? "success" : "tap"); if (nextRound >= 5) { setRunning(false); setRound(nextRound); setHits(nextHits); onScore(nextHits * 10); onContext(`أنهى اللاعب نبضة السرعة بدقة ${nextHits} من 5 وحصل على ${nextHits * 10} نقطة.`); return; } setRound(nextRound); setHits(nextHits); setTarget({ x: 12 + Math.random() * 74, y: 18 + Math.random() * 64 }); };
   return <div className="game-stage reflex-stage">
     <div className="stage-header"><div><span className="eyebrow">اختبار التركيز</span><h3>التقط الإشارة</h3></div><div className="timer-chip"><Timer size={15} /> {time} ث</div></div>
     <div className="reflex-board">{running ? <button aria-label="الإشارة" className="reflex-target" style={{ left: `${target.x}%`, top: `${target.y}%` }} onClick={hit}><span /></button> : <div className="reflex-idle">{round >= 5 ? <><Award size={30} /><strong>نتيجة ممتازة: {hits} / 5</strong><span>أعد اللعب لتحسين زمن الاستجابة.</span></> : <><Play size={30} /><strong>جاهز للإشارة؟</strong><span>لديك 8 ثوانٍ لالتقاط خمس نبضات.</span></>}</div>}</div>
@@ -152,8 +185,8 @@ function ChatPanel({ game, score, context }: { game: GameId; score: number; cont
 
 function ExplorePanel() {
   const [query, setQuery] = useState("BMO Adventure Time games"); const [results, setResults] = useState<ExternalResult[]>([]); const [loading, setLoading] = useState(false); const [error, setError] = useState("");
-  const search = async () => { setLoading(true); setError(""); try { const data = await postJson<{ results: ExternalResult[] }>("/api/search", { query }); setResults(data.results || []); } catch (err) { setError(err instanceof Error ? err.message : "تعذر جلب النتائج"); } finally { setLoading(false); } };
-  return <section className="explore-panel"><div className="section-heading"><div><span className="eyebrow">محتوى خارجي مختار</span><h2>استكشف ما وراء المختبر</h2><p>يجلب البحث مصادر عامة عند الطلب، وتظل المفاتيح والاتصالات الحساسة على الخادم.</p></div><div className="secure-badge"><ShieldCheck size={15} /> اتصال محمي</div></div><div className="search-row"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => event.key === "Enter" && search()} placeholder="ابحث عن ألعاب ومحتوى" /><button className="primary-btn" onClick={search} disabled={loading}>{loading ? "جارٍ البحث" : "ابحث"}</button></div>{error && <div className="error-box"><X size={16} /> {error}</div>}<div className="results-grid">{results.length ? results.map((item) => <a className="result-card" href={item.url} target="_blank" rel="noreferrer" key={item.url}><div className="result-title"><strong>{item.title}</strong><ExternalLink size={15} /></div><p>{item.description || "مصدر خارجي متعلق بموضوع البحث."}</p><span>{new URL(item.url).hostname}</span></a>) : <div className="empty-results"><Search size={26} /><strong>ابدأ بحثاً قصيراً</strong><span>ستظهر هنا اقتراحات خارجية مرتبطة بعالم BMO ووقت المغامرة.</span></div>}</div></section>;
+  const search = async () => { const cleanQuery = query.trim(); if (cleanQuery.length < 2 || loading) return; setLoading(true); setError(""); try { const data = await postJson<{ results: ExternalResult[] }>("/api/search", { query: cleanQuery }); setResults(data.results || []); } catch (err) { setResults(localExternalFallback); setError("تعذر الاتصال بالبحث الخارجي؛ عُرضت خيارات آمنة محفوظة."); } finally { setLoading(false); } };
+  return <section className="explore-panel"><div className="section-heading"><div><span className="eyebrow">محتوى خارجي مختار</span><h2>استكشف ما وراء المختبر</h2><p>يجلب البحث مصادر عامة عند الطلب، وتظل المفاتيح والاتصالات الحساسة على الخادم.</p></div><div className="secure-badge"><ShieldCheck size={15} /> اتصال محمي</div></div><div className="search-row"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => event.key === "Enter" && search()} placeholder="ابحث عن ألعاب ومحتوى" /><button className="primary-btn" onClick={search} disabled={loading}>{loading ? "جارٍ البحث" : "ابحث"}</button></div>{error && <div className="error-box"><X size={16} /> {error}</div>}<div className="results-grid">{results.length ? results.map((item) => <a className="result-card" href={item.url} target="_blank" rel="noreferrer" key={item.url}><div className="result-title"><strong>{item.title}</strong><ExternalLink size={15} /></div><p>{item.description || "مصدر خارجي متعلق بموضوع البحث."}</p><span>{safeHostname(item.url)}</span></a>) : <div className="empty-results"><Search size={26} /><strong>ابدأ بحثاً قصيراً</strong><span>ستظهر هنا اقتراحات خارجية مرتبطة بعالم BMO ووقت المغامرة.</span></div>}</div></section>;
 }
 
 export default function App() {
