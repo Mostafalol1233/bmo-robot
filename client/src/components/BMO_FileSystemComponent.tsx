@@ -813,7 +813,8 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   );
 
   const renderContentView = () => {
-    switch (currentView) {
+    const view = (() => {
+      switch (currentView) {
       case 'videos':
         return (
           <div className="p-4 h-full bg-white overflow-y-auto custom-scrollbar">
@@ -1588,9 +1589,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
       case 'information':
         return renderInformationView();
 
-      default:
-        return renderExplorerView();
-    }
+        default:
+          return renderExplorerView();
+      }
+    })();
+
+    return <div className="bmo-view-stage">{view}</div>;
   };
 
   // Show BMO face first, then transition to file explorer

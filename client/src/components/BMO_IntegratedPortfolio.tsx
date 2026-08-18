@@ -124,11 +124,11 @@ export default function BMO_IntegratedPortfolio() {
       
       case 'filesystem':
         return (
-          <div className="min-h-screen flex items-center justify-center p-4">
+          <div className="bmo-filesystem-shell min-h-screen flex items-center justify-center p-4">
             {isZoomed ? (
               // Zoomed screen view - fullscreen BMO screen only
               <div 
-                className="fixed inset-0 bg-gradient-to-br from-cyan-200 to-cyan-300 border-4 border-cyan-700 animate-zoomIn z-50"
+                className="bmo-filesystem-zoomed fixed inset-0 animate-zoomIn z-50"
                 style={{ transformOrigin: 'center center' }}
                 data-testid="bmo-filesystem-zoomed"
               >
