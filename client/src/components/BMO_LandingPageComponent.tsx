@@ -6,12 +6,24 @@ interface BMO_LandingPageComponentProps {
   isScreenZooming?: boolean;
 }
 
+type FaceMood = 'happy' | 'sleepy' | 'surprised' | 'wink' | 'love' | 'sad';
+
+const faceMoods: Array<{ id: FaceMood; label: string; glyph: string; caption: string }> = [
+  { id: 'happy', label: 'HAPPY', glyph: '◡', caption: 'ready for an adventure' },
+  { id: 'sleepy', label: 'SLEEPY', glyph: '⌣', caption: 'five more minutes, human' },
+  { id: 'surprised', label: 'WOW', glyph: 'O', caption: 'oh my glob!' },
+  { id: 'wink', label: 'WINK', glyph: '¬', caption: 'you got this' },
+  { id: 'love', label: 'LOVE', glyph: '♥', caption: 'best friends forever' },
+  { id: 'sad', label: 'SAD', glyph: '︵', caption: 'cheer up, little buddy' },
+];
+
 export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: BMO_LandingPageComponentProps) {
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
   const [isMouthMoving, setIsMouthMoving] = useState(false);
   const [isWaving, setIsWaving] = useState(false);
+  const [selectedFace, setSelectedFace] = useState<FaceMood>('happy');
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
   const bmoRef = useRef<HTMLDivElement>(null);
@@ -133,63 +145,83 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
     onStart();
   };
 
+  const activeMood = faceMoods.find((mood) => mood.id === selectedFace) ?? faceMoods[0];
+  const isWink = selectedFace === 'wink';
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-cyan-400/20 via-cyan-500/10 to-cyan-600/20">
-      <div 
-        ref={bmoRef}
-        className="relative w-80 mx-auto transform hover:scale-105 transition-transform duration-300"
-        data-testid="bmo-landing-component"
-      >
+    <div className="bmo-stage min-h-screen flex items-center justify-center p-4 sm:p-8">
+      <div className="bmo-layout">
+        <div className="bmo-intro">
+          <div className="bmo-kicker"><span className="bmo-live-dot" /> BMO // ONLINE</div>
+          <h1>HELLO, HUMAN<span>.</span></h1>
+          <p>Pick a face for your new best friend, then press start to explore BMO's world.</p>
+          <div className="bmo-intro-rule" />
+          <div className="bmo-hint"><span>01</span> FACE DECK <b>·</b> <span>02</span> START ADVENTURE</div>
+        </div>
+
+        <div
+          ref={bmoRef}
+          className={`bmo-character ${isScreenZooming ? 'bmo-character--zooming' : ''}`}
+          data-testid="bmo-landing-component"
+        >
         {/* BMO Body - More rectangular and authentic */}
-        <div className="bg-gradient-to-br from-cyan-400 via-cyan-450 to-cyan-500 rounded-xl border-4 border-cyan-700 shadow-2xl relative p-6" style={{ aspectRatio: '0.65', width: '320px' }}>
+        <div className="bmo-shell relative p-6" style={{ aspectRatio: '0.65', width: '320px' }}>
+          <div className="bmo-shell-top" />
+          <div className="bmo-screw bmo-screw--tl" />
+          <div className="bmo-screw bmo-screw--tr" />
+          <div className="bmo-screw bmo-screw--bl" />
+          <div className="bmo-screw bmo-screw--br" />
           
           {/* BMO Screen - White screen with animated face */}
           <div 
-            className="bg-white border-4 border-gray-800 rounded-lg h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-all duration-500"
-            style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)' }}
+            className="bmo-face-screen h-52 mb-6 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer"
             onClick={handleStart}
             data-testid="bmo-screen-clickable"
+            title="Start BMO"
           >
-            {/* BMO Animated Face */}
-            <div className="relative z-10 animate-bounce" style={{ imageRendering: 'pixelated', animationDuration: '3s' }}>
-              {/* Eyes - Black circles that follow mouse */}
-              <div className="flex space-x-12 mb-6">
+            <div className={`bmo-face-art bmo-face-art--${selectedFace} relative z-10 ${isMouthMoving ? 'bmo-face-art--talking' : ''}`}>
+              <div className="bmo-eyes">
                 <div className="relative">
-                  <div className={`w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out ${isBlinking ? 'animate-blink' : ''}`}
+                  <div className={`bmo-eye ${isBlinking || isWink ? 'bmo-eye--closed' : ''}`}
                     style={{
                       transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
-                      imageRendering: 'pixelated'
                     }}
                     data-testid="bmo-left-eye"
                   ></div>
                 </div>
                 <div className="relative">
-                  <div className={`w-6 h-6 bg-black rounded-full transition-transform duration-100 ease-out ${isBlinking ? 'animate-blink' : ''}`}
+                  <div className={`bmo-eye ${isBlinking ? 'bmo-eye--closed' : ''}`}
                     style={{
                       transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`,
-                      imageRendering: 'pixelated'
                     }}
                     data-testid="bmo-right-eye"
                   ></div>
                 </div>
               </div>
               
-              {/* BMO Smile with movement */}
-              <div className="relative w-16 h-6 mx-auto">
-                <div className={`absolute bottom-0 left-2 w-12 h-3 border-b-4 border-l-2 border-r-2 border-black rounded-b-full transition-transform duration-200 ${isMouthMoving ? 'animate-pulse' : ''}`} 
-                     style={{ 
-                       imageRendering: 'pixelated',
-                       transform: isMouthMoving ? 'scaleX(1.1) scaleY(0.9)' : 'scaleX(1) scaleY(1)'
-                     }}></div>
+              <div className="bmo-mouth" aria-label={`${activeMood.label.toLowerCase()} expression`}>
+                {selectedFace === 'surprised' && <span className="bmo-mouth-surprised" />}
+                {selectedFace === 'love' && <span className="bmo-mouth-smile" />}
+                {selectedFace === 'sad' && <span className="bmo-mouth-sad" />}
+                {selectedFace === 'sleepy' && <span className="bmo-mouth-sleepy" />}
+                {(selectedFace === 'happy' || selectedFace === 'wink') && <span className="bmo-mouth-smile" />}
               </div>
             </div>
             
-            {/* Screen reflection effect */}
-            <div className="absolute top-2 left-2 w-8 h-8 bg-white opacity-20 rounded blur-sm"></div>
+            <div className="bmo-screen-glare" />
+            <div className="bmo-screen-status"><span /> {activeMood.label}</div>
           </div>
           
+          {/* Speaker grille and headphone jack */}
+          <div className="bmo-speaker-grille" aria-label="BMO speaker">
+            {Array.from({ length: 6 }).map((_, index) => <i key={index} />)}
+          </div>
+          <div className="bmo-headphone-jack" />
+
+          <div className="bmo-slot" />
+
           {/* Control Buttons Layout - More authentic BMO layout */}
-          <div className="space-y-3">
+          <div className="bmo-controls">
             {/* Top Row: D-Pad and Red Button with proper spacing */}
             <div className="flex justify-between items-start px-2">
               {/* Yellow Cross D-Pad - Games Link */}
@@ -230,7 +262,11 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
         
         {/* BMO Side Label - More authentic positioning */}
         <div className="absolute right-0 top-1/2 transform translate-x-3 -translate-y-1/2 -rotate-90">
-          <span className="pixel-text text-xl text-black font-bold tracking-wider" style={{ textShadow: '1px 1px 0px rgba(0,0,0,0.3)' }}>BMO</span>
+          <span className="bmo-side-label">BMO</span>
+        </div>
+
+        <div className="bmo-side-vents" aria-hidden="true">
+          {Array.from({ length: 6 }).map((_, index) => <i key={index} />)}
         </div>
         
         {/* BMO Arms - Authentic Adventure Time Style */}
@@ -248,7 +284,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
           <div className="relative">
             {/* Upper arm curve */}
             <div 
-              className="w-1.5 h-20 bg-gray-900 rounded-full transform rotate-12"
+              className="bmo-arm bmo-arm--left w-2 h-20 rounded-full transform rotate-12"
               style={{
                 borderLeft: '2px solid black',
                 borderRight: '2px solid black',
@@ -257,7 +293,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
             ></div>
             {/* Lower arm curve */}
             <div 
-              className="w-1.5 h-16 bg-gray-900 rounded-full absolute top-16 left-2 transform -rotate-45 transition-transform duration-300"
+              className="bmo-arm bmo-arm--left w-2 h-16 rounded-full absolute top-16 left-2 transform -rotate-45 transition-transform duration-300"
               style={{
                 borderLeft: '2px solid black',
                 borderRight: '2px solid black',
@@ -266,7 +302,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
             ></div>
             {/* Simple mitten hand - Adventure Time style */}
             <div 
-              className="absolute top-28 left-6 w-6 h-8 bg-gray-900 rounded-full border-2 border-black transition-all duration-300"
+              className="bmo-hand absolute top-28 left-6 w-7 h-9 rounded-full border-2 transition-all duration-300"
               style={{
                 boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)'
               }}
@@ -291,7 +327,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
           <div className="relative">
             {/* Upper arm curve - mirrored from left arm */}
             <div 
-              className="w-1.5 h-20 bg-gray-900 rounded-full transform -rotate-12"
+              className="bmo-arm bmo-arm--right w-2 h-20 rounded-full transform -rotate-12"
               style={{
                 borderLeft: '2px solid black',
                 borderRight: '2px solid black',
@@ -300,7 +336,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
             ></div>
             {/* Lower arm curve - properly mirrored positioning */}
             <div 
-              className={`w-1.5 h-16 bg-gray-900 rounded-full absolute top-16 -left-2 transform rotate-45 transition-transform duration-300`}
+              className={`bmo-arm bmo-arm--right w-2 h-16 rounded-full absolute top-16 -left-2 transform rotate-45 transition-transform duration-300`}
               style={{
                 borderLeft: '2px solid black',
                 borderRight: '2px solid black',
@@ -309,7 +345,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
             ></div>
             {/* Simple mitten hand - Adventure Time style - corrected position */}
             <div 
-              className={`absolute top-28 -left-6 w-6 h-8 bg-gray-900 rounded-full border-2 border-black transition-all duration-300 ${
+              className={`bmo-hand absolute top-28 -left-6 w-7 h-9 rounded-full border-2 transition-all duration-300 ${
                 isWaving ? 'animate-bounce' : ''
               }`}
               style={{
@@ -331,7 +367,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
           <div className="absolute -left-12 top-0">
             {/* Thin black leg */}
             <div 
-              className="w-1.5 h-16 bg-black rounded-full"
+               className="bmo-leg w-2 h-16 rounded-full"
               style={{
                 border: '1px solid #333',
                 boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
@@ -339,7 +375,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
             ></div>
             {/* BMO's iconic rounded shoe */}
             <div 
-              className="absolute -bottom-2 -left-2 w-6 h-4 bg-black rounded-full border-2 border-gray-800"
+               className="bmo-foot absolute -bottom-2 -left-3 w-9 h-5 rounded-full border-2"
               style={{
                 boxShadow: '0 2px 4px rgba(0,0,0,0.3)'
               }}
@@ -355,7 +391,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
           <div className="absolute -right-12 top-0">
             {/* Thin black leg */}
             <div 
-              className="w-1.5 h-16 bg-black rounded-full"
+               className="bmo-leg w-2 h-16 rounded-full"
               style={{
                 border: '1px solid #333',
                 boxShadow: 'inset 1px 0 0 rgba(255,255,255,0.1)'
@@ -363,7 +399,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
             ></div>
             {/* BMO's iconic rounded shoe */}
             <div 
-              className="absolute -bottom-2 -left-2 w-6 h-4 bg-black rounded-full border-2 border-gray-800"
+               className="bmo-foot absolute -bottom-2 -left-3 w-9 h-5 rounded-full border-2"
               style={{
                 boxShadow: '0 2px 4px rgba(0,0,0,0.3)'
               }}
@@ -376,6 +412,36 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
           </div>
         </div>
         
+        </div>
+
+        <aside className="face-deck" aria-label="BMO face selector">
+          <div className="face-deck-header">
+            <div>
+              <span className="bmo-kicker">FACE DECK</span>
+              <h2>How are we feeling?</h2>
+            </div>
+            <span className="face-deck-count">0{faceMoods.length}</span>
+          </div>
+          <div className="face-grid">
+            {faceMoods.map((mood) => (
+              <button
+                key={mood.id}
+                type="button"
+                className={`face-card ${selectedFace === mood.id ? 'face-card--active' : ''}`}
+                onClick={() => setSelectedFace(mood.id)}
+                aria-pressed={selectedFace === mood.id}
+              >
+                <span className={`face-card-preview face-card-preview--${mood.id}`}>
+                  <i /><i /><b>{mood.glyph}</b>
+                </span>
+                <span className="face-card-label">{mood.label}</span>
+              </button>
+            ))}
+          </div>
+          <div className="face-deck-footer">
+            <span className="face-deck-signal" /> {activeMood.caption}
+          </div>
+        </aside>
       </div>
       
     </div>

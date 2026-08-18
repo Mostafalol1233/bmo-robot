@@ -245,17 +245,13 @@ export default function EnhancedVideoPlayer({
 
             <ReactPlayer
               ref={playerRef}
-              url={video.youtubeUrl ?? video.url}
+              src={video.youtubeUrl ?? video.url}
               width="100%"
               height="100%"
               playing={isPlaying}
               volume={isMuted ? 0 : volume}
-              onDuration={setDuration}
-              onProgress={(progress: any) => {
-                if (progress && progress.playedSeconds !== undefined) {
-                  setCurrentTime(progress.playedSeconds);
-                }
-              }}
+              onLoadedMetadata={(event) => setDuration(event.currentTarget.duration)}
+              onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
               onReady={() => {
                 setIsLoading(false);
                 setPlaybackReady(true);
@@ -267,20 +263,16 @@ export default function EnhancedVideoPlayer({
                 setPlaybackReady(false);
                 setErrorMessage('Failed to load video. Please try again or use the YouTube link below.');
               }}
-              onBuffer={() => setIsLoading(true)}
-              onBufferEnd={() => setIsLoading(false)}
+              onWaiting={() => setIsLoading(true)}
+              onPlaying={() => setIsLoading(false)}
               config={{
                 youtube: {
-                  playerVars: {
-                    modestbranding: 1,
                     rel: 0,
                     iv_load_policy: 3,
                     fs: 1,
-                    controls: 0,
                     disablekb: 1
-                  }
-                },
-                file: {
+                  },
+                html: {
                   attributes: {
                     controlsList: 'nodownload',
                     disablePictureInPicture: true

@@ -1,0 +1,1 @@
+- [Media player and install quirks](media-player-and-install-quirks.md) — this repl uses ReactPlayer v3 APIs and may need a newer Netlify functions tree to pass package firewall checks.
