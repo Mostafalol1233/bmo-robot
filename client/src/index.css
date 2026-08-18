@@ -1865,21 +1865,8 @@
     gap: 1rem;
   }
 
-  .bmo-intro {
-    padding: 0.5rem;
-  }
-
   .bmo-reference-mark {
     margin-bottom: 0.75rem;
-  }
-
-  .bmo-character {
-    min-height: 520px;
-    transform: scale(0.78);
-  }
-
-  .bmo-character:hover {
-    transform: scale(0.78) translateY(-5px) rotate(0.5deg);
   }
 
   .bmo-desktop-menubar {
