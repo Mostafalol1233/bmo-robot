@@ -70,27 +70,15 @@ async function postJson<T>(path: string, body: unknown): Promise<T> {
 function BMOAvatar({ speaking = false, mood = "ready" }: { speaking?: boolean; mood?: string }) {
   return (
     <div className={cn("bmo-avatar", speaking && "is-speaking")} aria-label={`BMO ${mood}`}>
-      <div className="bmo-antenna" aria-hidden="true" />
-      <div className="bmo-arm bmo-arm-left" aria-hidden="true"><span /></div>
-      <div className="bmo-arm bmo-arm-right" aria-hidden="true"><span /></div>
-      <div className="bmo-leg bmo-leg-left" aria-hidden="true" />
-      <div className="bmo-leg bmo-leg-right" aria-hidden="true" />
+      <div className="bmo-antenna" />
       <div className="bmo-shell">
-        <div className="bmo-side-name bmo-side-name-left" aria-hidden="true">BMO</div>
-        <div className="bmo-side-name bmo-side-name-right" aria-hidden="true">BMO</div>
         <div className="bmo-display">
           <span className="bmo-eye left" /><span className="bmo-eye right" />
           <span className="bmo-mouth" />
           <span className="bmo-scanline" />
         </div>
-        <div className="bmo-floppy-slot" aria-hidden="true"><span /></div>
         <div className="bmo-speaker"><span /><span /><span /></div>
-        <div className="bmo-controls" aria-hidden="true">
-          <div className="bmo-dpad"><span className="up" /><span className="right" /><span className="down" /><span className="left" /><span className="center" /></div>
-          <span className="bmo-action bmo-action-blue">A</span>
-          <span className="bmo-action bmo-action-red">B</span>
-        </div>
-        <div className="bmo-ports" aria-hidden="true"><span /><span /></div>
+        <div className="bmo-controls"><span /><span /><span /><span /><span /></div>
       </div>
       <div className="bmo-status"><Wifi size={12} /> متصل</div>
     </div>
