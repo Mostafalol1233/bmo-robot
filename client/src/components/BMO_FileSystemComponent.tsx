@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import BMOFace from './BMOFace';
+import BMO3DCharacter from './BMO3DCharacter';
 import EnhancedVideoPlayer from './EnhancedVideoPlayer';
 import bmoWelcomeSound from '@assets/bmo (mp3cut.net)_1757268027014.mp3';
 import bmoCloseSound from '@assets/bmo (mp3cut.net)(1)_1757268053074.mp3';
@@ -778,34 +779,45 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   };
 
   const renderExplorerView = () => (
-    <div className="h-full bg-white p-4">
-      {/* Main Content Area - Modern Grid */}
-      <div className="grid grid-cols-4 gap-4">
+    <div className="bmo-explorer-home h-full overflow-y-auto custom-scrollbar">
+      <div className="bmo-home-hero">
+        <div className="bmo-home-copy">
+          <span className="bmo-home-eyebrow">BMO / PERSONAL CONSOLE</span>
+          <h1>كل عالمك في مكان واحد</h1>
+          <p>استكشف الألعاب والقصص والصور والأدوات مباشرةً. لا توجد صفحات مخفية؛ كل قناة جاهزة أمامك.</p>
+          <div className="bmo-home-metrics" aria-label="حالة المنصة">
+            <span><b>{folders.length}</b> قنوات</span>
+            <span><b>24/7</b> نشط</span>
+            <span><b>03D</b> واجهة</span>
+          </div>
+        </div>
+        <BMO3DCharacter onAction={(action) => setCurrentPath(`C:\\Portfolio\\BMO\\${action}\\`)} />
+      </div>
+
+      <div className="bmo-channel-header">
+        <div>
+          <span className="bmo-home-eyebrow">قنوات الوصول</span>
+          <h2>اختر ما تريد أن تفتحه</h2>
+        </div>
+        <span className="bmo-channel-count">{folders.length} / {folders.length} متاحة</span>
+      </div>
+
+      <div className="bmo-channel-grid">
         {folders.map((folder, index) => (
           <button
             key={folder.name}
             onClick={() => handleFolderClick(folder)}
-            className="flex flex-col items-center p-4 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 group"
-            style={{ animationDelay: `${index * 0.1}s` }}
-            data-testid={`folder-${folder.name.toLowerCase().replace(/\s+/g, '-')}`}
+            className="bmo-channel-card group"
+            style={{ animationDelay: `${index * 45}ms` }}
+            data-testid={`folder-${folder.name.toLowerCase().replace(/\\s+/g, '-')}`}
           >
-            {/* Modern folder icon */}
-            <div className="relative mb-3">
-              <div className="w-16 h-12 bg-blue-100 border border-blue-300 rounded-lg relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 left-0 w-6 h-3 bg-blue-200 border-r border-blue-300 rounded-tl-lg"></div>
-                <div className="absolute inset-2 bg-blue-50 rounded flex items-center justify-center">
-                  <span className="text-2xl group-hover:scale-110 transition-transform">
-                    {folder.emoji}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <span className="text-sm text-center text-gray-800 leading-tight max-w-full font-medium">
-              {folder.name}
+            <span className="bmo-channel-index">{String(index + 1).padStart(2, '0')}</span>
+            <span className="bmo-channel-icon" aria-hidden="true">{folder.emoji}</span>
+            <span className="bmo-channel-text">
+              <strong>{folder.name}</strong>
+              <small>{folder.description}</small>
             </span>
-            <span className="text-xs text-gray-500 mt-1">
-              {folder.description}
-            </span>
+            <span className="bmo-channel-arrow" aria-hidden="true">↗</span>
           </button>
         ))}
       </div>
@@ -1605,7 +1617,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   return (
     <>
       <div
-        className="cinematic-shell w-full h-full text-slate-100"
+        className="cinematic-shell w-full min-h-full flex flex-col text-slate-100"
         style={{ fontSize: '12px' }}
         data-testid="bmo-filesystem"
       >
@@ -1697,22 +1709,10 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
         </div>
 
-        {/* Main Content Area with Responsive Sidebar */}
-        <div className="flex-1 h-full overflow-hidden flex flex-col md:flex-row">
-          {/* Mobile Menu Button */}
-          <div className="md:hidden cinematic-mobile-menu px-3 py-2">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="cinematic-menu-toggle flex items-center space-x-2 transition-colors p-2 rounded touch-none"
-              data-testid="button-mobile-menu"
-            >
-              <span className="text-lg">☰</span>
-              <span className="text-sm font-medium">Menu</span>
-            </button>
-          </div>
-
-          {/* Sidebar - Hidden on mobile by default, visible on desktop */}
-          <div className={`${mobileMenuOpen ? 'block' : 'hidden'} cinematic-sidebar md:block w-full md:w-56 ${mobileMenuOpen ? 'border-b' : 'md:border-r'} p-3`}>
+        {/* Main Content Area with an always-visible navigation rail */}
+        <div className="flex-1 min-h-0 overflow-visible flex flex-col md:flex-row">
+          {/* Sidebar - Always visible so every channel remains discoverable */}
+          <div className="cinematic-sidebar block w-full md:w-56 shrink-0 border-b md:border-b-0 md:border-r p-3">
             <div className="space-y-1">
               <div className="cinematic-sidebar-heading text-xs font-medium mb-3">BMO Portfolio <span>08 CHANNELS</span></div>
               <div className="grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-1">
@@ -1737,7 +1737,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
 
           {/* Main Content */}
-          <div className="cinematic-content flex-1 overflow-hidden">
+          <div className="cinematic-content flex-1 min-w-0 min-h-0 overflow-visible">
             <div className="h-full animate-fadeInUp">
               {renderContentView()}
             </div>
