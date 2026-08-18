@@ -405,3 +405,128 @@
   transform-origin: center center;
   position: relative;
 }
+
+
+/* Cinematic BMO control-room redesign */
+.cinematic-app-shell {
+  isolation: isolate;
+  min-height: 100vh;
+  background: #071619;
+}
+
+.cinematic-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  color: #e6fffb;
+  background:
+    radial-gradient(circle at 76% 16%, rgba(46, 211, 193, 0.16), transparent 28%),
+    radial-gradient(circle at 12% 78%, rgba(14, 95, 91, 0.22), transparent 30%),
+    linear-gradient(135deg, rgba(5, 20, 24, 0.98), rgba(8, 35, 38, 0.96) 48%, rgba(3, 16, 20, 0.99));
+}
+
+.cinematic-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.22;
+  background-image: linear-gradient(rgba(129, 255, 239, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(129, 255, 239, 0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+}
+
+.cinematic-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: radial-gradient(ellipse at center, transparent 48%, rgba(0, 6, 8, 0.42) 100%);
+}
+
+.cinematic-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cinematic-topbar,
+.cinematic-ribbon,
+.cinematic-navbar,
+.cinematic-sidebar,
+.cinematic-content,
+.cinematic-mobile-menu {
+  border-color: rgba(150, 255, 239, 0.14) !important;
+}
+
+.cinematic-topbar {
+  min-height: 66px;
+  background: linear-gradient(180deg, rgba(13, 43, 47, 0.96), rgba(8, 27, 31, 0.88));
+  border-bottom: 1px solid rgba(158, 255, 239, 0.22);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.cinematic-status-lights { display: flex; gap: 6px; }
+.status-light { width: 8px; height: 8px; border-radius: 999px; display: block; box-shadow: 0 0 12px currentColor; }
+.status-light-red { color: #ff5c69; background: #ff5c69; }
+.status-light-amber { color: #f5c862; background: #f5c862; }
+.status-light-green { color: #66e3ad; background: #66e3ad; }
+.cinematic-kicker { color: rgba(175, 239, 229, 0.58); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; }
+.cinematic-title { display: block; margin-top: 2px; color: #f1fffc; font-size: 15px; font-weight: 600; letter-spacing: 0.02em; }
+.cinematic-live-indicator { display: inline-flex; align-items: center; gap: 6px; color: #9cf5d4; font-size: 9px; letter-spacing: 0.15em; font-weight: 700; }
+.cinematic-live-indicator > span { width: 6px; height: 6px; border-radius: 50%; background: #6cf3bd; box-shadow: 0 0 12px #6cf3bd; animation: cinematic-live-pulse 1.8s ease-in-out infinite; }
+.cinematic-icon-button { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; color: rgba(222, 255, 249, 0.68); border: 1px solid rgba(169, 255, 240, 0.16); border-radius: 8px; background: rgba(255, 255, 255, 0.05); transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background 160ms ease, color 160ms ease; }
+.cinematic-icon-button:hover { color: #fff; background: rgba(164, 255, 239, 0.14); transform: translateY(-1px); }
+
+.cinematic-ribbon { background: rgba(4, 19, 22, 0.66); border-bottom: 1px solid rgba(151, 255, 238, 0.08); }
+.cinematic-ribbon-button { color: rgba(195, 235, 229, 0.58); padding: 3px 8px; border-radius: 5px; transition: color 160ms ease, background 160ms ease; }
+.cinematic-ribbon-button:hover { color: #dcfff8; background: rgba(117, 233, 215, 0.1); }
+.cinematic-navbar { background: rgba(8, 29, 33, 0.72); border-bottom: 1px solid rgba(153, 255, 239, 0.14); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12); backdrop-filter: blur(15px); }
+.cinematic-nav-button { color: rgba(215, 255, 247, 0.76); transition: color 160ms ease, background 160ms ease, transform 160ms ease; }
+.cinematic-nav-button:not(:disabled):hover { color: #fff; background: rgba(153, 255, 237, 0.12); transform: translateY(-1px); }
+.cinematic-addressbar { color: rgba(211, 255, 247, 0.82); background: rgba(0, 9, 12, 0.42); border: 1px solid rgba(157, 255, 238, 0.16); box-shadow: inset 0 1px 12px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(0, 0, 0, 0.12); }
+.cinematic-muted { color: rgba(185, 231, 224, 0.52) !important; }
+
+.cinematic-sidebar { background: linear-gradient(180deg, rgba(6, 28, 32, 0.88), rgba(5, 21, 25, 0.7)) !important; box-shadow: inset -1px 0 rgba(153, 255, 239, 0.1); }
+.cinematic-sidebar-heading { color: rgba(197, 242, 233, 0.82); letter-spacing: 0.08em; }
+.cinematic-sidebar-heading span { display: block; margin-top: 5px; color: rgba(139, 215, 205, 0.4); font-size: 8px; letter-spacing: 0.14em; }
+.cinematic-folder-button { color: rgba(207, 244, 237, 0.7); border: 1px solid transparent; background: transparent; }
+.cinematic-folder-button:hover { color: #f0fffc; background: rgba(111, 234, 215, 0.08); border-color: rgba(120, 238, 219, 0.12); transform: translateX(2px); }
+.cinematic-folder-button.is-active { color: #c9fff2 !important; background: linear-gradient(90deg, rgba(74, 210, 186, 0.2), rgba(74, 210, 186, 0.04)) !important; border-color: rgba(116, 242, 220, 0.24); box-shadow: inset 3px 0 #65e7ca, 0 8px 18px rgba(0, 0, 0, 0.14); }
+.cinematic-folder-icon { filter: saturate(0.7) drop-shadow(0 3px 7px rgba(0, 0, 0, 0.32)); }
+.cinematic-menu-toggle { color: rgba(216, 255, 247, 0.78); }
+.cinematic-mobile-menu { background: rgba(6, 24, 28, 0.92) !important; }
+
+.cinematic-content { background: radial-gradient(circle at 50% 0%, rgba(30, 136, 124, 0.12), transparent 44%), rgba(3, 16, 19, 0.66) !important; }
+.cinematic-content .bg-white { background: transparent !important; color: #e8fffa !important; }
+.cinematic-content .bg-gray-50 { background: rgba(255, 255, 255, 0.04) !important; }
+.cinematic-content .text-gray-800, .cinematic-content .text-gray-700, .cinematic-content .text-gray-600 { color: rgba(225, 255, 249, 0.82) !important; }
+.cinematic-content .text-gray-500 { color: rgba(185, 231, 224, 0.5) !important; }
+.cinematic-content .border-gray-300, .cinematic-content .border-gray-200 { border-color: rgba(160, 255, 239, 0.14) !important; }
+.cinematic-content .hover\:bg-blue-50:hover { background: rgba(91, 221, 202, 0.08) !important; }
+.cinematic-content > div { scrollbar-color: rgba(102, 233, 209, 0.45) rgba(0, 0, 0, 0.18); }
+
+/* Explorer landing grid: content-first, not a separate hero page */
+.cinematic-content .grid > button { border-color: rgba(160, 255, 239, 0.12) !important; border-radius: 14px; background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08); transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms ease, background 180ms ease, box-shadow 180ms ease; }
+.cinematic-content .grid > button:hover { transform: translateY(-5px); border-color: rgba(116, 242, 220, 0.38) !important; background: linear-gradient(145deg, rgba(93, 224, 203, 0.14), rgba(255, 255, 255, 0.045)); box-shadow: 0 20px 38px rgba(0, 0, 0, 0.26), 0 0 24px rgba(73, 216, 194, 0.08); }
+.cinematic-content .grid > button .bg-blue-100 { background: linear-gradient(145deg, rgba(68, 187, 207, 0.35), rgba(12, 86, 105, 0.3)) !important; border-color: rgba(125, 238, 226, 0.25) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 10px 20px rgba(0, 0, 0, 0.2); }
+.cinematic-content .grid > button .bg-blue-200 { background: rgba(152, 255, 241, 0.18) !important; border-color: rgba(145, 255, 240, 0.16) !important; }
+.cinematic-content .grid > button .bg-blue-50 { background: rgba(11, 53, 59, 0.52) !important; }
+
+@keyframes cinematic-live-pulse { 0%, 100% { opacity: 0.55; transform: scale(0.88); } 50% { opacity: 1; transform: scale(1.15); } }
+
+@media (max-width: 767px) {
+  .cinematic-shell { min-height: 100dvh; }
+  .cinematic-topbar { min-height: 58px; }
+  .cinematic-kicker { font-size: 7px; letter-spacing: 0.16em; }
+  .cinematic-title { font-size: 13px; }
+  .cinematic-live-indicator { display: none; }
+  .cinematic-content .grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .cinematic-content .grid > button { padding: 12px 8px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-live-indicator > span, .cinematic-content .grid > button { animation: none !important; transition: none !important; }
+}

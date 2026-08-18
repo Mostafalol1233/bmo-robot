@@ -17,9 +17,9 @@ interface VideoItem {
 }
 
 export default function BMO_IntegratedPortfolio() {
-  const [currentSection, setCurrentSection] = useState<AppSection>('landing');
+  const [currentSection, setCurrentSection] = useState<AppSection>('filesystem');
   const [isScreenZooming, setIsScreenZooming] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(true);
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [chatOpen, setChatOpen] = useState(false);
   const [videosOpen, setVideosOpen] = useState(false);
@@ -227,7 +227,7 @@ export default function BMO_IntegratedPortfolio() {
   };
 
   return (
-    <div className="relative">
+    <div className="cinematic-app-shell relative min-h-screen">
       {renderCurrentSection()}
       
       {/* Chat Modal */}

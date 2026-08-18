@@ -1604,22 +1604,26 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
   return (
     <>
-      <div 
-        className="w-full h-full bg-white text-black"
+      <div
+        className="cinematic-shell w-full h-full text-slate-100"
         style={{ fontSize: '12px' }}
         data-testid="bmo-filesystem"
       >
-        {/* Modern Windows 10 Style Top Bar */}
-        <div className="bg-white border-b border-gray-300 px-3 py-2 flex items-center justify-between shadow-sm">
-          <div className="flex items-center space-x-2">
-            <div className="flex space-x-1">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+        {/* Cinematic control-room top bar */}
+        <div className="cinematic-topbar px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="cinematic-status-lights" aria-hidden="true">
+              <span className="status-light status-light-red"></span>
+              <span className="status-light status-light-amber"></span>
+              <span className="status-light status-light-green"></span>
             </div>
-            <span className="text-sm font-medium text-gray-700">File Explorer</span>
+            <div>
+              <div className="cinematic-kicker">BMO / PORTFOLIO SYSTEM</div>
+              <span className="cinematic-title">File Explorer</span>
+            </div>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-3">
+            <span className="cinematic-live-indicator"><span></span> LIVE</span>
             <LanguageSwitcher />
             {onBack && (
               <button 
@@ -1632,7 +1636,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                   });
                   onBack();
                 }}
-                className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 p-1 rounded"
+                className="cinematic-icon-button"
                 data-testid="button-back-to-face"
                 title="Close File Explorer"
               >
@@ -1642,23 +1646,23 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
         </div>
 
-        {/* Ribbon Menu - Hidden on mobile for space */}
-        <div className="hidden md:block bg-gray-50 border-b border-gray-300 px-3 py-1">
-          <div className="flex items-center space-x-4 text-xs text-gray-600">
-            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">File</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">Home</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">Share</button>
-            <button className="hover:bg-gray-200 px-2 py-1 rounded transition-colors">View</button>
+        {/* Quiet utility ribbon */}
+        <div className="hidden md:block cinematic-ribbon px-4 py-2">
+          <div className="flex items-center gap-5 text-xs cinematic-muted">
+            <button className="cinematic-ribbon-button">File</button>
+            <button className="cinematic-ribbon-button">Home</button>
+            <button className="cinematic-ribbon-button">Share</button>
+            <button className="cinematic-ribbon-button">View</button>
           </div>
         </div>
 
-        {/* Navigation Bar - Mobile-Friendly Windows Style */}
-        <div className="bg-white border-b border-gray-300 px-3 py-2 flex items-center space-x-2 md:space-x-3">
+        {/* Navigation rail */}
+        <div className="cinematic-navbar px-4 py-3 flex items-center gap-2 md:gap-3">
           <div className="flex items-center space-x-1">
             <button
               onClick={handleBackClick}
               disabled={currentView === 'explorer'}
-              className={`p-2 md:p-1 text-lg md:text-base rounded hover:bg-gray-100 transition-colors touch-manipulation ${
+              className={`cinematic-nav-button p-2 md:p-1 text-lg md:text-base rounded transition-colors touch-manipulation ${
                 currentView === 'explorer' 
                   ? 'text-gray-400 cursor-not-allowed' 
                   : 'text-gray-600 hover:text-gray-800'
@@ -1670,25 +1674,25 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
             </button>
             <button
               disabled
-              className="p-2 md:p-1 text-lg md:text-base rounded text-gray-400 cursor-not-allowed"
+              className="cinematic-nav-button p-2 md:p-1 text-lg md:text-base rounded text-slate-600 cursor-not-allowed"
               title="Forward (not available)"
             >
               →
             </button>
             <button
-              className="p-2 md:p-1 text-lg md:text-base rounded hover:bg-gray-100 text-gray-600 hover:text-gray-800 touch-manipulation"
+              className="cinematic-nav-button p-2 md:p-1 text-lg md:text-base rounded touch-manipulation"
               title="Up"
             >
               ↑
             </button>
           </div>
-          <div className="flex-1 bg-gray-50 border border-gray-300 px-2 md:px-3 py-1 text-xs md:text-sm rounded overflow-hidden min-h-[32px] md:min-h-auto" style={{ fontFamily: 'system-ui' }}>
+          <div className="cinematic-addressbar flex-1 px-3 py-2 text-xs md:text-sm rounded overflow-hidden min-h-[32px] md:min-h-auto" style={{ fontFamily: 'system-ui' }}>
             <span className="flex items-center space-x-1 w-full">
-              <span className="text-blue-600 text-sm md:text-base flex-shrink-0">📁</span>
+              <span className="text-cyan-300 text-sm md:text-base flex-shrink-0">◈</span>
               <span className="truncate whitespace-nowrap text-ellipsis overflow-hidden">{currentPath}</span>
             </span>
           </div>
-          <div className="hidden md:block text-xs text-gray-500">
+          <div className="hidden md:block cinematic-muted text-xs">
             {currentView === 'explorer' ? `${folders.length} items` : '1 item'}
           </div>
         </div>
@@ -1696,10 +1700,10 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         {/* Main Content Area with Responsive Sidebar */}
         <div className="flex-1 h-full overflow-hidden flex flex-col md:flex-row">
           {/* Mobile Menu Button */}
-          <div className="md:hidden bg-gray-100 border-b border-gray-300 px-3 py-2">
+          <div className="md:hidden cinematic-mobile-menu px-3 py-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors p-2 rounded touch-none"
+              className="cinematic-menu-toggle flex items-center space-x-2 transition-colors p-2 rounded touch-none"
               data-testid="button-mobile-menu"
             >
               <span className="text-lg">☰</span>
@@ -1708,9 +1712,9 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
 
           {/* Sidebar - Hidden on mobile by default, visible on desktop */}
-          <div className={`${mobileMenuOpen ? 'block' : 'hidden'} md:block w-full md:w-48 bg-gray-50 ${mobileMenuOpen ? 'border-b' : 'md:border-r'} border-gray-300 p-2`}>
+          <div className={`${mobileMenuOpen ? 'block' : 'hidden'} cinematic-sidebar md:block w-full md:w-56 ${mobileMenuOpen ? 'border-b' : 'md:border-r'} p-3`}>
             <div className="space-y-1">
-              <div className="text-xs font-medium text-gray-600 mb-2">BMO Portfolio</div>
+              <div className="cinematic-sidebar-heading text-xs font-medium mb-3">BMO Portfolio <span>08 CHANNELS</span></div>
               <div className="grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-1">
                 {folders.map((folder) => (
                   <button
@@ -1719,12 +1723,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
                       handleFolderClick(folder);
                       setMobileMenuOpen(false); // Close mobile menu after selection
                     }}
-                    className={`flex items-center space-x-2 w-full text-left px-3 py-3 md:px-2 md:py-1 text-sm rounded hover:bg-gray-200 transition-colors min-h-[44px] md:min-h-auto ${
-                      currentView === folder.type ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+                    className={`cinematic-folder-button flex items-center space-x-2 w-full text-left px-3 py-3 md:px-3 md:py-2 text-sm rounded transition-colors min-h-[44px] md:min-h-auto ${
+                      currentView === folder.type ? 'is-active' : ''
                     }`}
                     data-testid={`folder-${folder.type}`}
                   >
-                    <span className="text-xl md:text-base flex-shrink-0">{folder.emoji}</span>
+                    <span className="text-xl md:text-base flex-shrink-0 cinematic-folder-icon">{folder.emoji}</span>
                     <span className="font-medium md:font-normal text-left">{folder.name}</span>
                   </button>
                 ))}
@@ -1733,7 +1737,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 overflow-hidden">
+          <div className="cinematic-content flex-1 overflow-hidden">
             <div className="h-full animate-fadeInUp">
               {renderContentView()}
             </div>
