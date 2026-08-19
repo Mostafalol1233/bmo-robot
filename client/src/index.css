@@ -725,11 +725,11 @@
 .bmo-speaker-grille {
   position: absolute;
   top: 22px;
-  left: 29px;
+  left: -35px;
   display: grid;
   grid-template-columns: repeat(3, 5px);
   gap: 5px;
-  transform: rotate(-15deg);
+  transform: rotate(15deg);
 }
 
 .bmo-speaker-grille i,
@@ -755,9 +755,9 @@
 }
 
 .bmo-slot {
-  width: 108px;
+  width: 96px;
   height: 8px;
-  margin: -6px auto 13px;
+  margin: -2px auto 13px;
   border-radius: 2px;
   background: #123b3b;
   box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -766,6 +766,7 @@
 .bmo-controls {
   position: relative;
   z-index: 5;
+  min-height: 86px;
 }
 
 .bmo-side-label {
@@ -775,11 +776,93 @@
   text-shadow: 1px 1px 0 rgba(159, 236, 184, 0.25);
 }
 
+.bmo-side-label-wrap {
+  right: auto !important;
+  left: -53px;
+  transform: translateY(-50%) rotate(-90deg) !important;
+}
+
+.bmo-start-button {
+  border: 4px solid #8f174a;
+  background: radial-gradient(circle at 32% 25%, #ff93b1 0 12%, #f01862 44%, #c80f4d 100%);
+  box-shadow:
+    0 4px 0 #781842,
+    0 7px 10px rgba(65, 28, 34, 0.35),
+    inset 0 3px 0 rgba(255, 255, 255, 0.28);
+}
+
+.bmo-reference-controls {
+  position: absolute;
+  top: 52px;
+  right: 10px;
+  width: 122px;
+  height: 74px;
+  pointer-events: none;
+}
+
+.bmo-control-triangle {
+  position: absolute;
+  top: 2px;
+  left: 25px;
+  width: 0;
+  height: 0;
+  border-right: 12px solid transparent;
+  border-bottom: 20px solid #14a9bd;
+  border-left: 12px solid transparent;
+  transform: rotate(18deg);
+  filter: drop-shadow(1px 2px 0 #0a596b);
+}
+
+.bmo-control-dot {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.25), 1px 2px 0 rgba(41, 53, 32, 0.3);
+}
+
+.bmo-control-dot--green {
+  top: 7px;
+  right: 16px;
+  width: 18px;
+  height: 18px;
+  background: #39bd35;
+}
+
+.bmo-control-dot--pink {
+  top: 31px;
+  right: 30px;
+  width: 29px;
+  height: 29px;
+  background: #ee0755;
+}
+
+.bmo-control-pill {
+  position: absolute;
+  bottom: 3px;
+  display: block;
+  width: 27px;
+  height: 9px;
+  border-radius: 2px;
+  transform: rotate(-10deg);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.2), 1px 2px 0 rgba(41, 53, 32, 0.3);
+}
+
+.bmo-control-pill--blue {
+  left: 16px;
+  background: #152fba;
+}
+
+.bmo-control-pill--navy {
+  left: 52px;
+  background: #17206e;
+}
+
 .bmo-side-vents {
   position: absolute;
   z-index: 3;
   top: 84px;
-  right: -1px;
+  right: auto;
+  left: -5px;
   display: grid;
   grid-template-columns: repeat(2, 5px);
   gap: 5px;
@@ -1121,9 +1204,10 @@
 }
 
 .bmo-character {
-  min-height: 575px;
+  width: 360px;
+  min-height: 620px;
   filter: drop-shadow(0 28px 16px rgba(42, 50, 24, 0.42));
-  perspective: 1000px;
+  perspective: 1200px;
   transform: scale(0.88);
   transform-origin: center center;
 }
@@ -1133,8 +1217,9 @@
 }
 
 .bmo-shell {
-  transform: rotateY(-7deg) rotateX(1deg);
+  transform: rotateY(12deg) rotateX(1deg);
   transform-style: preserve-3d;
+  border-radius: 15px 15px 11px 11px;
   border-color: #246653;
   background:
     linear-gradient(105deg, rgba(219, 255, 203, 0.28), transparent 22%),
@@ -1149,33 +1234,37 @@
 .bmo-shell-side-plane {
   position: absolute;
   top: 19px;
-  right: -50px;
+  right: auto;
+  left: -51px;
   z-index: -1;
   width: 58px;
   height: calc(100% - 31px);
   border: 3px solid #225c51;
-  border-left: 0;
-  border-radius: 0 20px 14px 0;
-  background: linear-gradient(110deg, #4db58f, #287960);
-  transform: skewY(-9deg);
-  transform-origin: left center;
+  border-right: 0;
+  border-radius: 20px 0 0 14px;
+  background: linear-gradient(110deg, #287960, #4db58f);
+  transform: skewY(9deg);
+  transform-origin: right center;
   box-shadow: inset -6px -3px 0 rgba(21, 77, 63, 0.22);
 }
 
 .bmo-shell-top {
   top: -11px;
-  left: 27px;
-  right: -26px;
+  left: -29px;
+  right: 23px;
   height: 22px;
   border: 2px solid rgba(34, 99, 80, 0.72);
   border-bottom: 0;
   border-radius: 50% 35% 0 0;
   background: linear-gradient(180deg, #78d5ad, #4cac88);
   opacity: 1;
-  transform: skewX(-12deg) rotate(-2deg);
+  transform: skewX(12deg) rotate(2deg);
 }
 
 .bmo-face-screen {
+  width: 78%;
+  height: 170px !important;
+  margin: 1.15rem auto 1rem !important;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.44), transparent 34%),
     #d8f1d3;
@@ -1683,16 +1772,18 @@
   .bmo-shell {
     width: 286px !important;
     padding: 1.15rem !important;
-    transform: rotateY(-6deg) rotateX(1deg);
+    transform: rotateY(12deg) rotateX(1deg);
   }
 
   .bmo-shell-side-plane {
-    right: -43px;
+    right: auto;
+    left: -43px;
     width: 48px;
   }
 
   .bmo-shell-top {
-    right: -21px;
+    left: -23px;
+    right: 17px;
   }
 
   .face-deck {

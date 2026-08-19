@@ -171,7 +171,7 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
         >
         <div className="bmo-shadow" aria-hidden="true" />
         {/* BMO Body - a CSS-perspective shell inspired by the reference */}
-        <div className="bmo-shell relative p-6" style={{ aspectRatio: '0.65', width: '320px' }}>
+        <div className="bmo-shell relative p-6" style={{ aspectRatio: '0.72', width: '320px' }}>
           <div className="bmo-shell-side-plane" aria-hidden="true" />
           <div className="bmo-shell-top" />
           <div className="bmo-screw bmo-screw--tl" />
@@ -251,24 +251,30 @@ export default function BMO_LandingPageComponent({ onStart, isScreenZooming }: B
               <div className="relative mr-2">
                 <button
                   onClick={handleStart}
-                  className="relative w-14 h-14 bg-gradient-to-br from-red-400 to-red-600 border-4 border-red-800 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 hover:from-red-300 hover:to-red-500"
-                  style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.2)' }}
+                  className="bmo-start-button relative w-14 h-14 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200"
                   title="Start Portfolio"
                   data-testid="button-start-red"
                 >
-                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-red-300 to-red-500 opacity-40"></div>
+                  <div className="absolute inset-2 rounded-full bg-pink-300 opacity-40"></div>
                   <div className="absolute inset-3 rounded-full bg-white opacity-20"></div>
                 </button>
                 <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 pixel-text text-xs text-black font-bold">START</span>
               </div>
               
             </div>
+
+            <div className="bmo-reference-controls" aria-hidden="true">
+              <span className="bmo-control-triangle" />
+              <span className="bmo-control-dot bmo-control-dot--green" />
+              <span className="bmo-control-pill bmo-control-pill--blue" />
+              <span className="bmo-control-pill bmo-control-pill--navy" />
+            </div>
             
           </div>
         </div>
         
         {/* BMO Side Label - More authentic positioning */}
-        <div className="absolute right-0 top-1/2 transform translate-x-3 -translate-y-1/2 -rotate-90">
+        <div className="bmo-side-label-wrap absolute right-0 top-1/2 transform translate-x-3 -translate-y-1/2 -rotate-90">
           <span className="bmo-side-label">BMO</span>
         </div>
 
