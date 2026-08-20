@@ -55,3 +55,12 @@
 ## تحقق Vercel النهائي
 
 الإصدار الإنتاجي `dpl_D5rfMqB3opqp4miK5y1TzrLcLTHV` أصبح READY وعلى الرابط `bmo-robot.vercel.app`. الشاشة الرئيسية تعرض BMO ثلاثي الأبعاد والقنوات العشر. قناة الألعاب تعرض Tic Tac Toe وMaze Runner وCandy Snake وBMO Quiz. قناة الحديث الذكي تعرض رسالة BMO وحقل `Ask BMO anything...` وزر Send.
+
+
+## مصادر صوت وفيديو تم التحقق منها
+
+- https://www.youtube.com/watch?v=zfrDbtFwkf4 — قناة Cartoon Network الرسمية، فيديو Best of BMO.
+- https://www.youtube.com/watch?v=XTuUoeNNrB8 — قناة Cartoon Network الرسمية، BMO The Hero من Adventure Time: Distant Lands.
+- https://open.spotify.com/track/6yCO64pit51XSgcYoUAwD5 — أغنية Oh BMO، من Adventure Time Vol. 2، موضح في الصفحة أنها © 2019 Cartoon Network Music و℗ 2019 Cartoon Network Music.
+
+النتيجة: يمكن إضافة روابط أو تضمين مشغلات للمصادر الرسمية، لكن لا ينبغي نسخ ملفات صوتية أو موسيقى محمية إلى المستودع دون ترخيص. البديل الآمن هو صوت أصلي مستوحى من أجواء وحدة ألعاب، أو تضمين المصدر الرسمي كما تسمح المنصة.

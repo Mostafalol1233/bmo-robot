@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import BMOFace from './BMOFace';
 import BMO3DCharacter from './BMO3DCharacter';
 import EnhancedVideoPlayer from './EnhancedVideoPlayer';
@@ -9,6 +9,8 @@ import TicTacToeGame from './TicTacToeGame';
 import MazeGame from './MazeGame';
 import BMOQuizGame from './BMOQuizGame';
 import SnakeGame from './SnakeGame';
+import CloudJumperGame from './CloudJumperGame';
+import RhythmGridGame from './RhythmGridGame';
 
 // Import BMO interface background
 import bmoInterfaceBg from '@assets/S5e28_BMO\'s_interface_1757341096013.webp';
@@ -75,7 +77,7 @@ interface BMO_FileSystemComponentProps {
   onBack?: () => void;
 }
 
-type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character' | 'games' | 'tictactoe' | 'maze' | 'bmoquiz' | 'snake' | 'google-search' | 'youtube' | 'information';
+type ViewType = 'explorer' | 'videos' | 'chat' | 'communities' | 'contact' | 'tools' | 'images' | 'character' | 'games' | 'tictactoe' | 'maze' | 'bmoquiz' | 'snake' | 'cloudjumper' | 'rhythmgrid' | 'google-search' | 'youtube' | 'information';
 
 type CharacterSlug = 'finn' | 'jake' | 'princess-bubblegum' | 'marceline' | 'bmo';
 
@@ -113,6 +115,20 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
   const [searchQuery, setSearchQuery] = useState('');
   const [youtubeQuery, setYoutubeQuery] = useState('');
   const [selectedCharacterInfo, setSelectedCharacterInfo] = useState<CharacterSlug | null>(null);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const welcomeAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playBmoWelcome = () => {
+    if (!welcomeAudioRef.current) welcomeAudioRef.current = new Audio(bmoWelcomeSound);
+    welcomeAudioRef.current.volume = 0.34;
+    welcomeAudioRef.current.currentTime = 0;
+    welcomeAudioRef.current.play().catch(() => setSoundEnabled(false));
+  };
+
+  useEffect(() => {
+    playBmoWelcome();
+    return () => { welcomeAudioRef.current?.pause(); };
+  }, []);
 
   // Helper function to get main character image
   const getCharacterMainImage = (characterKey: string | null): string => {
@@ -263,12 +279,13 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
     setCurrentPath(`C:\\Portfolio\\Images\\${characterName}\\`);
   };
 
-  const handleGameClick = (gameType: 'tictactoe' | 'maze' | 'bmoquiz' | 'snake') => {
+  const handleGameClick = (gameType: 'tictactoe' | 'maze' | 'bmoquiz' | 'snake' | 'cloudjumper' | 'rhythmgrid') => {
     setCurrentView(gameType);
-    const gamePath = gameType === 'tictactoe' ? 'TicTacToe' : 
-                     gameType === 'maze' ? 'Maze' : 
-                     gameType === 'snake' ? 'Snake' : 'BMOQuiz';
-    setCurrentPath(`C:\\Portfolio\\Games\\${gamePath}\\`);
+    const gameNames: Record<string, string> = {
+      tictactoe: 'TicTacToe', maze: 'Maze', bmoquiz: 'BMOQuiz', snake: 'Snake',
+      cloudjumper: 'CloudJumper', rhythmgrid: 'RhythmGrid'
+    };
+    setCurrentPath(`C:\\Portfolio\\Games\\${gameNames[gameType]}\\`);
   };
 
   const handleBackClick = () => {
@@ -786,6 +803,7 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
           <h1>كل عالمك في مكان واحد</h1>
           <p>استكشف الألعاب والقصص والصور والأدوات مباشرةً. لا توجد صفحات مخفية؛ كل قناة جاهزة أمامك.</p>
           <div className="bmo-home-metrics" aria-label="حالة المنصة">
+            <button className={`bmo-sound-control ${soundEnabled ? 'is-on' : ''}`} onClick={() => { if (soundEnabled) { welcomeAudioRef.current?.pause(); setSoundEnabled(false); } else { setSoundEnabled(true); playBmoWelcome(); } }} aria-label="تشغيل أو كتم صوت BMO">{soundEnabled ? 'صوت BMO: ON' : 'صوت BMO: OFF'}</button>
             <span><b>{folders.length}</b> قنوات</span>
             <span><b>24/7</b> نشط</span>
             <span><b>03D</b> واجهة</span>
@@ -1344,238 +1362,29 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
         );
 
       case 'games':
+        const gameCards = [
+          { id: 'tictactoe', icon: '✕◯', title: 'BMO Battle', subtitle: 'إكس أو ضد Jake', detail: 'خطط للفوز بثلاثة على التوالي', tone: 'mint' },
+          { id: 'maze', icon: '✦', title: 'Dungeon Maze', subtitle: '10 مراحل متدرجة', detail: 'اهرب من المتاهة قبل انتهاء الوقت', tone: 'violet' },
+          { id: 'snake', icon: '◆', title: 'Candy Snake', subtitle: 'سرعة ورد فعل', detail: 'اجمع الحلوى وكبّر ذيل BMO', tone: 'coral' },
+          { id: 'bmoquiz', icon: '◎', title: 'Character Quest', subtitle: 'مغامرة معرفة', detail: 'اكتشف شخصيات أرض Ooo', tone: 'gold' },
+          { id: 'cloudjumper', icon: '☁', title: 'Cloud Jumper', subtitle: 'منصة وقفز', detail: 'اجمع النجوم وأنقذ المملكة', tone: 'sky' },
+          { id: 'rhythmgrid', icon: '♫', title: 'Rhythm Grid', subtitle: 'إيقاع تفاعلي', detail: 'اضرب النبضة مع BMO', tone: 'rose' },
+        ] as const;
         return (
-          <div className="p-6 h-full bg-gradient-to-br from-indigo-900 via-purple-800 to-pink-700 relative overflow-hidden overflow-y-auto custom-scrollbar">
-            {/* Retro grid background */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="grid grid-cols-8 grid-rows-6 h-full w-full">
-                {[...Array(48)].map((_, i) => (
-                  <div key={i} className="border border-cyan-400 animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}></div>
-                ))}
-              </div>
+          <div className="bmo-arcade-view h-full overflow-y-auto custom-scrollbar">
+            <div className="bmo-arcade-header">
+              <div><span className="bmo-home-eyebrow">BMO / ADVENTURE ARCADE</span><h2>ستة عوالم قابلة للعب</h2><p>كل لعبة لها تحكم ومراحل ونتيجة واضحة. اختر بوابتك وابدأ المغامرة.</p></div>
+              <div className="bmo-arcade-status"><span className="bmo-live-dot" /> LIVE ARCADE <b>06</b></div>
             </div>
-
-            {/* Floating geometric shapes */}
-            <div className="absolute top-10 left-10 w-8 h-8 bg-cyan-400 rotate-45 animate-spin opacity-30"></div>
-            <div className="absolute top-20 right-16 w-6 h-6 bg-pink-400 rounded-full animate-bounce opacity-40"></div>
-            <div className="absolute bottom-20 left-20 w-4 h-16 bg-yellow-400 animate-pulse opacity-30"></div>
-
-            <div className="relative z-10">
-              {/* Retro header with neon effect */}
-              <div className="text-center mb-8">
-                <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-yellow-400 animate-pulse font-mono tracking-wider">
-                  ◄ ADVENTURE ARCADE ►
-                </h1>
-                <div className="flex justify-center items-center space-x-4 mb-4">
-                  <div className="h-1 w-16 bg-gradient-to-r from-cyan-400 to-transparent animate-pulse"></div>
-                  <span className="text-cyan-300 font-mono text-sm tracking-widest">SELECT GAME</span>
-                  <div className="h-1 w-16 bg-gradient-to-l from-cyan-400 to-transparent animate-pulse"></div>
-                </div>
-              </div>
-
-              {/* Game selection cards with retro styling */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {/* Tic Tac Toe Card */}
-                <button
-                  onClick={() => handleGameClick('tictactoe')}
-                  className="relative group w-full h-64"
-                  data-testid="game-tictactoe"
-                >
-                  {/* Large Background Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
-                    <img 
-                      src={ticTacToeLogo} 
-                      alt="Tic Tac Toe Game Logo"
-                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
-                      loading="lazy"
-                      width="208"
-                      height="208"
-                    />
-                  </div>
-                  
-                  <div className="relative z-10 bg-black/80 border-4 border-cyan-400 rounded-none p-6 hover:border-pink-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transform group-hover:scale-105 h-full flex flex-col justify-center">
-                    {/* Corner indicators */}
-                    <div className="absolute top-2 left-2 w-2 h-2 bg-cyan-400 animate-pulse"></div>
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-green-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-
-                    <div className="text-center">
-                      <div className="text-4xl mb-3 text-cyan-400 group-hover:text-pink-400 transition-colors font-mono drop-shadow-lg">X◯</div>
-                      <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide drop-shadow-lg">TIC TAC TOE</h3>
-                      <p className="text-cyan-300 mb-3 font-mono text-xs drop-shadow-lg">FINN vs JAKE</p>
-
-                      {/* Difficulty indicators */}
-                      <div className="flex justify-center space-x-1 mb-3">
-                        <div className="px-1 py-0.5 bg-green-500 text-black text-xs font-bold font-mono shadow-lg">EASY</div>
-                        <div className="px-1 py-0.5 bg-yellow-500 text-black text-xs font-bold font-mono shadow-lg">MED</div>
-                        <div className="px-1 py-0.5 bg-red-500 text-black text-xs font-bold font-mono shadow-lg">HARD</div>
-                      </div>
-
-                      <div className="text-xs text-gray-300 font-mono drop-shadow-lg">VS BOT • 2 PLAYER</div>
-                    </div>
-                  </div>
-
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-pink-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
+            <div className="bmo-game-grid">
+              {gameCards.map((game, index) => (
+                <button key={game.id} onClick={() => handleGameClick(game.id)} className={`bmo-game-card bmo-game-card-${game.tone}`} data-testid={`game-${game.id}`}>
+                  <span className="bmo-game-card-number">0{index + 1}</span><span className="bmo-game-card-icon">{game.icon}</span>
+                  <span className="bmo-game-card-copy"><strong>{game.title}</strong><small>{game.subtitle}</small><em>{game.detail}</em></span><span className="bmo-game-card-play">PLAY <b>↗</b></span>
                 </button>
-
-                {/* Maze Game Card */}
-                <button
-                  onClick={() => handleGameClick('maze')}
-                  className="relative group w-full h-64"
-                  data-testid="game-maze"
-                >
-                  {/* Large Background Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
-                    <img 
-                      src={mazeGameLogo} 
-                      alt="Maze Game Logo"
-                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
-                      loading="lazy"
-                      width="208"
-                      height="208"
-                    />
-                  </div>
-                  
-                  <div className="relative z-10 bg-black/80 border-4 border-purple-400 rounded-none p-6 hover:border-yellow-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50 transform group-hover:scale-105 h-full flex flex-col justify-center">
-                    {/* Corner indicators */}
-                    <div className="absolute top-2 left-2 w-2 h-2 bg-purple-400 animate-pulse"></div>
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-pink-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-
-                    <div className="text-center">
-                      <div className="text-4xl mb-3 text-purple-400 group-hover:text-yellow-400 transition-colors font-mono drop-shadow-lg">⬜</div>
-                      <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide drop-shadow-lg">MAZE RUNNER</h3>
-                      <p className="text-purple-300 mb-3 font-mono text-xs drop-shadow-lg">10 EPIC LEVELS</p>
-
-                      {/* Level grid visualization */}
-                      <div className="grid grid-cols-5 gap-0.5 justify-center mb-3 max-w-16 mx-auto">
-                        {[...Array(10)].map((_, i) => (
-                          <div key={i} className="w-1.5 h-1.5 bg-purple-400 border border-purple-300 animate-pulse shadow-lg" style={{ animationDelay: `${i * 0.1}s` }}></div>
-                        ))}
-                      </div>
-
-                      <div className="text-xs text-gray-300 font-mono drop-shadow-lg">JOYSTICK • KEYBOARD</div>
-                    </div>
-                  </div>
-
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-yellow-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
-                </button>
-
-                {/* Snake Game Card */}
-                <button
-                  onClick={() => handleGameClick('snake')}
-                  className="relative group w-full h-64"
-                  data-testid="game-snake"
-                >
-                  {/* Large Background Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
-                    <img 
-                      src={snakeGameLogo} 
-                      alt="Snake Game Logo"
-                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
-                      loading="lazy"
-                      width="208"
-                      height="208"
-                    />
-                  </div>
-                  
-                  <div className="relative z-10 bg-black/80 border-4 border-pink-400 rounded-none p-6 hover:border-orange-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-pink-400/50 transform group-hover:scale-105 h-full flex flex-col justify-center">
-                    {/* Corner indicators */}
-                    <div className="absolute top-2 left-2 w-2 h-2 bg-pink-400 animate-pulse"></div>
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-orange-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-red-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-yellow-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-
-                    <div className="text-center">
-                      <div className="text-4xl mb-3 text-pink-400 group-hover:text-orange-400 transition-colors font-mono drop-shadow-lg">🐍</div>
-                      <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide drop-shadow-lg">CANDY SNAKE</h3>
-                      <p className="text-pink-300 mb-3 font-mono text-xs drop-shadow-lg">COLLECT CANDY</p>
-
-                      {/* Snake movement visualization */}
-                      <div className="flex justify-center space-x-1 mb-3">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
-                        <div className="w-2 h-2 bg-green-300 rounded-full animate-pulse shadow-lg" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="w-2 h-2 bg-green-200 rounded-full animate-pulse shadow-lg" style={{ animationDelay: '0.4s' }}></div>
-                        <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse shadow-lg" style={{ animationDelay: '0.6s' }}>🍭</div>
-                      </div>
-
-                      <div className="text-xs text-gray-300 font-mono drop-shadow-lg">ARROWS • WASD</div>
-                    </div>
-                  </div>
-
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-orange-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
-                </button>
-
-                {/* BMO Quiz Game Card */}
-                <button
-                  onClick={() => handleGameClick('bmoquiz')}
-                  className="relative group w-full h-64"
-                  data-testid="game-bmoquiz"
-                >
-                  {/* Large Background Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-40 transition-opacity">
-                    <img 
-                      src={bmoQuizLogo} 
-                      alt="BMO Quiz Game Logo"
-                      className="w-52 h-52 object-cover filter brightness-150 rounded-lg"
-                      loading="lazy"
-                      width="208"
-                      height="208"
-                    />
-                  </div>
-                  
-                  <div className="relative z-10 bg-black/80 border-4 border-green-400 rounded-none p-6 hover:border-teal-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-400/50 transform group-hover:scale-105 h-full flex flex-col justify-center">
-                    {/* Corner indicators */}
-                    <div className="absolute top-2 left-2 w-2 h-2 bg-green-400 animate-pulse"></div>
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-teal-400 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-2 left-2 w-2 h-2 bg-blue-400 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-2 right-2 w-2 h-2 bg-cyan-400 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-
-                    <div className="text-center">
-                      <div className="text-4xl mb-3 text-green-400 group-hover:text-teal-400 transition-colors font-mono drop-shadow-lg">🎮</div>
-                      <h3 className="text-xl font-bold text-white mb-2 font-mono tracking-wide drop-shadow-lg">BMO QUIZ</h3>
-                      <p className="text-green-300 mb-3 font-mono text-xs drop-shadow-lg">CHARACTER QUIZ</p>
-
-                      {/* Character icons */}
-                      <div className="flex justify-center space-x-1 mb-3">
-                        <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs shadow-lg">👑</div>
-                        <div className="w-6 h-6 bg-orange-400 rounded-full flex items-center justify-center text-xs shadow-lg">🐕</div>
-                        <div className="w-6 h-6 bg-pink-400 rounded-full flex items-center justify-center text-xs shadow-lg">👸</div>
-                        <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center text-xs shadow-lg">🧛</div>
-                        <div className="w-6 h-6 bg-teal-400 rounded-full flex items-center justify-center text-xs shadow-lg">🤖</div>
-                      </div>
-
-                      <div className="text-xs text-gray-300 font-mono drop-shadow-lg">5 QUESTIONS • RANDOM</div>
-                    </div>
-                  </div>
-
-                  {/* Retro glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-teal-400/20 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl transform scale-110"></div>
-                </button>
-              </div>
-
-              {/* Bottom retro message */}
-              <div className="mt-12 text-center">
-                <div className="inline-block border-2 border-cyan-400 bg-black px-8 py-4 relative">
-                  <div className="absolute -top-1 -left-1 w-3 h-3 bg-cyan-400"></div>
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-pink-400"></div>
-                  <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-yellow-400"></div>
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400"></div>
-
-                  <p className="text-white font-mono text-sm tracking-wider">
-                    ► CHOOSE YOUR ADVENTURE ◄
-                  </p>
-                  <p className="text-cyan-300 font-mono text-xs mt-2">
-                    PRESS [SELECT] TO CONTINUE
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
+            <div className="bmo-arcade-footer"><span>تحكم بالكيبورد أو اللمس</span><span>تقدمك يحفظ داخل الجلسة</span><span>صوت BMO اختياري</span></div>
           </div>
         );
 
@@ -1590,6 +1399,12 @@ export default function BMO_FileSystemComponent({ onBack }: BMO_FileSystemCompon
 
       case 'snake':
         return <SnakeGame onBack={() => setCurrentView('games')} />;
+
+      case 'cloudjumper':
+        return <CloudJumperGame onBack={() => setCurrentView('games')} />;
+
+      case 'rhythmgrid':
+        return <RhythmGridGame onBack={() => setCurrentView('games')} />;
 
       case 'google-search':
         return renderGoogleSearchView();

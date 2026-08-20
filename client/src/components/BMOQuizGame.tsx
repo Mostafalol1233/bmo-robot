@@ -1,228 +1,177 @@
-import { useState, useEffect } from 'react';
-
-// Import character images for quiz
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import finnMainImg from '@assets/characters/finn_main.jpg';
 import jakeMainImg from '@assets/characters/jake_main.jpg';
 import princessBubblegumMainImg from '@assets/characters/princess_bubblegum_main.jpg';
 import marcelineMainImg from '@assets/characters/marceline_main.jpg';
 import bmoMainImg from '@assets/characters/bmo_main.jpg';
 
-interface QuizQuestion {
-  id: number;
-  image: string;
-  correctAnswer: string;
-  options: string[];
-}
-
-const QUIZ_QUESTIONS: QuizQuestion[] = [
-  {
-    id: 1,
-    image: finnMainImg,
-    correctAnswer: 'Finn',
-    options: ['Finn', 'Jake', 'BMO', 'Marceline']
-  },
-  {
-    id: 2,
-    image: jakeMainImg,
-    correctAnswer: 'Jake',
-    options: ['Finn', 'Jake', 'Princess Bubblegum', 'BMO']
-  },
-  {
-    id: 3,
-    image: princessBubblegumMainImg,
-    correctAnswer: 'Princess Bubblegum',
-    options: ['Marceline', 'Princess Bubblegum', 'Finn', 'Jake']
-  },
-  {
-    id: 4,
-    image: marcelineMainImg,
-    correctAnswer: 'Marceline',
-    options: ['Marceline', 'Princess Bubblegum', 'BMO', 'Finn']
-  },
-  {
-    id: 5,
-    image: bmoMainImg,
-    correctAnswer: 'BMO',
-    options: ['Jake', 'Finn', 'BMO', 'Marceline']
-  }
-];
-
-interface BMOQuizGameProps {
+interface CharacterQuestGameProps {
   onBack: () => void;
 }
 
-export default function BMOQuizGame({ onBack }: BMOQuizGameProps) {
-  const [currentQuestion, setCurrentQuestion] = useState<QuizQuestion | null>(null);
-  const [score, setScore] = useState(0);
-  const [questionsAnswered, setQuestionsAnswered] = useState(0);
-  const [gameStarted, setGameStarted] = useState(false);
-  const [showResult, setShowResult] = useState(false);
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('');
+type Point = { x: number; y: number };
 
-  const getRandomQuestion = () => {
-    const randomIndex = Math.floor(Math.random() * QUIZ_QUESTIONS.length);
-    return QUIZ_QUESTIONS[randomIndex];
-  };
+const BOARD = { width: 9, height: 6 };
+const START: Point = { x: 0, y: 5 };
+const EXIT: Point = { x: 8, y: 0 };
+const OBSTACLES: Point[] = [
+  { x: 2, y: 5 }, { x: 3, y: 4 }, { x: 5, y: 4 }, { x: 6, y: 2 },
+  { x: 1, y: 2 }, { x: 3, y: 1 }, { x: 7, y: 1 }, { x: 5, y: 0 },
+];
+const RELICS: Array<Point & { image: string; name: string }> = [
+  { x: 1, y: 4, image: finnMainImg, name: 'شارة فين' },
+  { x: 4, y: 5, image: jakeMainImg, name: 'شارة جيك' },
+  { x: 4, y: 2, image: princessBubblegumMainImg, name: 'بلورة الأميرة' },
+  { x: 7, y: 4, image: marcelineMainImg, name: 'وتر مارسيلين' },
+  { x: 7, y: 0, image: bmoMainImg, name: 'نواة بيمو' },
+];
 
-  const startGame = () => {
-    setGameStarted(true);
-    setScore(0);
-    setQuestionsAnswered(0);
-    setShowResult(false);
-    setCurrentQuestion(getRandomQuestion());
-  };
+const samePoint = (a: Point, b: Point) => a.x === b.x && a.y === b.y;
+const isObstacle = (point: Point) => OBSTACLES.some((item) => samePoint(item, point));
 
-  const handleAnswer = (answer: string) => {
-    setSelectedAnswer(answer);
-    
-    if (answer === currentQuestion?.correctAnswer) {
-      setScore(score + 1);
+export default function BMOQuizGame({ onBack }: CharacterQuestGameProps) {
+  const [player, setPlayer] = useState<Point>(START);
+  const [collected, setCollected] = useState<string[]>([]);
+  const [seconds, setSeconds] = useState(55);
+  const [status, setStatus] = useState<'ready' | 'playing' | 'won' | 'lost'>('ready');
+  const [moves, setMoves] = useState(0);
+  const [message, setMessage] = useState('اجمع شارات أصدقاء بيمو وافتح بوابة القلعة.');
+
+  const relicCount = RELICS.length;
+  const currentRelic = useMemo(
+    () => RELICS.find((item) => samePoint(item, player) && !collected.includes(item.name)),
+    [collected, player],
+  );
+
+  const resetGame = useCallback(() => {
+    setPlayer(START);
+    setCollected([]);
+    setSeconds(55);
+    setMoves(0);
+    setStatus('ready');
+    setMessage('اجمع شارات أصدقاء بيمو وافتح بوابة القلعة.');
+  }, []);
+
+  const startGame = useCallback(() => {
+    resetGame();
+    setStatus('playing');
+    setMessage('انطلق! استخدم الأسهم أو أزرار التحكم.');
+  }, [resetGame]);
+
+  const move = useCallback((dx: number, dy: number) => {
+    if (status !== 'playing') return;
+    const next = { x: player.x + dx, y: player.y + dy };
+    if (next.x < 0 || next.x >= BOARD.width || next.y < 0 || next.y >= BOARD.height) {
+      setMessage('الحافة تمنع الطريق. جرّب اتجاهاً آخر.');
+      return;
+    }
+    if (isObstacle(next)) {
+      setMessage('صخرة سحرية! ابحث عن طريق آخر.');
+      return;
     }
 
-    setTimeout(() => {
-      const newQuestionsAnswered = questionsAnswered + 1;
-      setQuestionsAnswered(newQuestionsAnswered);
-      
-      if (newQuestionsAnswered >= 5) {
-        setShowResult(true);
-        setGameStarted(false);
+    setPlayer(next);
+    setMoves((value) => value + 1);
+    const found = RELICS.find((item) => samePoint(item, next) && !collected.includes(item.name));
+    if (found) {
+      const nextCollected = [...collected, found.name];
+      setCollected(nextCollected);
+      setMessage(`جمعت ${found.name}. بقي ${relicCount - nextCollected.length}.`);
+    } else if (samePoint(next, EXIT)) {
+      if (collected.length >= relicCount) {
+        setStatus('won');
+        setMessage('فتحت البوابة! أرض أوو ترحب بك.');
       } else {
-        setCurrentQuestion(getRandomQuestion());
-        setSelectedAnswer('');
+        setMessage(`البوابة مقفلة. تحتاج ${relicCount - collected.length} عناصر أخرى.`);
       }
-    }, 1500);
-  };
+    } else {
+      setMessage('استمر في الاستكشاف وابحث عن اللمعات.');
+    }
+  }, [collected, player, relicCount, status]);
 
-  const resetGame = () => {
-    setGameStarted(false);
-    setShowResult(false);
-    setCurrentQuestion(null);
-    setSelectedAnswer('');
-  };
+  useEffect(() => {
+    if (status !== 'playing') return;
+    const handleKey = (event: KeyboardEvent) => {
+      const keys: Record<string, Point> = {
+        ArrowUp: { x: 0, y: -1 }, w: { x: 0, y: -1 },
+        ArrowDown: { x: 0, y: 1 }, s: { x: 0, y: 1 },
+        ArrowLeft: { x: -1, y: 0 }, a: { x: -1, y: 0 },
+        ArrowRight: { x: 1, y: 0 }, d: { x: 1, y: 0 },
+      };
+      const direction = keys[event.key];
+      if (direction) {
+        event.preventDefault();
+        move(direction.x, direction.y);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [move, status]);
 
-  if (!gameStarted && !showResult) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-b from-teal-50 to-blue-50">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🎮</div>
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">BMO Character Quiz</h2>
-          <p className="text-gray-600 mb-6">من الشخصية دي؟ هختبرك في شخصيات Adventure Time!</p>
-          <button
-            onClick={startGame}
-            className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-            data-testid="start-quiz-button"
-          >
-            ابدأ اللعبة
-          </button>
-        </div>
-        <button
-          onClick={onBack}
-          className="mt-4 text-gray-500 hover:text-gray-700 text-sm"
-          data-testid="back-to-games"
-        >
-          ← الرجوع للألعاب
-        </button>
-      </div>
-    );
-  }
-
-  if (showResult) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-b from-teal-50 to-blue-50">
-        <div className="text-center">
-          <div className="text-6xl mb-4">
-            {score >= 4 ? '🎉' : score >= 2 ? '😊' : '😅'}
-          </div>
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">انتهت اللعبة!</h2>
-          <p className="text-xl text-gray-700 mb-4">
-            النتيجة: {score} من 5
-          </p>
-          <p className="text-gray-600 mb-6">
-            {score >= 4 ? 'ممتاز! انت عارف Adventure Time كويس!' : 
-             score >= 2 ? 'مش وحش! تحتاج تتفرج أكتر على Adventure Time' : 
-             'تحتاج تتفرج على Adventure Time أكتر 😄'}
-          </p>
-          <div className="space-x-4">
-            <button
-              onClick={startGame}
-              className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-              data-testid="play-again-button"
-            >
-              العب تاني
-            </button>
-            <button
-              onClick={resetGame}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-              data-testid="back-to-menu"
-            >
-              القائمة الرئيسية
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (status !== 'playing') return;
+    if (seconds <= 0) {
+      setStatus('lost');
+      setMessage('انتهى الوقت. أعد المحاولة وأنقذ أصدقاء بيمو.');
+      return;
+    }
+    const timer = window.setInterval(() => setSeconds((value) => value - 1), 1000);
+    return () => window.clearInterval(timer);
+  }, [seconds, status]);
 
   return (
-    <div className="flex flex-col h-full p-6 bg-gradient-to-b from-teal-50 to-blue-50">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <button
-          onClick={onBack}
-          className="text-gray-500 hover:text-gray-700 text-sm"
-          data-testid="back-button"
-        >
-          ← رجوع
-        </button>
-        <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-800">BMO Quiz</h3>
-          <p className="text-sm text-gray-600">السؤال {questionsAnswered + 1} من 5</p>
+    <div className="quest-game-shell">
+      <header className="quest-game-header">
+        <button className="game-back-button" onClick={onBack}>← قاعة الألعاب</button>
+        <div>
+          <p className="game-kicker">العالم الرابع · مغامرة بيمو</p>
+          <h2>Character Quest</h2>
         </div>
-        <div className="text-sm text-gray-600">
-          النقاط: {score}
-        </div>
-      </div>
+        <div className="quest-timer">{String(seconds).padStart(2, '0')}<span>ث</span></div>
+      </header>
 
-      {/* Question */}
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <h2 className="text-xl font-bold mb-6 text-gray-800 text-center">
-          مين ده؟
-        </h2>
-        
-        {/* Character Image */}
-        <div className="mb-8">
-          <img
-            src={currentQuestion?.image}
-            alt="Adventure Time Character"
-            className="w-32 h-32 object-cover rounded-full border-4 border-teal-400 shadow-lg"
-            data-testid="quiz-character-image"
-          />
-        </div>
+      <div className="quest-game-layout">
+        <section className="quest-board-card">
+          <div className="quest-board" style={{ gridTemplateColumns: `repeat(${BOARD.width}, 1fr)` }}>
+            {Array.from({ length: BOARD.width * BOARD.height }).map((_, index) => {
+              const point = { x: index % BOARD.width, y: Math.floor(index / BOARD.width) };
+              const obstacle = isObstacle(point);
+              const relic = RELICS.find((item) => samePoint(item, point));
+              const isPlayer = samePoint(player, point);
+              const isExit = samePoint(EXIT, point);
+              return (
+                <div key={`${point.x}-${point.y}`} className={`quest-cell ${obstacle ? 'is-obstacle' : ''} ${isExit ? 'is-exit' : ''}`}>
+                  {obstacle && <span className="quest-rock">◆</span>}
+                  {isExit && <span className="quest-gate">⌂</span>}
+                  {relic && !collected.includes(relic.name) && <img className="quest-relic" src={relic.image} alt={relic.name} />}
+                  {isPlayer && <span className="quest-player" aria-label="بيمو">●</span>}
+                </div>
+              );
+            })}
+          </div>
+          <div className="quest-message"><span className="quest-signal" />{message}</div>
+        </section>
 
-        {/* Answer Options */}
-        <div className="grid grid-cols-2 gap-4 w-full max-w-md">
-          {currentQuestion?.options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => handleAnswer(option)}
-              disabled={selectedAnswer !== ''}
-              className={`p-4 rounded-lg font-medium transition-all transform hover:scale-105 ${
-                selectedAnswer === option
-                  ? option === currentQuestion.correctAnswer
-                    ? 'bg-green-500 text-white'
-                    : 'bg-red-500 text-white'
-                  : selectedAnswer === '' 
-                    ? 'bg-white hover:bg-teal-50 text-gray-800 border-2 border-teal-200'
-                    : option === currentQuestion.correctAnswer
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-300 text-gray-500'
-              }`}
-              data-testid={`answer-option-${index}`}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
+        <aside className="quest-sidebar">
+          <div className="quest-stat-row"><span>العناصر</span><strong>{collected.length}/{relicCount}</strong></div>
+          <div className="quest-stat-row"><span>الحركات</span><strong>{moves}</strong></div>
+          <div className="quest-progress"><span style={{ width: `${(collected.length / relicCount) * 100}%` }} /></div>
+          <h3>تحكم</h3>
+          <div className="quest-controls">
+            <button onClick={() => move(0, -1)}>↑</button>
+            <button onClick={() => move(-1, 0)}>←</button>
+            <button onClick={() => move(0, 1)}>↓</button>
+            <button onClick={() => move(1, 0)}>→</button>
+          </div>
+          {currentRelic && <div className="quest-found-card"><img src={currentRelic.image} alt="" /><span>{currentRelic.name}</span></div>}
+          <div className="quest-actions">
+            {status === 'ready' && <button className="game-primary-button" onClick={startGame}>ابدأ المغامرة</button>}
+            {status === 'playing' && <button className="game-secondary-button" onClick={resetGame}>إعادة الجولة</button>}
+            {(status === 'won' || status === 'lost') && <button className="game-primary-button" onClick={startGame}>{status === 'won' ? 'مغامرة جديدة' : 'حاول مرة أخرى'}</button>}
+          </div>
+          {status === 'won' && <div className="quest-result is-win">تم فتح البوابة بنجاح</div>}
+          {status === 'lost' && <div className="quest-result is-loss">الظلال سبقتك هذه المرة</div>}
+        </aside>
       </div>
     </div>
   );

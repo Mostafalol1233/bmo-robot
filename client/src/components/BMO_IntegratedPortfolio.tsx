@@ -17,9 +17,9 @@ interface VideoItem {
 }
 
 export default function BMO_IntegratedPortfolio() {
-  const [currentSection, setCurrentSection] = useState<AppSection>('filesystem');
+  const [currentSection, setCurrentSection] = useState<AppSection>('landing');
   const [isScreenZooming, setIsScreenZooming] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(true);
+  const [isZoomed, setIsZoomed] = useState(false);
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [chatOpen, setChatOpen] = useState(false);
   const [videosOpen, setVideosOpen] = useState(false);
@@ -29,24 +29,24 @@ export default function BMO_IntegratedPortfolio() {
   const sampleVideos: VideoItem[] = [
     {
       id: '1',
-      title: 'BMO\'s Adventure Demo',
-      url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      duration: '3:32'
+      title: 'BMO Adventure Short #1',
+      url: '/bmo_adventure_1.mp4',
+      youtubeUrl: 'https://youtube.com/shorts/A1eUITFLvrA',
+      duration: '0:15'
     },
     {
-      id: '2', 
-      title: 'Coding Tutorial #1',
-      url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
-      youtubeUrl: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
-      duration: '10:15'
+      id: '2',
+      title: 'BMO Adventure Short #2',
+      url: '/bmo_adventure_2.mp4',
+      youtubeUrl: 'https://youtube.com/shorts/920D9DjKgCo',
+      duration: '0:20'
     },
     {
       id: '3',
-      title: 'Project Showcase',
-      url: 'https://www.youtube.com/watch?v=9bZkp7q19f0',
-      youtubeUrl: 'https://www.youtube.com/watch?v=9bZkp7q19f0',
-      duration: '5:45'
+      title: 'BMO Adventure Short #3',
+      url: '/bmo_adventure_3.mp4',
+      youtubeUrl: 'https://youtube.com/shorts/Ql7tURnDdzk',
+      duration: '0:25'
     }
   ];
 

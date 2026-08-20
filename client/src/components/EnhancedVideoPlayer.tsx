@@ -34,6 +34,8 @@ export default function EnhancedVideoPlayer({
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [playbackReady, setPlaybackReady] = useState(false);
+  const [playbackUrl, setPlaybackUrl] = useState(video.url || video.youtubeUrl || '');
+  const [usingFallback, setUsingFallback] = useState(false);
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout>();
@@ -49,8 +51,10 @@ export default function EnhancedVideoPlayer({
       setErrorMessage('');
       setIsLoading(true);
       setPlaybackReady(false);
+      setUsingFallback(false);
+      setPlaybackUrl(video.url || video.youtubeUrl || '');
     }
-  }, [isOpen]);
+  }, [isOpen, video.id, video.url, video.youtubeUrl]);
 
   // Handle keyboard shortcuts
   useEffect(() => {
@@ -131,8 +135,8 @@ export default function EnhancedVideoPlayer({
   const handleSeek = (seconds: number) => {
     const newTime = Math.max(0, Math.min(duration, currentTime + seconds));
     setCurrentTime(newTime);
-    if (playerRef.current && playerRef.current.seekTo) {
-      playerRef.current.seekTo(newTime, 'seconds');
+    if (playerRef.current) {
+      playerRef.current.currentTime = newTime;
     }
   };
 
@@ -217,11 +221,14 @@ export default function EnhancedVideoPlayer({
                 </a>
               )}
               
-              <button
+                <button
                 onClick={() => {
                   setHasError(false);
                   setErrorMessage('');
                   setIsLoading(true);
+                  setPlaybackReady(false);
+                  setUsingFallback(false);
+                  setPlaybackUrl(video.url || video.youtubeUrl || '');
                 }}
                 className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg transition-colors"
                 data-testid="button-retry-video"
@@ -245,16 +252,16 @@ export default function EnhancedVideoPlayer({
 
             <ReactPlayer
               ref={playerRef}
-              url={video.youtubeUrl ?? video.url}
+              src={playbackUrl}
               width="100%"
               height="100%"
               playing={isPlaying}
               volume={isMuted ? 0 : volume}
-              onDuration={setDuration}
-              onProgress={(progress: any) => {
-                if (progress && progress.playedSeconds !== undefined) {
-                  setCurrentTime(progress.playedSeconds);
-                }
+              onDurationChange={(event: React.SyntheticEvent<HTMLVideoElement>) => {
+                setDuration(event.currentTarget.duration || 0);
+              }}
+              onTimeUpdate={(event: React.SyntheticEvent<HTMLVideoElement>) => {
+                setCurrentTime(event.currentTarget.currentTime || 0);
               }}
               onReady={() => {
                 setIsLoading(false);
@@ -262,10 +269,18 @@ export default function EnhancedVideoPlayer({
               }}
               onError={(error) => {
                 console.error('Video playback error:', error);
+                if (!usingFallback && video.youtubeUrl && playbackUrl !== video.youtubeUrl) {
+                  setUsingFallback(true);
+                  setPlaybackUrl(video.youtubeUrl);
+                  setHasError(false);
+                  setIsLoading(true);
+                  setPlaybackReady(false);
+                  return;
+                }
                 setHasError(true);
                 setIsLoading(false);
                 setPlaybackReady(false);
-                setErrorMessage('Failed to load video. Please try again or use the YouTube link below.');
+                setErrorMessage('تعذر تشغيل الملف المحلي. يمكنك فتح النسخة الاحتياطية على YouTube.');
               }}
               onBuffer={() => setIsLoading(true)}
               onBufferEnd={() => setIsLoading(false)}
@@ -340,8 +355,8 @@ export default function EnhancedVideoPlayer({
                     const seekRatio = (e.clientX - rect.left) / rect.width;
                     const seekTime = duration * seekRatio;
                     setCurrentTime(seekTime);
-                    if (playerRef.current && playerRef.current.seekTo) {
-                      playerRef.current.seekTo(seekTime, 'seconds');
+                    if (playerRef.current) {
+                      playerRef.current.currentTime = seekTime;
                     }
                   }}
                 >
