@@ -64,3 +64,23 @@
 - https://open.spotify.com/track/6yCO64pit51XSgcYoUAwD5 — أغنية Oh BMO، من Adventure Time Vol. 2، موضح في الصفحة أنها © 2019 Cartoon Network Music و℗ 2019 Cartoon Network Music.
 
 النتيجة: يمكن إضافة روابط أو تضمين مشغلات للمصادر الرسمية، لكن لا ينبغي نسخ ملفات صوتية أو موسيقى محمية إلى المستودع دون ترخيص. البديل الآمن هو صوت أصلي مستوحى من أجواء وحدة ألعاب، أو تضمين المصدر الرسمي كما تسمح المنصة.
+
+## QA update — six games local preview
+- Landing page opens from the root and START reaches the BMO file explorer.
+- Games channel shows six visible cards: BMO Battle, Dungeon Maze, Candy Snake, Character Quest, Cloud Jumper, and Rhythm Grid.
+- BMO Battle opens a real Tic Tac Toe board after Start Game.
+- Dungeon Maze opens a 10-level maze selection with progress tracking and keyboard/mobile instructions.
+- Candy Snake opens a real grid game with Start Adventure, score/high score, controls, and Game Over/Play Again states.
+- All tested routes returned rendered content rather than blank pages.
+
+## QA update — Character Quest
+Character Quest opens from the arcade, starts successfully, shows a countdown and the 5-item objective, and responds to keyboard movement. After pressing ArrowRight, the move counter changed from 0 to 1 and the status message updated, confirming active gameplay rather than a static quiz.
+
+## اختبار الألعاب الست — 2026-08-20
+- Cloud Jumper: فتحت شاشة اللعب، بدأت اللعبة، ظهرت السحب والنجوم والقلوب وأزرار الحركة، واستجابت للقفز عبر Space.
+- Rhythm Grid: فتحت اللعبة السادسة، بدأت الإيقاع، ظهرت مسارات A/S/D/F، واستجاب الإدخال مع تسجيل حالة خارج الإيقاع عند التوقيت غير الصحيح.
+- قاعة الألعاب تعرض البطاقات الستة بوضوح: BMO Battle، Dungeon Maze، Candy Snake، Character Quest، Cloud Jumper، Rhythm Grid.
+- المسار الخارجي يفتح الصفحة ثم START ثم مستكشف BMO ثم قاعة الألعاب دون صفحة بيضاء.
+
+### ملاحظة QA
+تم اختبار الظهور والتنقل والتفاعل الأساسي للألعاب الست على المعاينة المحلية. يلزم الآن دفع الالتزام النهائي ونشره على Vercel، ثم إعادة اختبار الرابط العام بنفس المسارات.
